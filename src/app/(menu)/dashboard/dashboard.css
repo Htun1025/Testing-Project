@@ -1,0 +1,187 @@
+
+/* ==============================
+   Dashboard Theme
+============================== */
+:root {
+  --dashboard-primary: #7e3af2;
+  --dashboard-text: #1f2937;
+  --dashboard-muted: #6b7280;
+  --dashboard-border: #e9eaf0;
+  --dashboard-bg: #f8f9fc;
+  --dashboard-card: #ffffff;
+}
+
+/* Main content */
+.dashboard-content {
+  width: 100%;
+  min-width: 0;
+  padding: 18px 22px;
+  box-sizing: border-box;
+  background: var(--dashboard-bg);
+}
+
+/* ==============================
+   Page Heading
+============================== */
+.dashboard-heading {
+  margin-bottom: 18px;
+}
+
+.dashboard-title {
+  color: var(--dashboard-text);
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.5px;
+}
+
+.dashboard-subtitle,
+.section-subtitle {
+  margin-top: 4px;
+  color: var(--dashboard-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ==============================
+   Announcement
+============================== */
+.dashboard-content > * + * {
+  min-width: 0;
+}
+
+/* ==============================
+   Statistics Cards
+============================== */
+.statistics-grid {
+  margin-top: 8px;
+}
+
+.statistics-grid > .MuiGrid-item {
+  min-width: 0;
+}
+
+/* Compact card styling */
+.statistics-grid > .MuiGrid-root > * {
+  height: 100%;
+  border-radius: 10px;
+}
+
+/* ==============================
+   Recent Activity
+============================== */
+.table-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 22px 0 12px;
+}
+
+.section-title {
+  color: var(--dashboard-text);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.records-chip {
+  flex-shrink: 0;
+  height: 26px;
+  border: 1px solid #e5defe;
+  border-radius: 7px;
+  background: #f1edff;
+  color: var(--dashboard-primary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ==============================
+   Table Container
+============================== */
+.dashboard-content .MuiTableContainer-root {
+  overflow-x: auto;
+  border: 1px solid var(--dashboard-border);
+  border-radius: 10px;
+  background: var(--dashboard-card);
+  box-shadow: 0 2px 8px rgb(31 41 55 / 3%);
+}
+
+.dashboard-content .MuiTableCell-root {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f0f1f5;
+  font-size: 12px;
+}
+
+.dashboard-content .MuiTableHead-root .MuiTableCell-root {
+  background: #f9fafb;
+  color: var(--dashboard-muted);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.dashboard-content .MuiTableBody-root .MuiTableRow-root:hover {
+  background: #faf8ff;
+}
+
+/* ==============================
+   Responsive Layout
+============================== */
+@media (min-width: 1200px) {
+  .dashboard-content {
+    padding: 22px 26px;
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-content {
+    padding: 16px;
+  }
+
+  .dashboard-title {
+    font-size: 21px;
+  }
+
+  .table-heading {
+    margin-top: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-content {
+    padding: 12px;
+  }
+
+  .dashboard-heading {
+    margin-bottom: 14px;
+  }
+
+  .dashboard-title {
+    font-size: 19px;
+  }
+
+  .dashboard-subtitle,
+  .section-subtitle {
+    font-size: 11px;
+  }
+
+  .table-heading {
+    align-items: flex-start;
+    margin: 18px 0 10px;
+  }
+
+  .section-title {
+    font-size: 14px;
+  }
+
+  .records-chip {
+    height: 24px;
+    font-size: 10px;
+  }
+
+  .dashboard-content .MuiTableCell-root {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+}
