@@ -16,31 +16,30 @@ type MenuLayoutClientProps = {
 export default function MenuLayoutClient({ children }: MenuLayoutClientProps) {
   const pathname = usePathname();
 
-  const [collapsed, setCollapsed] = useState(false);
+  const [pinned, setPinned] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [headerSearch, setHeaderSearch] = useState("");
 
-  // Expand temporarily when hovering over a collapsed sidebar.
-  const sidebarCollapsed = collapsed && !hovered;
+  const sidebarExpanded = pinned || hovered;
 
   function toggleSidebar() {
-    setCollapsed((previous) => !previous);
+    setPinned((previous) => !previous);
     setHovered(false);
   }
 
   return (
-    <Box className="app-layout">
+    <Box
+      className={`app-layout ${
+        sidebarExpanded ? "sidebar-expanded" : "sidebar-collapsed"
+      }`}
+    >
       <Box
-        className={`sidebar-hover-area ${
-          !collapsed ? "sidebar-pinned-open" : ""
-        }`}
-        onMouseEnter={() => {
-          if (collapsed) setHovered(true);
-        }}
+        className="sidebar-hover-area"
+        onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
         <Sidebar
-          collapsed={sidebarCollapsed}
+          collapsed={!sidebarExpanded}
           pathname={pathname}
           onToggle={toggleSidebar}
         />

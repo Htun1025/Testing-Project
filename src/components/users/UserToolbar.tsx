@@ -1,14 +1,12 @@
 "use client";
 
-import {
-  Box,
-  Button,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, InputAdornment, TextField } from "@mui/material";
+
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
+
+import AppButton from "@/components/AppButton";
+import "@/app/(menu)/user/user.css";
 
 type Props = {
   search: string;
@@ -25,14 +23,6 @@ export default function UserToolbar({
 }: Props) {
   return (
     <Box className="user-table-toolbar">
-      <Box>
-        <Typography className="user-table-title">All Users</Typography>
-
-        <Typography className="user-table-description">
-          {count} users found
-        </Typography>
-      </Box>
-
       <Box className="user-toolbar-actions">
         <TextField
           size="small"
@@ -51,14 +41,14 @@ export default function UserToolbar({
           }}
         />
 
-        <Button
+        <AppButton
           variant="contained"
           startIcon={<AddIcon />}
           onClick={onCreate}
           className="create-user-button"
         >
           Create User
-        </Button>
+        </AppButton>
       </Box>
     </Box>
   );

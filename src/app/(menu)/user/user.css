@@ -1,29 +1,29 @@
 
-/* ========================================
+/* =========================================
    USER PAGE — MAIN LAYOUT
-======================================== */
+========================================= */
 
 .user-page {
   width: 100%;
   max-width: 1600px;
   min-width: 0;
   margin: 0 auto;
-  padding: 20px 24px 28px;
+  padding: 5px 6px;
   box-sizing: border-box;
-  background: #f8fafc;
+  container-type: inline-size;
 }
 
-/* ========================================
+/* =========================================
    PAGE HEADING
-======================================== */
+========================================= */
 
 .user-page-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2px;
+  gap: 8px;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 }
 
 .user-page-heading-content {
@@ -34,153 +34,243 @@
 .user-page-title {
   margin: 0;
   color: #172033;
-  font-size: 23px;
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: -0.5px;
+ font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+
 }
 
 .user-page-subtitle {
-  margin: 5px 0 0;
+  margin: 2px 0 0;
   color: #64748b;
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
-.user-toolbar-section {
-  flex-shrink: 0;
+/* =========================================
+   SUMMARY + TOOLBAR
+========================================= */
+
+.user-summary-toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
   min-width: 0;
+  margin-bottom: 8px;
+}
+
+.user-summary-wrapper {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.user-summary-section {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 5px;
+}
+
+.user-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 180px));
+  align-items: stretch;
+  gap: 5px;
+  width: 100%;
+  max-width: 552px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   SUMMARY CARDS
+========================================= */
+
+.user-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  min-height: 50px;
+  padding: 5px 7px;
+  box-sizing: border-box;
+  border: 1px solid #e8edf5;
+  border-radius: 7px !important;
+  background: #f8fafc;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 3%) !important;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.user-summary-card:hover {
+  box-shadow: 0 3px 8px rgb(15 23 42 / 7%) !important;
+}
+
+.user-summary-icon {
+  flex: 0 0 27px;
+  width: 27px !important;
+  height: 27px !important;
+  border-radius: 6px !important;
+}
+
+.user-summary-icon .MuiSvgIcon-root {
+  font-size: 15px;
+}
+
+.user-summary-card > .MuiBox-root {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-summary-label {
+  margin: 0 0 2px !important;
+  color: #64748b;
+  font-size: 9px !important;
+  font-weight: 500 !important;
+  line-height: 1.3 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-summary-value {
+  margin: 0 !important;
+  color: #172033;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+}
+
+/* =========================================
+   USER TOOLBAR
+========================================= */
+
+.user-toolbar-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-left: auto;
 }
 
 .user-toolbar-section > * {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
-}
-
-/* Search input */
-.user-toolbar-section .MuiTextField-root {
-  width: 230px;
+  gap: 5px;
   min-width: 0;
 }
 
-.user-toolbar-section .MuiOutlinedInput-root {
-  height: 30px;
-  border-radius: 8px;
+.user-toolbar-section .MuiTextField-root,
+.user-search-field {
+  width: 170px;
+  min-width: 0;
+}
+
+.user-toolbar-section .MuiOutlinedInput-root,
+.user-search-field .MuiOutlinedInput-root {
+  height: 31px;
+  border-radius: 6px;
   background: #fff;
-  font-size: 13px;
+  font-size: 11px;
 }
 
-.user-toolbar-section .MuiOutlinedInput-input {
-  padding: 9px 12px;
+.user-toolbar-section .MuiOutlinedInput-input,
+.user-search-field .MuiOutlinedInput-input {
+  padding: 6px 9px;
+  text-align: left;
 }
 
-.user-toolbar-section .MuiOutlinedInput-notchedOutline {
+.user-toolbar-section .MuiOutlinedInput-notchedOutline,
+.user-search-field .MuiOutlinedInput-notchedOutline {
   border-color: #dbe3ee;
 }
 
-.user-toolbar-section
-  .MuiOutlinedInput-root:hover
-  .MuiOutlinedInput-notchedOutline {
+.user-toolbar-section .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
+.user-search-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
   border-color: #a78bfa;
 }
 
-.user-toolbar-section
-  .MuiOutlinedInput-root.Mui-focused
-  .MuiOutlinedInput-notchedOutline {
+.user-toolbar-section .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+.user-search-field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: #7e3af2;
   border-width: 1px;
 }
 
-/* Create User button */
+.user-search-field .MuiInputAdornment-root {
+  margin-right: 5px;
+}
+
+.user-search-field .MuiInputAdornment-root .MuiSvgIcon-root {
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+.user-search-field .MuiOutlinedInput-input::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+  text-align: left;
+}
+
 .user-toolbar-section .MuiButton-root {
-  min-height: 35px;
-  padding: 8px 15px;
-  border-radius: 8px;
-  font-size: 12px;
+  min-height: 31px;
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: none;
   white-space: nowrap;
   box-shadow: none;
 }
 
-/* ========================================
-   USER SUMMARY CARDS
-======================================== */
+/* =========================================
+   CREATE USER BUTTON
+========================================= */
 
-.user-summary-section {
-  width: 100%;
-  margin-bottom: 10px;
+.create-user-button {
+  min-width: 0 !important;
+  min-height: 31px !important;
+  padding: 5px 9px !important;
+  border-radius: 6px !important;
+  background-color: #7e3af2 !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  text-transform: none !important;
+  white-space: nowrap;
+  box-shadow: none !important;
 }
 
-.user-summary-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 15px;
-  width: 100%;
+.create-user-button:hover {
+  background-color: #6929d4 !important;
 }
 
-.user-summary-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-  min-height: 86px;
-  padding: 14px 18px;
-  box-sizing: border-box;
-  border: 1px solid #e8edf5;
-  border-radius: 10px !important;
-  background: #fff;
-  box-shadow: 0 2px 6px rgb(15 23 42 / 3%) !important;
-  transition:
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+.create-user-button .MuiButton-startIcon {
+  margin-right: 4px;
+  margin-left: 0;
 }
 
-.user-summary-card:hover {
-  box-shadow: 0 4px 12px rgb(15 23 42 / 7%) !important;
-  transform: translateY(-1px);
+.create-user-button .MuiButton-startIcon .MuiSvgIcon-root {
+  font-size: 15px;
 }
 
-.user-summary-icon {
-  flex-shrink: 0;
-  width: 42px !important;
-  height: 42px !important;
-  border-radius: 10px !important;
-}
-
-.user-summary-icon .MuiSvgIcon-root {
-  font-size: 22px;
-}
-
-.user-summary-label {
-  margin-bottom: 4px !important;
-  color: #64748b;
-  font-size: 12px !important;
-  font-weight: 500 !important;
-  line-height: 1.4 !important;
-}
-
-.user-summary-value {
-  color: #172033;
-  font-size: 23px !important;
-  font-weight: 700 !important;
-  line-height: 1.25 !important;
-}
-
-/* ========================================
-   USER TABLE CARD
-======================================== */
+/* =========================================
+   TABLE CARD
+========================================= */
 
 .user-table-card {
   width: 100%;
   min-width: 0;
+  margin-top: 0;
   overflow: hidden;
   border: 1px solid #e8edf5;
-  border-radius: 10px !important;
+  border-radius: 7px !important;
   background: #fff;
-  box-shadow: 0 2px 6px rgb(15 23 42 / 3%) !important;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 3%) !important;
 }
 
 .user-table-card .MuiTableContainer-root {
@@ -190,738 +280,1134 @@
 
 .user-table-card .MuiTable-root {
   width: 100%;
-  min-width: 750px;
+  min-width: 650px;
   border-collapse: separate;
   border-spacing: 0;
 }
 
-/* Table header */
 .user-table-card .MuiTableHead-root .MuiTableCell-root {
-  padding: 12px 16px;
+  padding: 5px 8px;
   background: #f8fafc;
   color: #64748b;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 600;
   white-space: nowrap;
   border-bottom: 1px solid #e8edf5;
 }
 
-/* Table body */
 .user-table-card .MuiTableBody-root .MuiTableCell-root {
-  padding: 10px 16px;
+  padding: 5px 8px;
   color: #334155;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 11px;
+  line-height: 1.35;
   border-bottom: 1px solid #f1f5f9;
 }
 
 .user-table-card .MuiTableBody-root .MuiTableRow-root {
-  height: 52px;
+  height: 36px;
   transition: background-color 0.15s ease;
+}
+
+.user-table-card .MuiTableBody-root .MuiTableRow-root:hover {
+  background: #f7f9ff;
 }
 
 .user-table-card .MuiTableBody-root .MuiTableRow-root:last-child .MuiTableCell-root {
   border-bottom: none;
 }
 
-/* User avatar */
-.user-table-card .MuiAvatar-root {
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #7e3af2;
-  background: #edebfe;
-}
-
-/* User name */
-.user-table-card .MuiTableCell-root .MuiTypography-root {
-  font-size: 13px;
-}
-
-/* Status chip */
-.user-table-card .MuiChip-root {
-  height: 23px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.user-table-card .MuiChip-label {
-  padding: 0 8px;
-}
-
-/* Edit and delete buttons */
-.user-table-card .MuiIconButton-root {
-  width: 30px;
-  height: 30px;
-  margin-left: 2px;
-  padding: 6px;
-}
-
-.user-table-card .MuiIconButton-root .MuiSvgIcon-root {
-  font-size: 17px;
-}
-
-/* Pagination */
-.user-table-card .MuiTablePagination-root {
-  min-height: 48px;
-  border-top: 1px solid #e8edf5;
-}
-
-.user-table-card .MuiTablePagination-toolbar {
-  min-height: 48px;
-  padding: 0 12px;
-}
-
-.user-table-card .MuiTablePagination-selectLabel,
-.user-table-card .MuiTablePagination-displayedRows {
-  margin: 0;
-  color: #64748b;
-  font-size: 12px;
-}
-
-.user-table-card .MuiTablePagination-select {
-  font-size: 12px;
-}
-
-.user-table-card .MuiTablePagination-actions .MuiIconButton-root {
-  width: 30px;
-  height: 30px;
-}
-
-/* Empty table message */
-.user-table-card .MuiTableBody-root .MuiTableCell-root[colspan] {
-  padding: 20px 12px;
-}
-
-/* ========================================
-   LARGE SCREENS
-======================================== */
-
-@media (min-width: 1440px) {
-  .user-page {
-    padding: 28px 36px 36px;
-  }
-
-  .user-page-heading {
-    margin-bottom: 26px;
-  }
-
-  .user-page-title {
-    font-size: 27px;
-  }
-
-  .user-summary-card {
-    min-height: 92px;
-    padding: 16px 20px;
-  }
-
-  .user-summary-grid {
-    gap: 18px;
-  }
-}
-
-/* ========================================
-   LAPTOP / SMALL DESKTOP
-======================================== */
-
-@media (max-width: 1100px) {
-  .user-page {
-    padding: 20px;
-  }
-
-  .user-page-heading {
-    gap: 16px;
-  }
-
-  .user-toolbar-section .MuiTextField-root {
-    width: 190px;
-  }
-
-  .user-summary-grid {
-    gap: 12px;
-  }
-
-  .user-summary-card {
-    gap: 10px;
-    padding: 12px;
-  }
-
-  .user-summary-icon {
-    width: 38px !important;
-    height: 38px !important;
-  }
-
-  .user-summary-value {
-    font-size: 21px !important;
-  }
-}
-
-/* ========================================
-   TABLET
-======================================== */
-
-@media (max-width: 768px) {
-  .user-page {
-    padding: 18px 16px 24px;
-  }
-
-  .user-page-heading {
-    align-items: flex-start;
-    gap: 14px;
-  }
-
-  .user-page-title {
-    font-size: 22px;
-  }
-
-  .user-page-subtitle {
-    font-size: 12px;
-  }
-
-  .user-toolbar-section .MuiTextField-root {
-    width: 170px;
-  }
-
-  .user-toolbar-section .MuiButton-root {
-    padding: 7px 10px;
-  }
-
-  .user-summary-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 9px;
-  }
-
-  .user-summary-card {
-    min-height: 76px;
-    gap: 8px;
-    padding: 10px;
-  }
-
-  .user-summary-icon {
-    width: 34px !important;
-    height: 34px !important;
-    border-radius: 8px !important;
-  }
-
-  .user-summary-icon .MuiSvgIcon-root {
-    font-size: 19px;
-  }
-
-  .user-summary-label {
-    font-size: 11px !important;
-  }
-
-  .user-summary-value {
-    font-size: 20px !important;
-  }
-
-  .user-table-card .MuiTableHead-root .MuiTableCell-root,
-  .user-table-card .MuiTableBody-root .MuiTableCell-root {
-    padding: 9px 12px;
-  }
-}
-
-/* ========================================
-   MOBILE
-======================================== */
-
-@media (max-width: 600px) {
-  .user-page {
-    padding: 16px 12px 20px;
-  }
-
-  .user-page-heading {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 14px;
-    margin-bottom: 18px;
-  }
-
-  .user-page-title {
-    font-size: 21px;
-  }
-
-  .user-page-subtitle {
-    max-width: 100%;
-    font-size: 12px;
-  }
-
-  /* Search and button stay on the same row */
-  .user-toolbar-section {
-    width: 100%;
-  }
-
-  .user-toolbar-section > * {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
-    width: 100%;
-  }
-
-  .user-toolbar-section .MuiTextField-root {
-    flex: 1;
-    width: auto;
-    min-width: 0;
-  }
-
-  .user-toolbar-section .MuiOutlinedInput-root {
-    height: 38px;
-  }
-
-  .user-toolbar-section .MuiButton-root {
-    min-height: 38px;
-    padding: 7px 10px;
-    font-size: 11px;
-  }
-
-  .user-summary-section {
-    margin-bottom: 14px;
-  }
-
-  .user-summary-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-  }
-
-  .user-summary-card {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 7px;
-    min-height: 100px;
-    padding: 10px;
-  }
-
-  .user-summary-icon {
-    width: 32px !important;
-    height: 32px !important;
-  }
-
-  .user-summary-icon .MuiSvgIcon-root {
-    font-size: 18px;
-  }
-
-  .user-summary-label {
-    margin-bottom: 3px !important;
-    font-size: 10px !important;
-  }
-
-  .user-summary-value {
-    font-size: 19px !important;
-  }
-
-  .user-table-card .MuiTablePagination-toolbar {
-    padding: 0 4px;
-  }
-
-  .user-table-card .MuiTablePagination-selectLabel,
-  .user-table-card .MuiTablePagination-displayedRows {
-    font-size: 11px;
-  }
-}
-
-/* ========================================
-   EXTRA SMALL MOBILE
-======================================== */
-
-@media (max-width: 380px) {
-  .user-page {
-    padding: 12px 8px 18px;
-  }
-
-  .user-page-title {
-    font-size: 19px;
-  }
-
-  .user-page-heading {
-    gap: 12px;
-  }
-
-  .user-toolbar-section > * {
-    gap: 6px;
-  }
-
-  .user-toolbar-section .MuiButton-root {
-    padding: 7px 8px;
-  }
-
-  .user-summary-grid {
-    gap: 6px;
-  }
-
-  .user-summary-card {
-    min-height: 90px;
-    padding: 8px;
-  }
-
-  .user-summary-label {
-    font-size: 9px !important;
-  }
-
-  .user-summary-value {
-    font-size: 17px !important;
-  }
-}
-
-/* ========================================
-   USER TOOLBAR
-======================================== */
+/* =========================================
+   TABLE TOOLBAR
+========================================= */
 
 .user-table-toolbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: flex-end;
   width: 100%;
   min-width: 0;
-  padding: 14px 0;
+  gap: 6px;
+  padding: 5px 0;
   box-sizing: border-box;
 }
 
-/* All Users title */
 .user-table-title {
   margin: 0 !important;
   color: #172033;
-  font-size: 15px !important;
+  font-size: 12px !important;
   font-weight: 700 !important;
-  line-height: 1.4 !important;
+  line-height: 1.3 !important;
 }
 
-/* Users found description */
 .user-table-description {
-  margin-top: 3px !important;
+  margin-top: 2px !important;
   color: #64748b;
-  font-size: 11px !important;
-  line-height: 1.5 !important;
+  font-size: 10px !important;
+  line-height: 1.3 !important;
 }
 
-/* Search + Create Button */
 .user-toolbar-actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 6px;
+  width: 100%;
   min-width: 0;
 }
 
-/* Search input */
-.user-search-field {
+.user-toolbar-actions .user-search-field {
   width: 220px;
+}
+
+/* =========================================
+   TABLE WRAPPER
+========================================= */
+
+.user-table-wrapper {
+  width: 100%;
+  min-width: 0;
+  background: #fff;
+}
+
+.user-table-container {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #eee;
+  border-radius: 6px;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-table .MuiTableHead-root .MuiTableCell-root {
+  height: 32px;
+  padding: 4px 7px;
+  background: #f7f8fc;
+  color: #333;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.user-table .MuiTableBody-root .MuiTableCell-root {
+  height: 34px;
+  padding: 5px 8px;
+  color: #555;
+  font-size: 11px;
+  font-weight: 400;
+  white-space: nowrap;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.user-table .MuiTableBody-root .MuiTableRow-root:last-child .MuiTableCell-root {
+  border-bottom: none;
+}
+
+.user-table .MuiTableBody-root .MuiTableRow-root:hover {
+  background: #f7f9ff;
+}
+
+/* =========================================
+   USER INFO
+========================================= */
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.user-avatar {
+  flex-shrink: 0;
+  width: 25px !important;
+  height: 25px !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  color: #7e3af2 !important;
+  background: #edebfe !important;
+}
+
+.user-name {
+  color: #333;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.user-status-chip,
+.user-table .MuiChip-root,
+.user-table-card .MuiChip-root {
+  height: 18px !important;
+  border-radius: 4px !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+}
+
+.user-status-chip .MuiChip-label,
+.user-table .MuiChip-label,
+.user-table-card .MuiChip-label {
+  padding: 0 6px !important;
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.user-actions {
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
+  text-align: center !important;
+  white-space: nowrap;
+}
+
+.actions-label {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+
+.user-action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.user-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  min-width: 26px !important;
+  padding: 3px !important;
+  border-radius: 5px !important;
+}
+
+.user-action-icon {
+  font-size: 15px !important;
+}
+
+/* =========================================
+   COLUMN SETTINGS
+========================================= */
+
+.column-settings {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 24px;
+  margin-bottom: 0;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.column-settings-btn {
+  width: 25px;
+  height: 25px;
+  padding: 3px !important;
+  border-radius: 4px !important;
+}
+
+.column-settings-btn svg {
+  font-size: 16px;
+}
+
+.column-settings-menu {
+  min-width: 155px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 12%) !important;
+}
+
+.column-menu-title {
+  padding: 7px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+.column-menu-item {
+  min-height: 30px !important;
+  padding: 2px 8px !important;
+}
+
+.column-menu-item .MuiCheckbox-root {
+  padding: 3px;
+}
+
+.column-menu-item .MuiCheckbox-root svg {
+  font-size: 15px;
+}
+
+.column-menu-item .MuiListItemText-primary {
+  font-size: 10px;
+}
+
+.user-column-settings {
+  width: 38px;
+  min-width: 38px;
+  max-width: 38px;
+  padding: 4px !important;
+  text-align: center !important;
+  white-space: nowrap;
+}
+
+/* =========================================
+   PAGINATION
+========================================= */
+
+.user-table-card .MuiTablePagination-root,
+.user-table-pagination {
+  min-height: 34px;
+  border-top: 1px solid #e8edf5;
+}
+
+.user-table-card .MuiTablePagination-toolbar,
+.user-table-pagination .MuiToolbar-root {
+  min-height: 34px;
+  padding: 0 5px;
+}
+
+.user-table-card .MuiTablePagination-selectLabel,
+.user-table-card .MuiTablePagination-displayedRows,
+.user-table-pagination .MuiTablePagination-selectLabel,
+.user-table-pagination .MuiTablePagination-displayedRows {
+  margin: 0;
+  color: #64748b;
+  font-size: 10px;
+}
+
+.user-table-card .MuiTablePagination-select,
+.user-table-pagination .MuiTablePagination-select {
+  font-size: 10px;
+}
+
+.user-table-pagination .MuiTablePagination-actions {
+  margin-left: 4px;
+}
+
+.user-table-pagination .MuiTablePagination-actions button {
+  padding: 2px;
+}
+
+.user-table-pagination .MuiSvgIcon-root {
+  font-size: 16px;
+}
+
+/* =========================================
+   EMPTY DATA
+========================================= */
+
+.user-table-card .MuiTableBody-root .MuiTableCell-root[colspan] {
+  padding: 15px 8px;
+}
+
+.empty-users {
+  padding: 15px 6px;
+}
+
+.empty-users p {
+  font-size: 11px;
+}
+
+/* =========================================
+   USER FORM — CREATE / EDIT DIALOG
+========================================= */
+
+/* Overlay */
+.user-form-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(3px);
+  overflow-y: auto;
+}
+
+/* Dialog Card */
+.user-form-card {
+  width: 100%;
+  max-width: 680px;
+  max-height: 92vh;
+  overflow-y: auto;
+  border-radius: 12px !important;
+  background: #fff;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14) !important;
+  animation: userFormShow 0.2s ease-out;
+}
+
+.user-form-card .MuiCardContent-root {
+  padding: 20px !important;
+}
+
+/* Header — No Bottom Border */
+.user-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 0;
+  border-bottom: none !important;
+}
+
+.user-form-title {
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  color: #222;
+}
+
+.user-form-subtitle {
+  font-size: 12px !important;
+  color: #888;
+  margin-top: 3px !important;
+}
+
+/* Form Grid */
+.user-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+
+.user-form-grid > * {
   min-width: 0;
 }
 
-.user-search-field .MuiOutlinedInput-root {
-  height: 36px;
-  border-radius: 7px;
-  background: #ffffff;
-  color: #334155;
-  font-size: 12px;
+.user-form-grid .MuiTextField-root {
+  width: 100%;
 }
 
-.user-search-field .MuiOutlinedInput-input {
-  padding: 8px 10px;
+/* =========================================
+   INPUT BOX
+========================================= */
+
+.user-form-card .MuiOutlinedInput-root {
+  min-height: 44px;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
 }
 
-.user-search-field .MuiOutlinedInput-input::placeholder {
+/* Input Text — Left */
+.user-form-card .MuiOutlinedInput-input {
+  height: auto;
+  padding: 11px 14px !important;
+  text-align: left !important;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
+/* Placeholder — Left */
+.user-form-card .MuiOutlinedInput-input::placeholder {
+  text-align: left !important;
   color: #94a3b8;
   opacity: 1;
 }
 
-/* Search icon */
-.user-search-field .MuiInputAdornment-root {
-  margin-right: 7px;
+/* =========================================
+   LABEL — LEFT ALIGNMENT
+========================================= */
+
+/* Default Label */
+.user-form-card .MuiInputLabel-root {
+  left: 0 !important;
+  right: auto !important;
+  width: auto;
+  max-width: calc(100% - 28px);
+  text-align: left !important;
+  font-size: 13px;
+  color: #64748b;
+  transform: translate(14px, -50px) scale(1) !important;
+  transform-origin: top left !important;
+  pointer-events: none;
 }
 
-.user-search-field .MuiInputAdornment-root .MuiSvgIcon-root {
-  color: #94a3b8;
-  font-size: 18px;
+/* Floating Label — Top Left */
+.user-form-card .MuiInputLabel-root.MuiInputLabel-shrink {
+  left: 0 !important;
+  right: auto !important;
+  width: max-content;
+  text-align: left !important;
+  transform: translate(14px, -9px) scale(0.75) !important;
+  transform-origin: top left !important;
 }
 
-.user-search-field .MuiOutlinedInput-notchedOutline {
-  border-color: #dbe3ee;
+/* Focus Label */
+.user-form-card .MuiInputLabel-root.Mui-focused {
+  color: #7c3aed;
 }
 
-.user-search-field
-  .MuiOutlinedInput-root:hover
-  .MuiOutlinedInput-notchedOutline {
+/* =========================================
+   INPUT BORDER
+========================================= */
+
+.user-form-card .MuiOutlinedInput-notchedOutline {
+  border-color: #d5deea;
+}
+
+.user-form-card .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
   border-color: #a78bfa;
 }
 
-.user-search-field
-  .MuiOutlinedInput-root.Mui-focused
-  .MuiOutlinedInput-notchedOutline {
-  border-color: #7e3af2;
-  border-width: 1px;
+.user-form-card .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border: 1.5px solid #7c3aed;
 }
 
-/* Create User button */
-.create-user-button {
-  min-width: 0 !important;
-  min-height: 36px;
-  padding: 7px 12px !important;
-  border-radius: 7px !important;
-  background-color: #7e3af2 !important;
-  font-size: 12px !important;
+/* =========================================
+   SELECT — LEFT ALIGNMENT
+========================================= */
+
+.user-form-card .MuiSelect-select {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  min-height: 0 !important;
+  padding: 11px 30px 11px 14px !important;
+}
+
+.user-form-card .MuiSelect-icon {
+  right: 8px;
+}
+
+/* =========================================
+   NRC GRID
+========================================= */
+
+.user-nrc-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 2fr;
+  gap: 12px;
+}
+
+/* NRC Font */
+.user-nrc-grid .MuiInputBase-input,
+.user-nrc-grid .MuiSelect-select {
+  font-size: 11px !important;
+}
+
+.user-nrc-grid .MuiInputLabel-root {
+  font-size: 11px !important;
+}
+
+/* NRC Dropdown */
+.MuiMenu-paper .MuiMenuItem-root {
+  min-height: 30px;
+  font-size: 11px !important;
+  padding: 5px 12px;
+}
+
+.MuiMenu-paper .MuiMenu-list {
+  padding: 3px 0;
+}
+
+/* NRC Preview */
+.user-nrc-preview {
+  grid-column: 1 / -1;
+  padding: 10px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 7px;
+  background: #fafafa;
+}
+
+.user-nrc-label {
+  color: #64748b;
+}
+
+.user-nrc-value {
+  font-size: 13px !important;
   font-weight: 600 !important;
-  line-height: 1.4 !important;
-  text-transform: none !important;
-  white-space: nowrap;
-  box-shadow: none !important;
 }
 
-.create-user-button:hover {
-  background-color: #6929d4 !important;
-  box-shadow: 0 2px 6px rgb(126 58 242 / 18%) !important;
+.user-nrc-error {
+  color: #dc2626;
+  font-size: 11px !important;
 }
 
-/* Add icon */
-.create-user-button .MuiButton-startIcon {
-  margin-right: 5px;
-  margin-left: 0;
+/* =========================================
+   ADDRESS
+========================================= */
+
+.user-form-grid .user-address {
+  grid-column: 1 / -1;
 }
 
-.create-user-button .MuiButton-startIcon .MuiSvgIcon-root {
-  font-size: 17px;
+.user-form-card .user-address .MuiOutlinedInput-root {
+  min-height: 45px !important;
+  height: 45px !important;
+  align-items: center;
 }
 
-/* ========================================
-   TABLET
-======================================== */
+.user-form-card .user-address textarea.MuiInputBase-input {
+  min-height: 25px !important;
+  height: 25px !important;
+  padding: 5px 14px !important;
+  text-align: left !important;
+  box-sizing: border-box;
+}
 
-@media (max-width: 768px) {
-  .user-table-toolbar {
-    gap: 12px;
-    padding: 12px 0;
+/* =========================================
+   VALIDATION
+========================================= */
+
+.user-form-card .MuiFormHelperText-root {
+  margin: 3px 0 0 2px;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.user-form-card .MuiFormHelperText-root.Mui-error {
+  color: #dc2626;
+}
+
+.user-form-card .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+  border-color: #dc2626;
+}
+
+/* =========================================
+   FORM ACTIONS
+========================================= */
+
+.user-form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 5px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.user-form-actions button {
+  min-height: 34px;
+  padding: 5px 13px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 7px;
+  text-transform: none;
+}
+
+/* =========================================
+   ANIMATION
+========================================= */
+
+@keyframes userFormShow {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
   }
 
-  .user-toolbar-actions {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+/* Keep all form labels LEFT aligned */
+.user-form-card .MuiInputLabel-root {
+  left: 0 !important;
+  right: auto !important;
+  width: auto !important;
+  text-align: left !important;
+  transform: translate(14px, 13px) scale(1) !important;
+  transform-origin: top left !important;
+}
+
+/* Floating label — top left */
+.user-form-card .MuiInputLabel-root.MuiInputLabel-shrink {
+  left: 0 !important;
+  right: auto !important;
+  width: max-content !important;
+  text-align: left !important;
+  transform: translate(14px, -9px) scale(0.75) !important;
+  transform-origin: top left !important;
+}
+
+/* Input text — always left */
+.user-form-card .MuiInputBase-input,
+.user-form-card .MuiSelect-select {
+  text-align: left !important;
+}
+
+/* Dialog default */
+.user-form-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.user-form-card {
+  width: 100%;
+  max-width: 680px;
+  max-height: calc(100dvh - 24px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  overscroll-behavior: contain;
+}
+
+.user-form-card .MuiCardContent-root {
+  padding: 16px !important;
+}
+
+.user-form-header {
+  margin-bottom: 12px !important;
+  padding-bottom: 0 !important;
+  border-bottom: none !important;
+}
+
+.user-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.user-form-grid > * {
+  min-width: 0;
+}
+
+.user-form-card .MuiOutlinedInput-root {
+  min-height: 42px;
+  border-radius: 7px;
+}
+
+.user-form-card .MuiOutlinedInput-input {
+  padding: 10px 14px !important;
+  text-align: left !important;
+  font-size: 12px;
+}
+
+.user-form-card .MuiSelect-select {
+  justify-content: flex-start !important;
+  padding: 10px 30px 10px 14px !important;
+}
+
+.user-form-card .user-address .MuiOutlinedInput-root {
+  height: 42px !important;
+  min-height: 42px !important;
+}
+
+/* NRC */
+.user-nrc-grid {
+  grid-template-columns: 1fr 2fr 1fr 2fr;
+  gap: 8px;
+}
+
+.user-nrc-preview {
+  padding: 8px 10px;
+}
+
+/* Form buttons */
+.user-form-actions {
+  position: sticky;
+  bottom: -16px;
+  z-index: 5;
+  background: #fff;
+  padding: 10px 0 4px !important;
+  margin-top: 0 !important;
+}
+
+/* =========================================
+   TABLET — 701px to 900px
+========================================= */
+
+@media (min-width: 701px) and (max-width: 900px) {
+  .user-page {
+    padding: 5px;
+  }
+
+  .user-summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 480px;
+  }
+
+  .user-summary-card {
+    padding: 5px;
+  }
+
+  .user-toolbar-section .MuiTextField-root,
+  .user-search-field {
+    width: 140px;
+  }
+
+  .user-form-card {
+    max-width: 620px;
+  }
+
+  .user-form-card .MuiCardContent-root {
+    padding: 14px !important;
+  }
+
+  .user-form-grid {
+    gap: 9px;
+  }
+}
+
+/* =========================================
+   MOBILE — MAX 700px
+========================================= */
+
+@media (max-width: 700px) {
+  .user-page {
+    padding: 5px;
+  }
+
+  .user-page-heading {
+    gap: 6px;
+  }
+
+  .user-page-title {
+    font-size: 14px;
+  }
+
+  .user-page-subtitle {
+    font-size: 11px;
+  }
+
+  /* Summary cards */
+  .user-summary-toolbar-row {
+    flex-direction: column;
+    align-items: stretch;
     gap: 8px;
   }
 
-  .user-search-field {
-    width: 180px;
-  }
-
-  .create-user-button {
-    padding: 7px 10px !important;
-  }
-}
-
-/* ========================================
-   MOBILE
-======================================== */
-
-@media (max-width: 600px) {
-  .user-table-toolbar {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .user-toolbar-actions {
-    justify-content: flex-start;
+  .user-summary-wrapper {
     width: 100%;
   }
 
+  .user-summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 100%;
+    gap: 5px;
+  }
+
+  .user-summary-card {
+    min-height: 45px;
+    padding: 5px;
+    gap: 4px;
+  }
+
+  .user-summary-icon {
+    flex: 0 0 23px;
+    width: 23px !important;
+    height: 23px !important;
+  }
+
+  .user-summary-value {
+    font-size: 14px !important;
+  }
+
+  /* Toolbar */
+  .user-toolbar-section {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .user-toolbar-section > * {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .user-toolbar-section .MuiTextField-root,
   .user-search-field {
+    width: 100%;
+  }
+
+  .user-toolbar-actions {
+    width: 100%;
+  }
+
+  .user-toolbar-actions .user-search-field {
     flex: 1;
     width: auto;
   }
 
-  .create-user-button {
-    flex-shrink: 0;
-  }
-}
-
-/* Extra small mobile */
-@media (max-width: 360px) {
-  .user-table-title {
-    font-size: 14px !important;
+  /* Table */
+  .user-table-card {
+    width: 100%;
+    overflow: hidden;
   }
 
-  .user-search-field .MuiOutlinedInput-input {
-    padding: 8px;
+  .user-table-card .MuiTableContainer-root,
+  .user-table-container {
+    overflow-x: auto;
   }
 
-  .create-user-button {
-    padding: 7px 8px !important;
+  .user-table-card .MuiTable-root {
+    min-width: 650px;
+  }
+
+  /* Dialog */
+  .user-form-overlay {
+    align-items: center;
+    padding: 8px !important;
+  }
+
+  .user-form-card {
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100dvh - 16px) !important;
+    border-radius: 10px !important;
+  }
+
+  .user-form-card .MuiCardContent-root {
+    padding: 12px !important;
+  }
+
+  .user-form-title {
+    font-size: 16px !important;
+  }
+
+  .user-form-subtitle {
     font-size: 11px !important;
   }
-}
-/* USER DIALOG CARD */
-.user-dialog .MuiDialog-paper {
-  width: calc(100% - 32px);
-  max-width: 440px;
-  margin: 16px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.12);
-}
 
-/* HEADER */
-.user-dialog-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 20px 24px 12px !important;
-}
-
-.user-dialog-heading {
-  color: #172033;
-  font-size: 20px !important;
-  font-weight: 700 !important;
-}
-
-.user-dialog-description {
-  margin-top: 5px !important;
-  color: #64748b;
-  font-size: 14px !important;
-  line-height: 1.5;
-}
-
-/* FORM CONTENT */
-.user-dialog-content {
-  padding: 12px 24px 20px !important;
-}
-
-/* ONE INPUT PER ROW */
-.user-dialog-fields {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 18px;
-  width: 100%;
-  padding-top: 6px;
-}
-
-.user-dialog-fields .MuiTextField-root {
-  width: 100%;
-  min-width: 0;
-}
-
-.user-dialog-fields .MuiInputBase-root {
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-.user-dialog-fields .MuiInputLabel-root {
-  font-size: 16px;
-}
-
-.user-dialog-fields .MuiOutlinedInput-notchedOutline {
-  border-color: #dbe3ee;
-  transition: border-color 0.2s ease;
-}
-
-/* HOVER */
-.user-dialog-fields .MuiOutlinedInput-root:hover
-.MuiOutlinedInput-notchedOutline {
-  border-color: #a78bfa;
-}
-
-/* FOCUS */
-.user-dialog-fields .MuiOutlinedInput-root.Mui-focused
-.MuiOutlinedInput-notchedOutline {
-  border-color: #7e3af2;
-  border-width: 1.5px;
-}
-
-.user-dialog-fields .MuiInputLabel-root.Mui-focused {
-  color: #7e3af2;
-}
-
-/* FOOTER */
-.user-dialog-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  padding: 12px 24px 24px !important;
-}
-
-.user-dialog-actions .MuiButton-root {
-  min-height: 40px;
-  padding: 8px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: none;
-  box-shadow: none;
-}
-
-/* CANCEL BUTTON */
-.user-dialog-actions .MuiButton-outlined {
-  border-color: #dbe3ee;
-  color: #475569;
-}
-
-.user-dialog-actions .MuiButton-outlined:hover {
-  background-color: #f8fafc;
-  border-color: #94a3b8;
-}
-
-/* SUBMIT BUTTON */
-.user-dialog-submit {
-  background-color: #7e3af2 !important;
-  color: #ffffff !important;
-  transition: background-color 0.2s ease;
-}
-
-.user-dialog-submit:hover {
-  background-color: #6929d4 !important;
-}
-
-/* TABLET */
-@media (max-width: 768px) {
-  .user-dialog .MuiDialog-paper {
-    max-width: 440px;
-  }
-}
-
-/* MOBILE */
-@media (max-width: 420px) {
-  .user-dialog .MuiDialog-paper {
-    width: calc(100% - 24px);
-    max-width: 440px;
-    margin: 12px;
+  /* One column for form fields */
+  .user-form-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 9px !important;
   }
 
-  .user-dialog-title {
-    padding: 18px 18px 10px !important;
+  /* NRC stays two columns */
+  .user-nrc-grid {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
   }
 
-  .user-dialog-heading {
-    font-size: 18px !important;
+  .user-nrc-preview {
+    grid-column: 1 / -1;
   }
 
-  .user-dialog-description {
-    font-size: 13px !important;
+  .user-form-grid .user-address {
+    grid-column: 1 / -1;
   }
 
-  .user-dialog-content {
-    padding: 10px 18px 16px !important;
-  }
-
-  .user-dialog-fields {
-    gap: 16px;
-  }
-
-  .user-dialog-fields .MuiInputBase-root,
-  .user-dialog-fields .MuiInputLabel-root {
-    font-size: 14px;
-  }
-
-  .user-dialog-actions {
-    padding: 10px 18px 18px !important;
+  /* Form actions */
+  .user-form-actions {
+    flex-direction: row !important;
+    justify-content: flex-end;
     gap: 8px;
   }
 
-  .user-dialog-actions .MuiButton-root {
+  .user-form-actions button {
+    width: auto;
+    min-height: 34px;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE — MAX 400px
+========================================= */
+
+@media (max-width: 400px) {
+  .user-page {
+    padding: 4px;
+  }
+
+  .user-summary-grid {
+    gap: 4px;
+  }
+
+  .user-summary-card {
+    min-height: 42px;
+    padding: 4px;
+  }
+
+  .user-summary-icon {
+    display: none !important;
+  }
+
+  .user-summary-label {
+    font-size: 8px !important;
+  }
+
+  .user-summary-value {
+    font-size: 13px !important;
+  }
+
+  .user-toolbar-section .MuiButton-root {
+    padding: 5px 7px;
+    font-size: 10px;
+  }
+
+  /* Dialog */
+  .user-form-overlay {
+    padding: 5px !important;
+  }
+
+  .user-form-card {
+    max-height: calc(100dvh - 10px) !important;
+  }
+
+  .user-form-card .MuiCardContent-root {
+    padding: 10px !important;
+  }
+
+  .user-form-title {
+    font-size: 15px !important;
+  }
+
+  .user-form-subtitle {
+    font-size: 10px !important;
+  }
+
+  .user-form-grid {
+    gap: 8px !important;
+  }
+
+  .user-form-card .MuiOutlinedInput-root {
+    min-height: 39px;
+  }
+
+  .user-form-card .MuiOutlinedInput-input {
+    padding: 9px 12px !important;
+    font-size: 11px;
+  }
+
+  .user-form-card .MuiSelect-select {
+    padding: 9px 27px 9px 12px !important;
+    font-size: 11px;
+  }
+
+  .user-form-card .MuiInputLabel-root {
+    font-size: 12px;
+    transform: translate(12px, 11px) scale(1) !important;
+  }
+
+  .user-form-card .MuiInputLabel-root.MuiInputLabel-shrink {
+    transform: translate(12px, -9px) scale(0.75) !important;
+  }
+
+  .user-nrc-grid {
+    gap: 6px !important;
+  }
+
+  .user-nrc-grid .MuiInputBase-input,
+  .user-nrc-grid .MuiSelect-select {
+    font-size: 10px !important;
+  }
+
+  .user-form-actions {
+    gap: 6px;
+  }
+
+  .user-form-actions button {
+    flex: 1;
+    min-height: 32px;
+    padding: 5px 7px;
+    font-size: 10px;
+  }
+}
+
+/* =========================================
+   SHORT SCREEN HEIGHT
+========================================= */
+
+@media (max-height: 750px) {
+  .user-form-overlay {
+    align-items: flex-start;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .user-form-card {
+    max-height: calc(100dvh - 12px) !important;
+  }
+
+  .user-form-card .MuiCardContent-root {
+    padding: 10px !important;
+  }
+
+  .user-form-header {
+    margin-bottom: 8px !important;
+  }
+
+  .user-form-grid {
+    gap: 7px !important;
+  }
+
+  .user-form-card .MuiOutlinedInput-root {
     min-height: 38px;
-    padding: 7px 14px;
-    font-size: 13px;
+  }
+
+  .user-form-card .MuiOutlinedInput-input {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .user-nrc-preview {
+    padding: 6px 9px;
+  }
+
+  .user-form-actions {
+    padding-top: 7px !important;
+  }
+}
+
+/* =========================================
+   VERY SHORT SCREEN
+========================================= */
+
+@media (max-height: 550px) {
+  .user-form-overlay {
+    align-items: flex-start;
+  }
+
+  .user-form-card {
+    max-height: calc(100dvh - 12px) !important;
+  }
+
+  .user-form-card .MuiCardContent-root {
+    padding: 8px !important;
+  }
+
+  .user-form-header {
+    margin-bottom: 6px !important;
+  }
+
+  .user-form-grid {
+    gap: 6px !important;
+  }
+
+  .user-form-card .MuiOutlinedInput-root {
+    min-height: 35px;
+  }
+
+  .user-form-actions {
+    padding-top: 5px !important;
   }
 }

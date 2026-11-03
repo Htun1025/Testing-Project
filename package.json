@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "seed:users": "tsx src/scripts/seed-users.ts",
     "lint": "eslint",
     "postinstall": "prisma skills sync || exit 0"
   },
@@ -36,6 +37,7 @@
     "eslint-config-next": "16.4.3",
     "prisma": "7.10.1",
     "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   },
   "packageManager": "pnpm@12.4.1"

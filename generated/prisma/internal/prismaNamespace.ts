@@ -397,7 +397,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  UserToken: 'UserToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -413,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user"
+    modelProps: "user" | "userToken"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -491,6 +492,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UserToken: {
+      payload: Prisma.$UserTokenPayload<ExtArgs>
+      fields: Prisma.UserTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.UserTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTokenPayload>
+        }
+        findMany: {
+          args: Prisma.UserTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTokenPayload>[]
+        }
+        create: {
+          args: Prisma.UserTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTokenPayload>
+        }
+        createMany: {
+          args: Prisma.UserTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.UserTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTokenPayload>
+        }
+        update: {
+          args: Prisma.UserTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.UserTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserToken>
+        }
+        groupBy: {
+          args: Prisma.UserTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserTokenCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -535,10 +610,27 @@ export const UserScalarFieldEnum = {
   name: 'name',
   username: 'username',
   email: 'email',
-  password: 'password'
+  password: 'password',
+  phone: 'phone',
+  nrc: 'nrc',
+  address: 'address',
+  status: 'status'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const UserTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tokenHash: 'tokenHash',
+  token_type: 'token_type',
+  expires_at: 'expires_at',
+  revoked: 'revoked',
+  createdAt: 'createdAt'
+} as const
+
+export type UserTokenScalarFieldEnum = (typeof UserTokenScalarFieldEnum)[keyof typeof UserTokenScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -588,6 +680,55 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UserStatus'
+ */
+export type EnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'UserStatus[]'
+ */
+export type ListEnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TokenType'
+ */
+export type EnumTokenTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TokenType'>
+    
+
+
+/**
+ * Reference to a field of type 'TokenType[]'
+ */
+export type ListEnumTokenTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TokenType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -756,6 +897,7 @@ export interface PrismaClientOptionsWithAdapter extends PrismaClientBaseOptions 
 export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaClientOptionsWithAdapter
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  userToken?: Prisma.UserTokenOmit
 }
 
 /* Types for Logging */

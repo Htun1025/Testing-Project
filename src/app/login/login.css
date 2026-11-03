@@ -1,0 +1,143 @@
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #f5f3ff, #eef2ff);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #eeeef5;
+  box-shadow: 0 15px 45px rgba(31, 41, 55, 0.08);
+}
+
+.login-logo {
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: #edebfe;
+  color: #7e3af2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.login-logo svg {
+  font-size: 30px;
+}
+
+.login-title {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  color: #1f2937;
+}
+
+.login-subtitle {
+  color: #9ca3af;
+  margin-top: 8px !important;
+  margin-bottom: 30px !important;
+  font-size: 14px !important;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-label {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #374151;
+  margin-top: 8px !important;
+}
+
+.login-form .MuiOutlinedInput-root {
+  border-radius: 9px;
+  background: #ffffff;
+}
+
+.login-form .MuiOutlinedInput-notchedOutline {
+  border-color: #e5e7eb;
+}
+
+.login-form .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #7e3af2;
+}
+
+.login-form .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #7e3af2 !important;
+}
+
+.login-form .MuiInputAdornment-root {
+  color: #9ca3af;
+}
+
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.login-options .MuiFormControlLabel-label {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.login-options .MuiCheckbox-root.Mui-checked {
+  color: #7e3af2;
+}
+
+.forgot-password {
+  font-size: 13px !important;
+  color: #7e3af2;
+  cursor: pointer;
+  font-weight: 600 !important;
+}
+
+.login-button {
+  height: 48px;
+  margin-top: 15px !important;
+  background: #7e3af2 !important;
+  border-radius: 9px !important;
+  text-transform: none !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+
+.login-button:hover {
+  background: #6c2bd9 !important;
+}
+
+.login-footer {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 13px !important;
+  margin-top: 28px !important;
+}
+
+.login-footer span {
+  color: #7e3af2;
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 28px 22px;
+  }
+
+  .login-title {
+    font-size: 24px !important;
+  }
+}
+

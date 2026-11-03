@@ -1,6 +1,7 @@
 "use client";
 
 import { Avatar, Box, Paper, Typography } from "@mui/material";
+
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import PersonOffOutlinedIcon from "@mui/icons-material/PersonOffOutlined";
@@ -13,9 +14,22 @@ type Props = {
 };
 
 export default function UserSummary({ users }: Props) {
-  const active = users.filter((user) => user.status === "Active").length;
+  // Status ကို တစ်ပုံစံတည်း ပြောင်းရန်
+  const getStatus = (status: string) =>
+    status
+      .trim()
+      .toUpperCase()
+      .replace(/[\s_-]/g, "");
 
-  const inactive = users.filter((user) => user.status === "Inactive").length;
+  // Active Users
+  const active = users.filter(
+    (user) => getStatus(user.status) === "ACTIVE",
+  ).length;
+
+  // Inactive Users
+  const inactive = users.filter(
+    (user) => getStatus(user.status) === "INACTIVE",
+  ).length;
 
   const summaries = [
     {
@@ -23,28 +37,33 @@ export default function UserSummary({ users }: Props) {
       value: users.length,
       icon: <PeopleAltOutlinedIcon />,
       color: "#7e3af2",
-      background: "#edebfe",
+      background: "#e1e0e4",
     },
     {
       label: "Active Users",
       value: active,
       icon: <CheckCircleOutlineIcon />,
       color: "#057a55",
-      background: "#def7ec",
+      background: "#e1e0e4",
     },
     {
       label: "Inactive Users",
       value: inactive,
       icon: <PersonOffOutlinedIcon />,
       color: "#c81e1e",
-      background: "#fde8e8",
+      background: "#e1e0e4",
     },
   ];
 
   return (
     <Box className="user-summary-grid">
       {summaries.map((item) => (
-        <Paper key={item.label} className="user-summary-card" elevation={0}>
+        <Paper
+          key={item.label}
+          className="user-summary-card"
+          elevation={0}
+          sx={{ backgroundColor: item.background }}
+        >
           <Avatar
             className="user-summary-icon"
             sx={{

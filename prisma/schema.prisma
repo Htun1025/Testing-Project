@@ -7,12 +7,44 @@ datasource db {
     provider = "postgresql"
 }
 
+enum UserStatus {
+    ACTIVE
+    INACTIVE
+}
+
 model User {
-    id       Int    @id @default(autoincrement())
+    id       Int        @id @default(autoincrement())
     name     String
-    username String @unique
-    email    String @unique
+    username String     @unique
+    email    String     @unique
     password String
+    phone    String
+    nrc      String     @unique
+    address  String
+    status   UserStatus @default(ACTIVE)
+
+    tokens UserToken[]
 
     @@map("users")
+}
+
+enum TokenType {
+    ACCESS_TOKEN
+    REFRESH_TOKEN
+}
+
+model UserToken {
+    id         Int       @id @default(autoincrement())
+    userId     Int
+    tokenHash  String    @unique
+    token_type TokenType
+    expires_at DateTime
+    revoked    Boolean   @default(false)
+    createdAt  DateTime  @default(now())
+
+    // User Relation
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId, token_type])
+    @@map("user_tokens")
 }

@@ -2,11 +2,12 @@
 
 import { Box, Paper } from "@mui/material";
 
-import useUsers from "@/hook/useUser";
-import UserSummary from "@/components/users/UserSummary";
+import useUsers from "@/hooks/useUser";
+
+import UserSummary from "@/components/UserSummary";
 import UserToolbar from "@/components/users/UserToolbar";
-import UserTable from "@/components/users/UserTable";
-import UserDialog from "@/components/users/UserDialog";
+import UserTable from "@/components/UserTable";
+import UserDialog from "@/components/User_Add_Edit_Card";
 
 import type { UserForm } from "@/types";
 
@@ -24,7 +25,6 @@ export default function UserPage() {
 
   return (
     <Box className="user-page">
-      {/* Page Heading */}
       <Box className="user-page-heading">
         <Box className="user-page-heading-content">
           <h1 className="user-page-title">User Management</h1>
@@ -33,8 +33,13 @@ export default function UserPage() {
             Manage users, contact information and account status.
           </p>
         </Box>
+      </Box>
 
-        {/* Search and Create User */}
+      <Box className="user-summary-toolbar-row">
+        <Box className="user-summary-wrapper">
+          <UserSummary users={userState.users} />
+        </Box>
+
         <Box className="user-toolbar-section">
           <UserToolbar
             search={userState.search}
@@ -48,12 +53,12 @@ export default function UserPage() {
         </Box>
       </Box>
 
-      {/* Summary Cards */}
-      <Box className="user-summary-section">
-        <UserSummary users={userState.users} />
-      </Box>
+      {userState.error && !userState.dialogOpen && (
+        <Box sx={{ mb: 1, color: "error.main", fontSize: 13 }}>
+          {userState.error}
+        </Box>
+      )}
 
-      {/* Users Table */}
       <Paper className="user-table-card" elevation={0}>
         <UserTable
           users={userState.visibleUsers}
@@ -67,11 +72,12 @@ export default function UserPage() {
         />
       </Paper>
 
-      {/* Create and Edit Dialog */}
       <UserDialog
         open={userState.dialogOpen}
         editingUser={userState.editingUser}
         form={userState.form}
+        error={userState.error}
+        loading={userState.loading}
         onFormChange={handleFormChange}
         onClose={userState.closeDialog}
         onSubmit={userState.handleSubmit}

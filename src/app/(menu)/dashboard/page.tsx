@@ -1,88 +1,115 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import { Avatar, Box, Chip, Grid, Typography } from "@mui/material";
-
-import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import { Box, Chip, Typography, CircularProgress } from "@mui/material";
 
 import AnnouncementBanner from "@/components/AnnouncementBanner";
-import StatCard from "@/components/StatCard";
-import UsersTable, { type UserRow } from "@/components/UserTable";
+import UserSummary from "@/components/UserSummary";
+import UserTable from "@/components/UserTable";
+
+import type { User } from "@/types";
 
 import "./dashboard.css";
 
-const sampleUsers: UserRow[] = [
-  {
-    id: 1,
-    name: "Sofia Rodriguez",
-    job: "10x Developer",
-    amount: "$863.45",
-    status: "Approved",
-    date: "6/21/2025",
-  },
-  {
-    id: 2,
-    name: "Alexander Lee",
-    job: "UI Designer",
-    amount: "$369.95",
-    status: "Pending",
-    date: "6/20/2025",
-  },
-  {
-    id: 3,
-    name: "Emma Watson",
-    job: "Frontend Developer",
-    amount: "$86.00",
-    status: "Denied",
-    date: "6/19/2025",
-  },
-  {
-    id: 4,
-    name: "Noah Wilson",
-    job: "Backend Developer",
-    amount: "$1,200.00",
-    status: "Approved",
-    date: "6/18/2025",
-  },
-  {
-    id: 5,
-    name: "Olivia Martin",
-    job: "Product Designer",
-    amount: "$520.00",
-    status: "Expired",
-    date: "6/17/2025",
-  },
-];
-
 export default function DashboardPage() {
+  // User data
+  const [users, setUsers] = useState<User[]>([]);
+
+  // Search
   const [search, setSearch] = useState("");
 
+  // Pagination
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  // Loading and error
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  // Fetch users from database
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await fetch("/api/admin/users");
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to load users.");
+        }
+
+        // Support array response or object response
+        const userList = Array.isArray(data)
+          ? data
+          : (data.users ?? data.data ?? []);
+
+        setUsers(userList);
+      } catch (error) {
+        console.error("Dashboard users error:", error);
+
+        setError(
+          error instanceof Error ? error.message : "Something went wrong.",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  // Search users
   const filteredUsers = useMemo(() => {
     const keyword = search.trim().toLowerCase();
 
-    if (!keyword) {
-      return sampleUsers;
-    }
+    if (!keyword) return users;
 
-    return sampleUsers.filter((user) =>
-      [user.name, user.job, user.amount, user.status, user.date].some((value) =>
-        value.toLowerCase().includes(keyword),
+    return users.filter((user) =>
+      [
+        user.id,
+        user.name,
+        user.username,
+        user.email,
+        user.phone,
+        user.nrc,
+        user.address,
+        user.status,
+      ].some((value) =>
+        String(value ?? "")
+          .toLowerCase()
+          .includes(keyword),
       ),
     );
-  }, [search]);
+  }, [users, search]);
+
+  // Pagination data
+  const paginatedUsers = useMemo(() => {
+    const startIndex = page * rowsPerPage;
+
+    return filteredUsers.slice(startIndex, startIndex + rowsPerPage);
+  }, [filteredUsers, page, rowsPerPage]);
+
+  // Page change
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  // Rows per page change
+  const handleRowsPerPageChange = (value: string) => {
+    setRowsPerPage(Number(value));
+    setPage(0);
+  };
 
   return (
     <Box className="dashboard-content">
-      {/* Dashboard heading */}
       <Box className="dashboard-heading">
         <Typography component="h1" className="dashboard-title">
           Dashboard
         </Typography>
-
         <Typography className="dashboard-subtitle">
           Welcome back! Here&apos;s what&apos;s happening today.
         </Typography>
@@ -91,58 +118,18 @@ export default function DashboardPage() {
       {/* Announcement */}
       <AnnouncementBanner />
 
-      {/* Statistics */}
-      <Grid container spacing={3} className="statistics-grid">
-        <Grid size={{ xs: 12, sm: 6, xl: 3 }}>
-          <StatCard
-            title="Total clients"
-            value="6389"
-            icon={<PeopleAltOutlinedIcon />}
-            color="#7e3af2"
-            background="#edebfe"
-          />
-        </Grid>
+      {/* User Summary Cards */}
+      <UserSummary users={users} />
 
-        <Grid size={{ xs: 12, sm: 6, xl: 3 }}>
-          <StatCard
-            title="Account balance"
-            value="$46,760.89"
-            icon={<AccountBalanceWalletOutlinedIcon />}
-            color="#0694a2"
-            background="#d5f5f6"
-          />
-        </Grid>
-
-        <Grid size={{ xs: 12, sm: 6, xl: 3 }}>
-          <StatCard
-            title="New sales"
-            value="376"
-            icon={<ShoppingCartOutlinedIcon />}
-            color="#ff5a1f"
-            background="#fde8e8"
-          />
-        </Grid>
-
-        <Grid size={{ xs: 12, sm: 6, xl: 3 }}>
-          <StatCard
-            title="Pending contacts"
-            value="35"
-            icon={<MonetizationOnOutlinedIcon />}
-            color="#0e9f6e"
-            background="#def7ec"
-          />
-        </Grid>
-      </Grid>
-
-      {/* Recent activity heading */}
+      {/* User Information Heading */}
       <Box className="table-heading">
         <Box>
           <Typography component="h2" className="section-title">
-            Recent activity
+            User Information
           </Typography>
 
           <Typography className="section-subtitle">
-            Your latest client transactions
+            View your registered users
           </Typography>
         </Box>
 
@@ -152,8 +139,34 @@ export default function DashboardPage() {
         />
       </Box>
 
-      {/* Recent activity table */}
-      <UsersTable users={filteredUsers} />
+      {/* Loading / Error / User Table */}
+      {loading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: 200,
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : error ? (
+        <Box className="empty-users">
+          <Typography color="error">{error}</Typography>
+        </Box>
+      ) : (
+        <UserTable
+          users={paginatedUsers}
+          totalCount={filteredUsers.length}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+          showActions={false}
+          showColumnSettings={true}
+        />
+      )}
     </Box>
   );
 }

@@ -4,6 +4,7 @@ import { Box, Button, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import "@/app/globals.css";
+
 export default function AnnouncementBanner() {
   return (
     <Box className="announcement">

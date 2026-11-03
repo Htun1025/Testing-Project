@@ -28,6 +28,8 @@ export type User = {
   username: string;
   email: string;
   phone: string;
+  nrc:string;
+  address: string;
   status: "Active" | "Inactive";
 };
 
@@ -36,6 +38,10 @@ export type UserForm = {
   username: string;
   email: string;
   phone: string;
+  password?: string;
+  nrc: string;
+  address: string;
+  status: "Active" | "Inactive";
 };
 
 export const emptyForm: UserForm = {
@@ -43,4 +49,13 @@ export const emptyForm: UserForm = {
   username: "",
   email: "",
   phone: "",
+  nrc: "",
+  address: "",
+  status: "Active",
+};
+
+
+export type TableColumn = {
+  id: string;
+  label: string;
 };
