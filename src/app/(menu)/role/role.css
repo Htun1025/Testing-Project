@@ -1,7 +1,7 @@
 
-/* =================================
+/* 
    ROLE MANAGEMENT — COMPACT UI
-================================= */
+*/
 
 .roles-page {
   width: 100%;
@@ -13,9 +13,9 @@
   color: var(--text-primary, #1e293b);
 }
 
-/* =================================
+/* 
    HEADER
-================================= */
+*/
 
 .roles-header {
   display: flex;
@@ -49,9 +49,9 @@
   line-height: 1.4 !important;
 }
 
-/* =================================
+/* 
    SUMMARY + SEARCH ROW
-================================= */
+*/
 
 .roles-summary-row {
   display: flex;
@@ -77,9 +77,9 @@
   margin: 0;
 }
 
-/* =================================
+/* 
    SUMMARY CARDS
-================================= */
+*/
 
 .roles-summary-content .user-summary-card {
   display: flex;
@@ -142,9 +142,9 @@
   line-height: 1.2 !important;
 }
 
-/* =================================
+/* 
    SEARCH + ADD BUTTON
-================================= */
+*/
 
 .roles-header-actions {
   display: flex;
@@ -230,9 +230,9 @@
   font-size: 16px;
 }
 
-/* =================================
+/* 
    TABLE CARD
-================================= */
+*/
 
 .roles-table-card {
   width: 100%;
@@ -263,9 +263,9 @@
   font-weight: 700 !important;
 }
 
-/* =================================
+/* 
    TABLE
-================================= */
+*/
 
 .roles-table-card .MuiTableContainer-root {
   width: 100%;
@@ -321,9 +321,9 @@
   text-overflow: ellipsis;
 }
 
-/* =================================
+/* 
    STATUS
-================================= */
+*/
 
 .role-status {
   height: 20px !important;
@@ -346,9 +346,9 @@
   background: #fee2e2 !important;
 }
 
-/* =================================
+/* 
    ACTION BUTTONS
-================================= */
+*/
 
 .role-action-button {
   width: 28px !important;
@@ -373,9 +373,9 @@
   font-size: 16px;
 }
 
-/* =================================
+/* 
    DIALOG
-================================= */
+*/
 
 .roles-page .MuiDialog-paper {
   border-radius: 10px;
@@ -409,9 +409,9 @@
   text-transform: none;
 }
 
-/* =================================
+/* 
    TABLET
-================================= */
+*/
 
 @media (max-width: 1100px) {
   .roles-summary-row {
@@ -433,9 +433,9 @@
   }
 }
 
-/* =================================
+/* 
    SMALL SCREEN
-================================= */
+*/
 
 @media (max-width: 900px) {
   .roles-summary-row {
@@ -463,9 +463,9 @@
   }
 }
 
-/* =================================
+/* 
    MOBILE
-================================= */
+*/
 
 @media (max-width: 700px) {
   .roles-page {
@@ -537,9 +537,9 @@
   }
 }
 
-/* =================================
+/* 
    SMALL MOBILE
-================================= */
+*/
 
 @media (max-width: 400px) {
   .roles-page {
@@ -583,9 +583,9 @@
   }
 }
 
-/* =================================
+/* 
    DARK MODE
-================================= */
+*/
 
 :root[data-theme="dark"] .roles-page {
   color: var(--text-primary);

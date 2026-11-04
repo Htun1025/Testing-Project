@@ -34,3 +34,11 @@ export const TokenType = {
 } as const
 
 export type TokenType = (typeof TokenType)[keyof typeof TokenType]
+
+
+export const PermissionStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+} as const
+
+export type PermissionStatus = (typeof PermissionStatus)[keyof typeof PermissionStatus]

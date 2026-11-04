@@ -1,7 +1,7 @@
 
-/* =================================
+/* 
    THEME VARIABLES
-================================= */
+*/
 
 :root,
 :root[data-theme="light"] {
@@ -44,9 +44,9 @@
   --profile-shadow: 0 2px 8px rgb(0 0 0 / 15%);
 }
 
-/* =================================
+/* 
    PROFILE PAGE
-================================= */
+*/
 
 .profile-page {
   width: 100%;
@@ -58,9 +58,9 @@
   color: var(--profile-text);
 }
 
-/* =================================
+/* 
    HEADING
-================================= */
+*/
 
 .profile-heading {
   margin-bottom: 8px;
@@ -79,9 +79,9 @@
   font-size: 11px !important;
 }
 
-/* =================================
+/* 
    PROFILE CARD
-================================= */
+*/
 
 .profile-card {
   padding: 12px !important;
@@ -99,9 +99,9 @@
   text-align: center;
 }
 
-/* =================================
+/* 
    CARD HEADER
-================================= */
+*/
 
 .profile-card-header {
   display: flex;
@@ -118,9 +118,9 @@
   font-weight: 700 !important;
 }
 
-/* =================================
+/* 
    EDIT BUTTON
-================================= */
+*/
 
 .profile-edit-button {
   min-height: 29px !important;
@@ -140,9 +140,9 @@
   border-color: var(--profile-primary) !important;
 }
 
-/* =================================
+/* 
    AVATAR
-================================= */
+*/
 
 .profile-avatar {
   width: 48px !important;
@@ -176,18 +176,18 @@
   font-weight: 600 !important;
 }
 
-/* =================================
+/* 
    DIVIDER
-================================= */
+*/
 
 .profile-divider {
   margin: 12px 0 !important;
   border-color: var(--profile-divider) !important;
 }
 
-/* =================================
+/* 
    USER DETAILS
-================================= */
+*/
 
 .profile-summary-details {
   text-align: left;
@@ -222,9 +222,9 @@
   word-break: break-word;
 }
 
-/* =================================
+/* 
    EDIT DIALOG
-================================= */
+*/
 
 .profile-edit-dialog {
   border-radius: 10px !important;
@@ -260,9 +260,9 @@
   color: var(--profile-text);
 }
 
-/* =================================
+/* 
    INPUTS
-================================= */
+*/
 
 .profile-input .MuiOutlinedInput-root {
   min-height: 36px;
@@ -312,9 +312,9 @@
   font-size: 17px !important;
 }
 
-/* =================================
+/* 
    DIALOG ACTIONS
-================================= */
+*/
 
 .profile-dialog-actions {
   padding: 10px 18px !important;
@@ -360,9 +360,9 @@
   background: var(--profile-primary-hover) !important;
 }
 
-/* =================================
+/* 
    RESPONSIVE: TABLET
-================================= */
+*/
 
 @media (max-width: 900px) {
   .profile-page {
@@ -374,9 +374,9 @@
   }
 }
 
-/* =================================
+/* 
    RESPONSIVE: MOBILE
-================================= */
+*/
 
 @media (max-width: 600px) {
   .profile-page {
@@ -412,9 +412,9 @@
   }
 }
 
-/* =================================
+/* 
    ACCESSIBILITY
-================================= */
+*/
 
 @media (prefers-reduced-motion: reduce) {
   .profile-page *,
