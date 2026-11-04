@@ -1,28 +1,81 @@
 
-/* ================================
-   GLOBAL VARIABLES
-================================ */
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
 
-:root {
   --sidebar-width: 190px;
   --sidebar-collapsed-width: 60px;
 
-  --primary: #7c3aed;
-  --primary-hover: #6d28d9;
+  --primary: #6094cb;
+  --primary-hover: #4f83bb;
 
   --text-primary: #1e293b;
   --text-secondary: #64748b;
 
-  --border-color: #e5e7eb;
-  --page-background: #f8fafc;
-  --white: #ffffff;
+  --border-color: #e2e8f0;
+  --page-background: #e9eaebfd;
+  --surface: #ffffff;
+  --sidebar-background: #ffffff;
 
   --success: #16a34a;
   --warning: #d97706;
   --danger: #dc2626;
+
+  --hover-background: #eff6ff;
+  --active-background: #eaf2ff;
+  --table-header-background: #f8fafc;
+  --table-row-hover: #f8fbff;
+  --input-background: #f8fafc;
+  --soft-primary: #eaf2ff;
+  --muted-color: #94a3b8;
+
+    --summary-card-bg: #ffffff;
+  --summary-card-border: #e2e8f0;
+  --summary-card-text: #1e293b;
+  --summary-card-muted: #64748b;
 }
 
-* {
+/* =================================
+   DARK THEME
+================================= */
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --sidebar-width: 190px;
+  --sidebar-collapsed-width: 60px;
+
+  --primary: #82b5e8;
+  --primary-hover: #a0c9f0;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+
+  --border-color: #374151;
+  --page-background: #111827;
+  --surface: #1f2937;
+  --sidebar-background: #1f2937;
+
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+
+  --hover-background: #273449;
+  --active-background: #263b55;
+  --table-header-background: #273449;
+  --table-row-hover: #273449;
+  --input-background: #111827;
+  --soft-primary: #263b55;
+  --muted-color: #94a3b8;
+
+    --summary-card-bg: #1e293b;
+  --summary-card-border: #334155;
+  --summary-card-text: #f1f5f9;
+  --summary-card-muted: #94a3b8;
+}
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -33,38 +86,62 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-
   background: var(--page-background);
   color: var(--text-primary);
   font-family: Arial, Helvetica, sans-serif;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+
+body {
+  min-height: 100vh;
 }
 
 button,
-input {
+input,
+textarea,
+select {
   font: inherit;
 }
 
-/* ================================
-   MAIN APP LAYOUT
-================================ */
+button {
+  cursor: pointer;
+}
+
+/* =================================
+   APP LAYOUT
+================================= */
 
 .app-layout {
+  --current-sidebar-width: var(--sidebar-collapsed-width);
+
   display: flex;
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: var(--page-background);
 }
 
-/* Sidebar space */
+.app-layout.sidebar-expanded {
+  --current-sidebar-width: var(--sidebar-width);
+}
+
+/* Sidebar occupies real layout space */
 
 .sidebar-hover-area {
   position: relative;
   z-index: 1200;
-  flex: 0 0 var(--sidebar-collapsed-width);
-  width: var(--sidebar-collapsed-width);
-  min-width: var(--sidebar-collapsed-width);
+  flex: 0 0 var(--current-sidebar-width);
+  width: var(--current-sidebar-width);
+  min-width: var(--current-sidebar-width);
+  height: 100vh;
   min-height: 100vh;
+  overflow: hidden;
+  background: var(--sidebar-background);
+  border-right: 1px solid var(--border-color);
 
   transition:
     width 0.25s ease,
@@ -72,59 +149,41 @@ input {
     flex-basis 0.25s ease;
 }
 
-/* Expanded sidebar */
+/* Main UI automatically moves with sidebar */
 
-.app-layout.sidebar-expanded .sidebar-hover-area {
-  flex-basis: var(--sidebar-width);
-  width: var(--sidebar-width);
-  min-width: var(--sidebar-width);
-}
-
-/* Main content */
-
-.main-content {
-  flex: 1;
-  width: 0;
+.app-layout .main-content {
+  flex: 1 1 auto;
+  width: calc(100% - var(--current-sidebar-width));
   min-width: 0;
   min-height: 100vh;
-  padding: 0 !important;
-  overflow-x: auto;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
   background: var(--page-background);
+  transition: width 0.25s ease;
 }
 
 .menu-page-content {
   width: 100%;
   min-width: 0;
-  padding: 10px;
+  padding: 12px;
 }
 
-/* ================================
+/* =================================
    SIDEBAR
-================================ */
+================================= */
 
 .sidebar {
-  position: relative;
-  top: 0;
-  left: 0;
-
   display: flex;
   flex-direction: column;
-
   width: 100%;
-  min-width: 100%;
-  height: 100vh;
+  min-width: 0;
+  height: 100%;
   min-height: 100vh;
-
   overflow-x: hidden;
   overflow-y: auto;
-
-  background: var(--white);
-  border-right: 1px solid #eee8f5;
-
+  background: var(--sidebar-background);
   scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  transition: width 0.25s ease;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -133,23 +192,21 @@ input {
 
 .sidebar.sidebar-collapsed {
   width: 100%;
-  min-width: 100%;
+  min-width: 0;
 }
 
-/* ================================
+/* =================================
    SIDEBAR HEADER
-================================ */
+================================= */
 
 .sidebar-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-
-  min-height: 44px;
-  padding: 5px 10px;
-
-  border-bottom: 1px solid #f3eef8;
+  min-height: 48px;
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .sidebar-brand {
@@ -157,6 +214,7 @@ input {
   align-items: center;
   justify-content: flex-start;
   flex: 1;
+  gap: 9px;
   min-width: 0;
   overflow: hidden;
 }
@@ -169,29 +227,58 @@ input {
 
 .sidebar-brand-name {
   overflow: hidden;
-  color: #172033;
-  font-size: 17px !important;
+  color: var(--text-primary);
+  font-size: 16px !important;
   font-weight: 700 !important;
   white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sidebar-brand-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sidebar-brand-subtitle {
+  color: #94a3b8;
+  font-size: 12px !important;
+  white-space: nowrap;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 10px;
+  background: #f1898b;
+  color: #ffffff;
+}
+
+.sidebar-logo svg {
+  font-size: 23px;
 }
 
 .sidebar-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
+  flex-shrink: 0;
   width: 30px;
   min-width: 30px !important;
   height: 30px;
   padding: 0 !important;
-
-  flex-shrink: 0;
   color: var(--primary) !important;
   border-radius: 7px !important;
 }
 
 .sidebar-toggle:hover {
-  background: #f3e8ff !important;
+  background: #eff6ff !important;
 }
 
 .sidebar-collapsed .sidebar-header {
@@ -203,54 +290,41 @@ input {
   display: none;
 }
 
-/* ================================
-   SIDEBAR SECTION
-================================ */
+/* =================================
+   SIDEBAR NAVIGATION
+================================= */
 
 .sidebar-section-label {
-  padding: 16px 12px 7px;
-
-  color: #9ca3af;
+  padding: 14px 12px 6px;
+  color: #94a3b8;
   font-size: 10px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.7px;
   white-space: nowrap;
 }
-
-/* ================================
-   SIDEBAR NAVIGATION
-================================ */
 
 .sidebar-nav {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 2px;
-
+  gap: 3px;
   padding: 5px;
 }
 
 .sidebar-link {
   display: flex;
   align-items: center;
-  gap: 8px;
-
+  gap: 9px;
   width: 100%;
-  min-height: 35px;
-  padding: 5px 8px;
-
+  min-height: 36px;
+  padding: 6px 8px;
   border: none;
   border-radius: 7px;
-
   background: transparent;
-  color: #6b7280;
-
-  text-decoration: none;
+  color: #64748b;
   text-align: left;
+  text-decoration: none;
   font: inherit;
-
-  cursor: pointer;
-
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
@@ -258,12 +332,12 @@ input {
 
 .sidebar-link:hover {
   color: var(--primary);
-  background: #f7f2ff;
+  background: #eff6ff;
 }
 
 .sidebar-link.active {
   color: var(--primary);
-  background: #f3e8ff;
+  background: #eaf2ff;
   font-weight: 600;
 }
 
@@ -271,29 +345,22 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 20px;
-  height: 20px;
   flex-shrink: 0;
+  width: 22px;
+  height: 22px;
 }
 
-.sidebar-link-label {
+.sidebar-link-label,
+.menu-label,
+.sidebar-label {
   flex: 1;
   min-width: 0;
   overflow: hidden;
-
   color: inherit;
   font-size: 12px !important;
   font-weight: inherit;
   white-space: nowrap;
-}
-
-/* ================================
-   SIDEBAR SUBMENU
-================================ */
-
-.sidebar-menu-button {
-  font-family: inherit;
+  text-overflow: ellipsis;
 }
 
 .sidebar-menu-arrow {
@@ -311,7 +378,6 @@ input {
   display: flex;
   flex-direction: column;
   gap: 3px;
-
   padding: 3px 0 3px 10px;
 }
 
@@ -331,18 +397,17 @@ input {
 }
 
 .sidebar-collapsed .sidebar-link-label,
+.sidebar-collapsed .menu-label,
+.sidebar-collapsed .sidebar-label,
 .sidebar-collapsed .sidebar-section-label,
-.sidebar-collapsed .sidebar-menu-arrow {
-  display: none;
-}
-
+.sidebar-collapsed .sidebar-menu-arrow,
 .sidebar-collapsed .sidebar-submenu {
   display: none;
 }
 
-/* ================================
+/* =================================
    SIDEBAR PROFILE
-================================ */
+================================= */
 
 .sidebar-bottom {
   margin-top: auto;
@@ -351,7 +416,7 @@ input {
 
 .sidebar-footer-divider {
   margin-bottom: 8px !important;
-  border-color: #eee8f5 !important;
+  border-color: var(--border-color) !important;
 }
 
 .sidebar-profile-button {
@@ -359,11 +424,9 @@ input {
   align-items: center;
   justify-content: flex-start;
   gap: 8px;
-
   width: 100%;
   min-height: 44px;
   padding: 6px !important;
-
   color: #374151 !important;
   text-align: left;
   text-transform: none !important;
@@ -371,17 +434,15 @@ input {
 }
 
 .sidebar-profile-button:hover {
-  background: #f7f2ff !important;
+  background: #eff6ff !important;
 }
 
 .sidebar-profile-avatar {
   width: 30px !important;
   height: 30px !important;
   flex-shrink: 0;
-
   background: var(--primary) !important;
-  color: var(--white) !important;
-
+  color: #ffffff !important;
   font-size: 12px !important;
   font-weight: 600 !important;
 }
@@ -401,18 +462,14 @@ input {
 
 .sidebar-profile-role {
   margin-top: 2px !important;
-  color: #9ca3af;
+  color: #94a3b8;
   font-size: 10px !important;
   white-space: nowrap;
 }
 
 .sidebar-profile-arrow {
   flex-shrink: 0;
-  color: #9ca3af;
-}
-
-.sidebar-collapsed .sidebar-bottom {
-  padding: 5px;
+  color: #94a3b8;
 }
 
 .sidebar-collapsed .sidebar-profile-button {
@@ -425,13 +482,9 @@ input {
   display: none;
 }
 
-/* ================================
-   SIDEBAR PROFILE MENU
-================================ */
-
 .sidebar-profile-menu {
   min-width: 180px;
-  border: 1px solid #eee8f5;
+  border: 1px solid var(--border-color);
   border-radius: 9px !important;
   box-shadow: 0 8px 24px rgb(0 0 0 / 10%) !important;
 }
@@ -447,21 +500,20 @@ input {
   color: var(--danger) !important;
 }
 
-/* ================================
+/* =================================
    TOPBAR
-================================ */
+================================= */
 
 .topbar.MuiAppBar-root {
+  position: sticky;
+  top: 0;
   width: 100%;
-  height: 44px;
-  min-height: 44px;
-
-  background: var(--white) !important;
+  height: 48px;
+  min-height: 48px;
+  background: var(--surface) !important;
   color: #374151 !important;
-
-  border-bottom: 1px solid #eee8f5;
+  border-bottom: 1px solid var(--border-color);
   box-shadow: none !important;
-
   z-index: 1100;
 }
 
@@ -469,39 +521,31 @@ input {
   display: flex;
   align-items: center;
   gap: 10px;
-
   width: 100%;
-  height: 43px;
-  min-height: 43px !important;
-  max-height: 43px;
-
+  height: 47px;
+  min-height: 47px !important;
+  max-height: 47px;
   padding: 0 12px !important;
 }
 
-/* ================================
-   TOPBAR MOBILE MENU
-================================ */
-
 .mobile-menu-button {
   display: none !important;
-  color: #6b7280 !important;
+  color: #64748b !important;
 }
 
 .mobile-menu-button:hover {
-  background: #f3e8ff !important;
+  background: #eff6ff !important;
 }
 
 .mobile-brand {
   display: none;
   color: var(--primary);
-  font-size: 16px !important;
+  font-size: 15px !important;
   font-weight: 700 !important;
   white-space: nowrap;
 }
 
-/* ================================
-   TOPBAR SEARCH
-================================ */
+/* Topbar search */
 
 .topbar-search {
   width: 280px;
@@ -510,19 +554,19 @@ input {
 
 .topbar-search .MuiOutlinedInput-root {
   height: 32px;
-  background: #f9fafb;
+  background: #f8fafc;
   border-radius: 7px;
   color: #374151;
   font-size: 12px;
 }
 
 .topbar-search .MuiOutlinedInput-notchedOutline {
-  border-color: #e5e7eb;
+  border-color: var(--border-color);
 }
 
 .topbar-search .MuiOutlinedInput-root:hover
 .MuiOutlinedInput-notchedOutline {
-  border-color: #c4b5fd;
+  border-color: #bfdbfe;
 }
 
 .topbar-search .MuiOutlinedInput-root.Mui-focused
@@ -536,17 +580,15 @@ input {
 }
 
 .topbar-search .MuiInputBase-input::placeholder {
-  color: #9ca3af;
+  color: #94a3b8;
   opacity: 1;
 }
 
 .topbar-search .MuiInputAdornment-root {
-  color: #9ca3af;
+  color: #94a3b8;
 }
 
-/* ================================
-   TOPBAR ACTIONS
-================================ */
+/* Topbar actions */
 
 .topbar-actions {
   display: flex;
@@ -559,14 +601,13 @@ input {
   width: 30px;
   height: 30px;
   padding: 5px;
-
-  color: #6b7280;
+  color: #64748b;
   border-radius: 7px;
 }
 
 .topbar-actions .MuiIconButton-root:hover {
   color: var(--primary);
-  background: #f3e8ff;
+  background: #eff6ff;
 }
 
 .topbar-actions .MuiSvgIcon-root {
@@ -581,12 +622,10 @@ input {
   position: absolute;
   top: 3px;
   right: 3px;
-
   width: 7px;
   height: 7px;
-
   background: #e02424;
-  border: 1.5px solid var(--white);
+  border: 1.5px solid #ffffff;
   border-radius: 50%;
 }
 
@@ -594,17 +633,15 @@ input {
   width: 28px !important;
   height: 28px !important;
   margin-left: 2px;
-
   background: var(--primary) !important;
-  color: var(--white) !important;
-
+  color: #ffffff !important;
   font-size: 12px !important;
   font-weight: 600 !important;
 }
 
-/* ================================
+/* =================================
    PAGE CONTENT
-================================ */
+================================= */
 
 .menu-page-content h1 {
   margin: 0 0 4px !important;
@@ -621,8 +658,8 @@ input {
 }
 
 .menu-page-content .MuiCard-root {
-  border-radius: 8px !important;
-  box-shadow: 0 1px 4px rgb(0 0 0 / 5%) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 1px 4px rgb(15 23 42 / 5%) !important;
 }
 
 .menu-page-content .MuiCardContent-root {
@@ -633,70 +670,64 @@ input {
   padding-bottom: 10px !important;
 }
 
-/* ================================
+/* =================================
    TABLE CARD
-================================ */
+================================= */
 
 .table-card {
   width: 100%;
   min-width: 0;
   overflow: hidden;
-
-  border: 1px solid #e9eaf0;
-  border-radius: 9px !important;
-
-  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 10px !important;
+  background: var(--surface);
   box-shadow: 0 2px 8px rgb(31 41 55 / 3%) !important;
 }
 
 .table-card .MuiTableContainer-root {
   width: 100%;
   overflow-x: auto;
+  border-radius: inherit;
 }
 
 .table-card .MuiTable-root {
   width: 100%;
   min-width: 540px;
-
   border-collapse: separate;
   border-spacing: 0;
 }
 
 .table-card .MuiTableHead-root {
-  background: #f8f9fc;
+  background: #f8fafc;
 }
 
 .table-card .MuiTableHead-root .MuiTableCell-root {
   height: 36px;
   padding: 7px 10px !important;
-
-  color: #6b7280;
+  color: #64748b;
   font-size: 11px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.3px;
-
+  letter-spacing: 0.2px;
   white-space: nowrap;
-  border-bottom: 1px solid #e9eaf0;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .table-card .MuiTableBody-root .MuiTableRow-root {
-  transition: background 0.15s ease;
+  transition: background-color 0.15s ease;
 }
 
 .table-card .MuiTableBody-root .MuiTableRow-root:hover {
-  background: #faf8ff;
+  background: #f8fbff;
 }
 
 .table-card .MuiTableBody-root .MuiTableCell-root {
   height: 40px;
   padding: 7px 10px !important;
-
   color: #374151;
   font-size: 12px !important;
   line-height: 1.3 !important;
-
   white-space: nowrap;
-  border-bottom: 1px solid #f0f1f5;
+  border-bottom: 1px solid #f1f5f9;
 }
 
 .table-card .MuiTableBody-root
@@ -708,21 +739,19 @@ input {
 .table-card .MuiTableBody-root .MuiTableCell-root[colspan] {
   height: auto;
   padding: 24px 12px !important;
-
-  color: #9ca3af;
+  color: #94a3b8;
   font-size: 12px !important;
   text-align: center;
 }
 
-/* ================================
+/* =================================
    CLIENT INFORMATION
-================================ */
+================================= */
 
 .client-cell {
   display: flex;
   align-items: center;
   gap: 9px;
-
   min-width: 180px;
 }
 
@@ -730,10 +759,8 @@ input {
   width: 30px !important;
   height: 30px !important;
   flex-shrink: 0;
-
-  background: #edebfe !important;
+  background: #eaf2ff !important;
   color: var(--primary) !important;
-
   font-size: 11px !important;
   font-weight: 700 !important;
 }
@@ -747,19 +774,18 @@ input {
 
 .client-job {
   margin-top: 2px !important;
-  color: #9ca3af;
+  color: #94a3b8;
   font-size: 10px !important;
   line-height: 1.3 !important;
 }
 
-/* ================================
+/* =================================
    STATUS CHIPS
-================================ */
+================================= */
 
 .status-chip {
   height: 22px !important;
   border-radius: 6px !important;
-
   font-size: 10px !important;
   font-weight: 600 !important;
 }
@@ -769,8 +795,8 @@ input {
 }
 
 .status-approved {
-  background: #def7ec !important;
-  color: #057a55 !important;
+  background: #dcfce7 !important;
+  color: #15803d !important;
 }
 
 .status-pending {
@@ -779,29 +805,26 @@ input {
 }
 
 .status-denied {
-  background: #fde8e8 !important;
-  color: #c81e1e !important;
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
 }
 
 .status-expired {
-  background: #f3f4f6 !important;
-  color: #6b7280 !important;
+  background: #f1f5f9 !important;
+  color: #64748b !important;
 }
 
-/* ================================
+/* =================================
    STATISTICS CARDS
-================================ */
+================================= */
 
 .statistics-card {
   height: 100%;
   overflow: hidden;
-
-  border: 1px solid #eeeaf5;
+  border: 1px solid var(--border-color);
   border-radius: 9px !important;
-
-  background: var(--white);
+  background: var(--surface);
   box-shadow: 0 2px 8px rgb(31 41 55 / 4%) !important;
-
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
@@ -827,11 +850,9 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 36px;
   height: 36px;
   flex-shrink: 0;
-
   border-radius: 8px;
 }
 
@@ -847,46 +868,39 @@ input {
 
 .statistics-label {
   overflow: hidden;
-
-  color: #6b7280;
+  color: #64748b;
   font-size: 10px !important;
   font-weight: 500 !important;
   line-height: 1.5 !important;
-
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .statistics-value {
   margin-top: 3px !important;
-
   color: #1f2937;
   font-size: 19px !important;
   font-weight: 700 !important;
   line-height: 1.3 !important;
   letter-spacing: -0.4px !important;
-
   overflow-wrap: anywhere;
 }
 
-/* ================================
+/* =================================
    ANNOUNCEMENT
-================================ */
+================================= */
 
 .announcement {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-
   width: 100%;
   margin: 10px 0;
   padding: 9px 12px;
-
-  border: 1px solid #e5defe;
+  border: 1px solid #dbeafe;
   border-radius: 8px;
-
-  background: #f5f2ff;
+  background: #eff6ff;
 }
 
 .announcement-message {
@@ -894,8 +908,7 @@ input {
   align-items: center;
   gap: 8px;
   min-width: 0;
-
-  color: var(--primary-hover);
+  color: var(--primary);
 }
 
 .announcement-message > svg {
@@ -915,10 +928,8 @@ input {
   flex-shrink: 0;
   min-width: auto;
   padding: 5px 8px;
-
   color: var(--primary);
   border-radius: 6px;
-
   font-size: 10px;
   font-weight: 600;
   text-transform: none;
@@ -926,7 +937,7 @@ input {
 }
 
 .announcement-button.MuiButton-root:hover {
-  background: #ebe4ff;
+  background: #dbeafe;
 }
 
 .announcement-button .MuiButton-endIcon {
@@ -938,20 +949,17 @@ input {
   height: 15px;
 }
 
-/* ================================
+/* =================================
    BUTTONS
-================================ */
+================================= */
 
 .app-button {
   min-height: 34px;
   padding: 6px 12px !important;
-
   border-radius: 7px !important;
   box-shadow: none !important;
-
   font-weight: 600 !important;
   text-transform: none !important;
-
   transition: all 0.2s ease;
 }
 
@@ -968,12 +976,10 @@ input {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   width: 30px;
   min-width: 30px !important;
   height: 30px;
   min-height: 30px !important;
-
   padding: 4px !important;
   border-radius: 6px !important;
 }
@@ -982,21 +988,18 @@ input {
   font-size: 17px !important;
 }
 
-/* ================================
+/* =================================
    DELETE CONFIRMATION
-================================ */
+================================= */
 
 .delete-card-overlay {
   position: fixed;
   inset: 0;
   z-index: 9999;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   padding: 20px;
-
   background: rgb(15 23 42 / 45%);
   backdrop-filter: blur(3px);
 }
@@ -1004,13 +1007,10 @@ input {
 .global-delete-card {
   width: 100%;
   max-width: 400px;
-
   border: 1px solid #fee2e2;
   border-radius: 14px !important;
-
-  background: var(--white);
+  background: #ffffff;
   box-shadow: 0 20px 60px rgb(0 0 0 / 20%) !important;
-
   animation: deleteCardFloat 0.2s ease-out;
 }
 
@@ -1023,12 +1023,9 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 54px;
   height: 54px;
-
   margin: 0 auto 14px;
-
   border-radius: 50%;
   background: #fef2f2;
   color: var(--danger);
@@ -1074,19 +1071,14 @@ input {
   }
 }
 
-/* ================================
-   RESPONSIVE: TABLET
-================================ */
+/* =================================
+   TABLET
+================================= */
 
 @media (max-width: 768px) {
-  .app-layout.sidebar-expanded .sidebar-hover-area {
-    flex-basis: var(--sidebar-collapsed-width);
-    width: var(--sidebar-collapsed-width);
-    min-width: var(--sidebar-collapsed-width);
-  }
-
-  .sidebar-hover-area .sidebar:not(.sidebar-collapsed) {
-    box-shadow: 5px 0 20px rgb(0 0 0 / 15%);
+  :root {
+    --sidebar-width: 190px;
+    --sidebar-collapsed-width: 56px;
   }
 
   .topbar .topbar-toolbar.MuiToolbar-root {
@@ -1136,11 +1128,16 @@ input {
   }
 }
 
-/* ================================
-   RESPONSIVE: MOBILE
-================================ */
+/* =================================
+   MOBILE
+================================= */
 
 @media (max-width: 600px) {
+  :root {
+    --sidebar-width: 170px;
+    --sidebar-collapsed-width: 50px;
+  }
+
   .menu-page-content {
     padding: 6px;
   }
@@ -1154,7 +1151,7 @@ input {
   }
 
   .table-card {
-    border-radius: 7px !important;
+    border-radius: 10px !important;
   }
 
   .table-card .MuiTableHead-root .MuiTableCell-root {
@@ -1257,9 +1254,9 @@ input {
   }
 }
 
-/* ================================
-   RESPONSIVE: SMALL MOBILE
-================================ */
+/* =================================
+   SMALL MOBILE
+================================= */
 
 @media (max-width: 480px) {
   .topbar.MuiAppBar-root {
@@ -1313,10 +1310,6 @@ input {
   }
 }
 
-/* ================================
-   RESPONSIVE: EXTRA SMALL MOBILE
-================================ */
-
 @media (max-width: 360px) {
   .topbar .topbar-toolbar.MuiToolbar-root {
     gap: 3px;
@@ -1342,5 +1335,210 @@ input {
 
   .menu-page-content {
     padding: 5px;
+  }
+}
+
+/* =================================
+   ACCESSIBILITY
+================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* Sidebar */
+.sidebar-toggle:hover,
+.sidebar-link:hover,
+.sidebar-profile-button:hover,
+.mobile-menu-button:hover {
+  background: var(--hover-background) !important;
+}
+
+.sidebar-link {
+  color: var(--text-secondary);
+}
+
+.sidebar-link.active {
+  color: var(--primary);
+  background: var(--active-background);
+}
+
+.sidebar-profile-button {
+  color: var(--text-primary) !important;
+}
+
+.sidebar-profile-name {
+  color: var(--text-primary);
+}
+
+/* Topbar */
+.topbar.MuiAppBar-root {
+  background: var(--surface) !important;
+  color: var(--text-primary) !important;
+}
+
+.topbar-actions .MuiIconButton-root {
+  color: var(--text-secondary);
+}
+
+.topbar-actions .MuiIconButton-root:hover {
+  color: var(--primary);
+  background: var(--hover-background);
+}
+
+.topbar-search .MuiOutlinedInput-root {
+  background: var(--input-background);
+  color: var(--text-primary);
+}
+
+/* Table */
+.table-card {
+  background: var(--surface);
+  border-color: var(--border-color);
+}
+
+.table-card .MuiTableHead-root {
+  background: var(--table-header-background);
+}
+
+.table-card .MuiTableHead-root .MuiTableCell-root {
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.table-card .MuiTableBody-root .MuiTableCell-root {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.table-card .MuiTableBody-root .MuiTableRow-root:hover {
+  background: var(--table-row-hover);
+}
+
+/* Client */
+.client-name {
+  color: var(--text-primary);
+}
+
+.client-job {
+  color: var(--text-secondary);
+}
+
+.client-avatar {
+  background: var(--soft-primary) !important;
+  color: var(--primary) !important;
+}
+
+/* Statistics */
+.statistics-card {
+  background: var(--surface);
+  border-color: var(--border-color);
+}
+
+.statistics-label {
+  color: var(--text-secondary);
+}
+
+.statistics-value {
+  color: var(--text-primary);
+}
+
+/* MUI Dialog / Menu / Cards */
+.MuiPaper-root {
+  background-color: var(--surface);
+  color: var(--text-primary);
+}
+
+.MuiMenuItem-root {
+  color: var(--text-primary);
+}
+
+.MuiMenuItem-root:hover {
+  background: var(--hover-background);
+}
+
+.MuiOutlinedInput-root {
+  color: var(--text-primary);
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: var(--border-color);
+}
+
+.user-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.user-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid #edf0f5;
+  border-radius: 7px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 6px rgba(15, 23, 42, 0.03) !important;
+}
+
+.user-summary-icon {
+  width: 34px !important;
+  height: 34px !important;
+  flex-shrink: 0;
+}
+
+.user-summary-icon .MuiSvgIcon-root {
+  font-size: 19px;
+}
+
+.user-summary-label {
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  color: #64748b;
+}
+
+.user-summary-value {
+  margin-top: 3px !important;
+  font-size: 20px !important;
+  line-height: 1.3 !important;
+  font-weight: 700 !important;
+  color: #1e293b;
+}
+
+@media (max-width: 600px) {
+  .user-summary-grid {
+    gap: 6px;
+  }
+
+  .user-summary-card {
+    gap: 6px;
+    padding: 9px 7px;
+  }
+
+  .user-summary-icon {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .user-summary-icon .MuiSvgIcon-root {
+    font-size: 16px;
+  }
+
+  .user-summary-label {
+    font-size: 9px !important;
+  }
+
+  .user-summary-value {
+    font-size: 17px !important;
   }
 }

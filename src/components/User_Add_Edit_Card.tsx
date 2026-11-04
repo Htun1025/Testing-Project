@@ -391,7 +391,7 @@ export default function UserForm({
                 </Typography>
 
                 <Typography className="user-nrc-value">
-                  {fullNrc || "Enter NRC information"}
+                  {fullNrc || "Your NRC information"}
                 </Typography>
 
                 {errors.nrc && (
@@ -412,20 +412,32 @@ export default function UserForm({
                 error={!!errors.address}
                 helperText={errors.address}
               />
-
               <TextField
-                label="Status"
+                className="user-status-field"
                 select
-                value={form.status}
+                value={form.status || ""}
                 onChange={(e) => handleChange("status", e.target.value)}
                 fullWidth
                 error={!!errors.status}
                 helperText={errors.status}
+                slotProps={{
+                  select: {
+                    displayEmpty: true,
+                    renderValue: (selected) => {
+                      if (!selected) {
+                        return (
+                          <span className="status-placeholder">Status</span>
+                        );
+                      }
+
+                      return selected === "ACTIVE" ? "Active" : "Inactive";
+                    },
+                  },
+                }}
               >
                 <MenuItem value="ACTIVE">Active</MenuItem>
                 <MenuItem value="INACTIVE">Inactive</MenuItem>
               </TextField>
-
               {error && (
                 <Box sx={{ gridColumn: "1 / -1" }}>
                   <Alert severity="error">{error}</Alert>

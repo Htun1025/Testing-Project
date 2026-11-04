@@ -1,0 +1,843 @@
+
+/* =================================
+   PERMISSION MANAGEMENT — COMPACT UI
+================================= */
+
+.permission-page {
+  width: 100%;
+  max-width: 1600px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 8px;
+  box-sizing: border-box;
+  color: var(--text-primary, #1e293b);
+}
+
+/* HEADER */
+
+.permission-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.permission-header-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.permission-title {
+  margin: 0 !important;
+  color: var(--text-primary, #172033);
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.4px;
+}
+
+.permission-subtitle {
+  margin: 0 !important;
+  color: var(--text-secondary, #64748b);
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+
+/* SUMMARY + SEARCH ROW */
+
+.permission-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 10px;
+}
+
+.permission-summary {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.permission-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 180px));
+  gap: 7px;
+  width: 100%;
+  max-width: 560px;
+  margin: 0;
+}
+
+/* SUMMARY CARDS */
+
+.permission-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  min-height: 54px;
+  padding: 7px 9px;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 1px solid var(--border-color, #e8edf5);
+  border-radius: 8px !important;
+  background: var(--surface, #fff) !important;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 4%) !important;
+  transition: box-shadow 0.2s ease;
+}
+
+.permission-summary-card:hover {
+  box-shadow: 0 3px 9px rgb(15 23 42 / 7%) !important;
+}
+
+.permission-summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 30px;
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 7px !important;
+}
+
+.permission-summary-icon .MuiSvgIcon-root {
+  font-size: 17px;
+}
+
+.permission-summary-icon.purple {
+  color: #7c3aed;
+  background: #ede9fe;
+}
+
+.permission-summary-icon.blue {
+  color: #2563eb;
+  background: #dbeafe;
+}
+
+.permission-summary-icon.green {
+  color: #059669;
+  background: #d1fae5;
+}
+
+.permission-summary-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.permission-summary-label {
+  margin: 0 0 3px !important;
+  overflow: hidden;
+  color: var(--text-secondary, #64748b);
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  line-height: 1.3 !important;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.permission-summary-value {
+  margin: 0 !important;
+  color: var(--text-primary, #172033);
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+}
+
+/* SEARCH + ADD BUTTON */
+
+.permission-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 7px;
+}
+
+.permission-search {
+  width: 180px;
+  min-width: 0;
+}
+
+.permission-search .MuiOutlinedInput-root {
+  height: 34px;
+  border-radius: 7px;
+  background: var(--input-background, #fff);
+  color: var(--text-primary, #334155);
+  font-size: 12px;
+}
+
+.permission-search .MuiOutlinedInput-input {
+  padding: 7px 10px;
+  text-align: left;
+}
+
+.permission-search .MuiInputAdornment-root {
+  margin-right: 5px;
+}
+
+.permission-search .MuiInputAdornment-root .MuiSvgIcon-root {
+  color: #94a3b8;
+  font-size: 16px;
+}
+
+.permission-search .MuiOutlinedInput-input::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+.permission-search .MuiOutlinedInput-notchedOutline {
+  border-color: var(--border-color, #dbe3ee);
+}
+
+.permission-search .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #a78bfa;
+}
+
+.permission-search .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #7c3aed;
+  border-width: 1px;
+}
+
+.permission-add-button {
+  min-width: 0 !important;
+  min-height: 34px !important;
+  padding: 6px 11px !important;
+  border-radius: 7px !important;
+  background: #7c3aed !important;
+  box-shadow: none !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  text-transform: none !important;
+  white-space: nowrap;
+}
+
+.permission-add-button:hover {
+  background: #6929d4 !important;
+  box-shadow: none !important;
+}
+
+.permission-add-button .MuiButton-startIcon {
+  margin-right: 5px;
+  margin-left: 0;
+}
+
+.permission-add-button .MuiSvgIcon-root {
+  font-size: 16px;
+}
+
+/* MAIN CARD */
+
+.permission-main-card {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-color, #e8edf5);
+  border-radius: 9px !important;
+  background: var(--surface, #fff) !important;
+  box-shadow: 0 1px 4px rgb(15 23 42 / 4%) !important;
+}
+
+/* TABS */
+
+.permission-tabs {
+  min-height: 38px !important;
+  border-bottom: 1px solid var(--border-color, #e8edf5);
+}
+
+.permission-tabs .MuiTab-root {
+  min-height: 38px;
+  min-width: 100px;
+  padding: 7px 12px;
+  color: var(--text-secondary, #64748b);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.permission-tabs .MuiTab-root.Mui-selected {
+  color: #7c3aed;
+}
+
+.permission-tabs .MuiTab-iconWrapper {
+  font-size: 16px;
+}
+
+.permission-tabs .MuiTabs-indicator {
+  height: 2px;
+  background: #7c3aed;
+}
+
+/* TOOLBAR */
+
+.permission-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 11px;
+  border-bottom: 1px solid var(--border-color, #e8edf5);
+}
+
+.permission-section-title {
+  margin: 0 !important;
+  color: var(--text-primary, #334155);
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+.permission-module-filter {
+  width: 145px;
+}
+
+.permission-module-filter .MuiInputBase-root {
+  height: 32px;
+  font-size: 11px;
+  border-radius: 6px;
+}
+
+.permission-module-filter .MuiSelect-select {
+  padding: 6px 9px;
+}
+
+.permission-module-filter .MuiSvgIcon-root {
+  font-size: 17px;
+}
+
+.matrix-toolbar {
+  min-height: 43px;
+}
+
+.permission-matrix-subtitle {
+  margin-top: 2px !important;
+  color: var(--text-secondary, #94a3b8);
+  font-size: 10px !important;
+}
+
+/* PERMISSION TABLE */
+
+.permission-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.permission-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.permission-table .MuiTableCell-root {
+  height: 39px;
+  padding: 7px 10px !important;
+  color: var(--text-primary, #475569);
+  font-size: 12px !important;
+  line-height: 1.35;
+  border-bottom: 1px solid var(--border-color, #f1f5f9);
+}
+
+.permission-table .MuiTableHead-root .MuiTableCell-root {
+  height: 36px;
+  padding: 7px 10px !important;
+  background: var(--table-header-background, #f8fafc);
+  color: var(--text-secondary, #64748b);
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.permission-table .MuiTableBody-root .MuiTableRow-root {
+  transition: background-color 0.15s ease;
+}
+
+.permission-table .MuiTableBody-root .MuiTableRow-root:hover {
+  background: var(--table-row-hover, #f7f9ff);
+}
+
+.permission-table .MuiTableBody-root .MuiTableRow-root:last-child .MuiTableCell-root {
+  border-bottom: none;
+}
+
+/* TABLE TEXT */
+
+.permission-name {
+  overflow: hidden;
+  max-width: 300px;
+  color: var(--text-primary, #334155);
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  text-overflow: ellipsis;
+}
+
+.permission-cell {
+  color: var(--text-primary, #475569);
+  font-size: 12px !important;
+}
+
+.permission-description {
+  max-width: 260px;
+  overflow: hidden;
+  color: var(--text-secondary, #64748b);
+  font-size: 11px !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* MODULE CHIP */
+
+.permission-module-chip {
+  height: 20px !important;
+  border-radius: 5px !important;
+  background: #ede9fe !important;
+  color: #6d28d9 !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+}
+
+.permission-module-chip .MuiChip-label {
+  padding: 0 7px !important;
+}
+
+/* STATUS */
+
+.permission-status {
+  height: 20px !important;
+  border-radius: 5px !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+}
+
+.permission-status .MuiChip-label {
+  padding: 0 7px !important;
+}
+
+.permission-status.active {
+  color: #047857 !important;
+  background: #d1fae5 !important;
+}
+
+.permission-status.inactive {
+  color: #b91c1c !important;
+  background: #fee2e2 !important;
+}
+
+/* ACTION BUTTONS */
+
+.permission-action-button {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  padding: 4px !important;
+  color: var(--text-secondary, #64748b) !important;
+  border-radius: 6px !important;
+}
+
+.permission-action-button:hover {
+  color: #7c3aed !important;
+  background: #f3e8ff !important;
+}
+
+.permission-action-button.delete:hover {
+  color: #dc2626 !important;
+  background: #fee2e2 !important;
+}
+
+.permission-action-button .MuiSvgIcon-root {
+  font-size: 16px;
+}
+
+.permission-empty {
+  padding: 14px 0;
+  color: var(--text-secondary, #94a3b8);
+  font-size: 12px !important;
+}
+
+/* ROLE MATRIX TABLE */
+
+.permission-matrix-table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.permission-matrix-table .MuiTableCell-root {
+  padding: 7px 10px !important;
+  color: var(--text-primary, #475569);
+  font-size: 12px !important;
+  border-bottom: 1px solid var(--border-color, #f1f5f9);
+}
+
+.permission-matrix-table .MuiTableHead-root .MuiTableCell-root {
+  background: var(--table-header-background, #f8fafc);
+  color: var(--text-secondary, #64748b);
+}
+
+.matrix-permission-column {
+  min-width: 190px;
+  z-index: 3 !important;
+}
+
+.matrix-role-column {
+  min-width: 105px;
+  padding: 8px 5px !important;
+  text-align: center;
+}
+
+.matrix-role-name {
+  color: var(--text-primary, #334155);
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+
+.matrix-role-column .MuiCheckbox-root {
+  padding: 3px;
+}
+
+.matrix-count {
+  color: var(--text-secondary, #94a3b8);
+  font-size: 9px !important;
+  white-space: nowrap;
+}
+
+.matrix-permission-cell {
+  min-width: 190px;
+}
+
+.matrix-permission-cell .permission-name {
+  font-size: 12px !important;
+}
+
+.matrix-permission-cell .permission-description {
+  margin-top: 2px;
+  font-size: 10px !important;
+}
+
+.matrix-checkbox-cell {
+  min-width: 105px;
+  text-align: center;
+}
+
+.matrix-checkbox-cell .MuiCheckbox-root {
+  padding: 4px;
+}
+
+.matrix-checkbox-cell .MuiSvgIcon-root {
+  font-size: 19px;
+}
+
+.matrix-footer {
+  padding: 9px 11px;
+  border-top: 1px solid var(--border-color, #e8edf5);
+}
+
+/* DIALOG */
+
+.permission-dialog .MuiDialog-paper {
+  border-radius: 10px;
+}
+
+.permission-dialog-title {
+  padding: 16px 18px !important;
+  color: var(--text-primary, #172033);
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+
+.permission-dialog .MuiDialogContent-root {
+  padding: 8px 18px;
+}
+
+.permission-dialog .MuiInputBase-root {
+  font-size: 12px;
+}
+
+.permission-dialog .MuiInputLabel-root {
+  font-size: 12px;
+}
+
+.permission-dialog .MuiMenuItem-root {
+  font-size: 12px;
+}
+
+.permission-dialog-actions {
+  padding: 10px 18px 14px !important;
+}
+
+.permission-dialog-actions .MuiButton-root {
+  min-height: 32px;
+  padding: 5px 12px;
+  font-size: 11px;
+  text-transform: none;
+  border-radius: 6px;
+}
+
+/* TABLET */
+
+@media (max-width: 1100px) {
+  .permission-summary-row {
+    gap: 8px;
+  }
+
+  .permission-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 480px;
+  }
+
+  .permission-summary-card {
+    gap: 5px;
+    padding: 6px;
+  }
+
+  .permission-search {
+    width: 145px;
+  }
+}
+
+/* SMALL SCREEN */
+
+@media (max-width: 900px) {
+  .permission-summary-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 9px;
+  }
+
+  .permission-summary {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .permission-header-actions {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+
+  .permission-search {
+    flex: 1;
+    width: auto;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+  .permission-page {
+    padding: 6px;
+  }
+
+  .permission-header {
+    margin-bottom: 8px;
+  }
+
+  .permission-title {
+    font-size: 17px !important;
+  }
+
+  .permission-subtitle {
+    font-size: 11px !important;
+  }
+
+  .permission-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .permission-summary-card {
+    min-height: 46px;
+    padding: 5px;
+    gap: 5px;
+  }
+
+  .permission-summary-icon {
+    flex: 0 0 24px;
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .permission-summary-icon .MuiSvgIcon-root {
+    font-size: 14px;
+  }
+
+  .permission-summary-value {
+    font-size: 14px !important;
+  }
+
+  .permission-header-actions {
+    gap: 6px;
+  }
+
+  .permission-search {
+    flex: 1;
+    width: auto;
+  }
+
+  .permission-add-button {
+    min-height: 34px !important;
+  }
+
+  .permission-toolbar {
+    min-height: 34px;
+    padding: 0 9px;
+  }
+
+  .permission-tabs .MuiTab-root {
+    min-width: 90px;
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+
+  .permission-table {
+    min-width: 680px;
+  }
+
+  .permission-table .MuiTableCell-root {
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+  }
+
+  .permission-dialog-title {
+    padding: 12px 14px !important;
+  }
+
+  .permission-dialog .MuiDialogContent-root {
+    padding: 8px 14px 10px;
+  }
+
+  .permission-dialog-actions {
+    padding: 5px 14px 12px !important;
+  }
+}
+
+/* SMALL MOBILE */
+
+@media (max-width: 400px) {
+  .permission-page {
+    padding: 4px;
+  }
+
+  .permission-summary {
+    gap: 4px;
+  }
+
+  .permission-summary-card {
+    min-height: 42px;
+    padding: 4px;
+  }
+
+  .permission-summary-icon {
+    display: none !important;
+  }
+
+  .permission-summary-label {
+    font-size: 8px !important;
+  }
+
+  .permission-summary-value {
+    font-size: 13px !important;
+  }
+
+  .permission-header-actions {
+    gap: 5px;
+  }
+
+  .permission-search .MuiOutlinedInput-root {
+    height: 32px;
+    font-size: 10px;
+  }
+
+  .permission-add-button {
+    min-height: 32px !important;
+    padding: 5px 8px !important;
+    font-size: 10px !important;
+  }
+}
+
+/* DARK MODE */
+
+:root[data-theme="dark"] .permission-page {
+  color: var(--text-primary);
+}
+
+:root[data-theme="dark"] .permission-summary-card,
+:root[data-theme="dark"] .permission-main-card {
+  background: var(--surface) !important;
+  border-color: var(--border-color) !important;
+}
+
+:root[data-theme="dark"] .permission-summary-label {
+  color: var(--text-secondary);
+}
+
+:root[data-theme="dark"] .permission-summary-value,
+:root[data-theme="dark"] .permission-title,
+:root[data-theme="dark"] .permission-section-title,
+:root[data-theme="dark"] .permission-name,
+:root[data-theme="dark"] .permission-cell,
+:root[data-theme="dark"] .matrix-role-name {
+  color: var(--text-primary);
+}
+
+:root[data-theme="dark"] .permission-subtitle,
+:root[data-theme="dark"] .permission-description,
+:root[data-theme="dark"] .matrix-count {
+  color: var(--text-secondary);
+}
+
+:root[data-theme="dark"] .permission-toolbar,
+:root[data-theme="dark"] .permission-tabs,
+:root[data-theme="dark"] .matrix-footer {
+  border-color: var(--border-color);
+}
+
+:root[data-theme="dark"] .permission-table .MuiTableHead-root .MuiTableCell-root,
+:root[data-theme="dark"] .permission-matrix-table .MuiTableHead-root .MuiTableCell-root {
+  background: var(--table-header-background);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+:root[data-theme="dark"] .permission-table .MuiTableBody-root .MuiTableCell-root,
+:root[data-theme="dark"] .permission-matrix-table .MuiTableBody-root .MuiTableCell-root {
+  background: var(--surface);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+:root[data-theme="dark"] .permission-table .MuiTableBody-root .MuiTableRow-root:hover,
+:root[data-theme="dark"] .permission-table .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root {
+  background: var(--table-row-hover);
+}
+
+:root[data-theme="dark"] .permission-search .MuiOutlinedInput-root {
+  background: var(--input-background);
+  color: var(--text-primary);
+}
+
+:root[data-theme="dark"] .permission-search .MuiOutlinedInput-notchedOutline {
+  border-color: var(--border-color);
+}
+
+:root[data-theme="dark"] .permission-action-button {
+  color: var(--text-secondary) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .permission-page *,
+  .permission-page *::before,
+  .permission-page *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

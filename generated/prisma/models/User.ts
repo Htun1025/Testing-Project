@@ -44,6 +44,7 @@ export type UserMinAggregateOutputType = {
   nrc: string | null
   address: string | null
   status: $Enums.UserStatus | null
+  role: $Enums.UserRole | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -56,6 +57,7 @@ export type UserMaxAggregateOutputType = {
   nrc: string | null
   address: string | null
   status: $Enums.UserStatus | null
+  role: $Enums.UserRole | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -68,6 +70,7 @@ export type UserCountAggregateOutputType = {
   nrc: number
   address: number
   status: number
+  role: number
   _all: number
 }
 
@@ -90,6 +93,7 @@ export type UserMinAggregateInputType = {
   nrc?: true
   address?: true
   status?: true
+  role?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -102,6 +106,7 @@ export type UserMaxAggregateInputType = {
   nrc?: true
   address?: true
   status?: true
+  role?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -114,6 +119,7 @@ export type UserCountAggregateInputType = {
   nrc?: true
   address?: true
   status?: true
+  role?: true
   _all?: true
 }
 
@@ -213,6 +219,7 @@ export type UserGroupByOutputType = {
   nrc: string
   address: string
   status: $Enums.UserStatus
+  role: $Enums.UserRole
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -248,6 +255,7 @@ export type UserWhereInput = {
   nrc?: Prisma.StringFilter<"User"> | string
   address?: Prisma.StringFilter<"User"> | string
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   tokens?: Prisma.UserTokenListRelationFilter
 }
 
@@ -261,6 +269,7 @@ export type UserOrderByWithRelationInput = {
   nrc?: Prisma.SortOrder
   address?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   tokens?: Prisma.UserTokenOrderByRelationAggregateInput
 }
 
@@ -277,6 +286,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   phone?: Prisma.StringFilter<"User"> | string
   address?: Prisma.StringFilter<"User"> | string
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   tokens?: Prisma.UserTokenListRelationFilter
 }, "id" | "username" | "email" | "nrc">
 
@@ -290,6 +300,7 @@ export type UserOrderByWithAggregationInput = {
   nrc?: Prisma.SortOrder
   address?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -310,6 +321,7 @@ export type UserScalarWhereWithAggregatesInput = {
   nrc?: Prisma.StringWithAggregatesFilter<"User"> | string
   address?: Prisma.StringWithAggregatesFilter<"User"> | string
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
+  role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
 }
 
 export type UserCreateInput = {
@@ -321,6 +333,7 @@ export type UserCreateInput = {
   nrc: string
   address: string
   status?: $Enums.UserStatus
+  role?: $Enums.UserRole
   tokens?: Prisma.UserTokenCreateNestedManyWithoutUserInput
 }
 
@@ -334,6 +347,7 @@ export type UserUncheckedCreateInput = {
   nrc: string
   address: string
   status?: $Enums.UserStatus
+  role?: $Enums.UserRole
   tokens?: Prisma.UserTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -346,6 +360,7 @@ export type UserUpdateInput = {
   nrc?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   tokens?: Prisma.UserTokenUpdateManyWithoutUserNestedInput
 }
 
@@ -359,6 +374,7 @@ export type UserUncheckedUpdateInput = {
   nrc?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   tokens?: Prisma.UserTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -372,6 +388,7 @@ export type UserCreateManyInput = {
   nrc: string
   address: string
   status?: $Enums.UserStatus
+  role?: $Enums.UserRole
 }
 
 export type UserUpdateManyMutationInput = {
@@ -383,6 +400,7 @@ export type UserUpdateManyMutationInput = {
   nrc?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -395,6 +413,7 @@ export type UserUncheckedUpdateManyInput = {
   nrc?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -407,6 +426,7 @@ export type UserCountOrderByAggregateInput = {
   nrc?: Prisma.SortOrder
   address?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  role?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
@@ -423,6 +443,7 @@ export type UserMaxOrderByAggregateInput = {
   nrc?: Prisma.SortOrder
   address?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  role?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -435,6 +456,7 @@ export type UserMinOrderByAggregateInput = {
   nrc?: Prisma.SortOrder
   address?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  role?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
@@ -452,6 +474,10 @@ export type StringFieldUpdateOperationsInput = {
 
 export type EnumUserStatusFieldUpdateOperationsInput = {
   set?: $Enums.UserStatus
+}
+
+export type EnumUserRoleFieldUpdateOperationsInput = {
+  set?: $Enums.UserRole
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -485,6 +511,7 @@ export type UserCreateWithoutTokensInput = {
   nrc: string
   address: string
   status?: $Enums.UserStatus
+  role?: $Enums.UserRole
 }
 
 export type UserUncheckedCreateWithoutTokensInput = {
@@ -497,6 +524,7 @@ export type UserUncheckedCreateWithoutTokensInput = {
   nrc: string
   address: string
   status?: $Enums.UserStatus
+  role?: $Enums.UserRole
 }
 
 export type UserCreateOrConnectWithoutTokensInput = {
@@ -524,6 +552,7 @@ export type UserUpdateWithoutTokensInput = {
   nrc?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
 }
 
 export type UserUncheckedUpdateWithoutTokensInput = {
@@ -536,6 +565,7 @@ export type UserUncheckedUpdateWithoutTokensInput = {
   nrc?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
 }
 
 
@@ -579,6 +609,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   nrc?: boolean
   address?: boolean
   status?: boolean
+  role?: boolean
   tokens?: boolean | Prisma.User$tokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -593,6 +624,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   nrc?: boolean
   address?: boolean
   status?: boolean
+  role?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -605,6 +637,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   nrc?: boolean
   address?: boolean
   status?: boolean
+  role?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -617,9 +650,10 @@ export type UserSelectScalar = {
   nrc?: boolean
   address?: boolean
   status?: boolean
+  role?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "username" | "email" | "password" | "phone" | "nrc" | "address" | "status", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "username" | "email" | "password" | "phone" | "nrc" | "address" | "status" | "role", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tokens?: boolean | Prisma.User$tokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -642,6 +676,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     nrc: string
     address: string
     status: $Enums.UserStatus
+    role: $Enums.UserRole
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1075,6 +1110,7 @@ export interface UserFieldRefs {
   readonly nrc: Prisma.FieldRef<"User", 'String'>
   readonly address: Prisma.FieldRef<"User", 'String'>
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
+  readonly role: Prisma.FieldRef<"User", 'UserRole'>
 }
     
 

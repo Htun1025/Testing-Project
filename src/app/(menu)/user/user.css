@@ -8,7 +8,7 @@
   max-width: 1600px;
   min-width: 0;
   margin: 0 auto;
-  padding: 5px 6px;
+  padding: 6px;
   box-sizing: border-box;
   container-type: inline-size;
 }
@@ -34,17 +34,16 @@
 .user-page-title {
   margin: 0;
   color: #172033;
- font-size: 20px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   line-height: 1.3;
-  letter-spacing: -0.4px;
-
+  letter-spacing: -0.3px;
 }
 
 .user-page-subtitle {
-  margin: 2px 0 0;
+  margin: 3px 0 0;
   color: #64748b;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.4;
 }
 
@@ -59,7 +58,7 @@
   gap: 8px;
   width: 100%;
   min-width: 0;
-  margin-bottom: 8px;
+  margin-bottom: 9px;
 }
 
 .user-summary-wrapper {
@@ -70,18 +69,16 @@
 .user-summary-section {
   width: 100%;
   min-width: 0;
-  margin-bottom: 5px;
+  margin-bottom: 0;
 }
 
 .user-summary-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 180px));
-  align-items: stretch;
-  gap: 5px;
+  grid-template-columns: repeat(3, minmax(0, 165px));
+  gap: 7px;
   width: 100%;
-  max-width: 552px;
+  max-width: 510px;
   min-width: 0;
-  box-sizing: border-box;
 }
 
 /* =========================================
@@ -91,18 +88,20 @@
 .user-summary-card {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   width: 100%;
   min-width: 0;
-  min-height: 50px;
-  padding: 5px 7px;
+  min-height: 48px;
+  padding: 6px 8px;
+  overflow: hidden;
   box-sizing: border-box;
+
   border: 1px solid #e8edf5;
   border-radius: 7px !important;
-  background: #f8fafc;
-  box-shadow: 0 1px 3px rgb(15 23 42 / 3%) !important;
-  overflow: hidden;
-  transition: box-shadow 0.2s ease;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 4%) !important;
+
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .user-summary-card:hover {
@@ -110,6 +109,9 @@
 }
 
 .user-summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 0 0 27px;
   width: 27px !important;
   height: 27px !important;
@@ -117,7 +119,7 @@
 }
 
 .user-summary-icon .MuiSvgIcon-root {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .user-summary-card > .MuiBox-root {
@@ -127,12 +129,12 @@
 
 .user-summary-label {
   margin: 0 0 2px !important;
+  overflow: hidden;
   color: #64748b;
   font-size: 9px !important;
   font-weight: 500 !important;
   line-height: 1.3 !important;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -155,33 +157,35 @@
   flex: 1 1 auto;
   min-width: 0;
   margin-left: auto;
+  margin-top: 0;
 }
 
 .user-toolbar-section > * {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 5px;
+  gap: 6px;
   min-width: 0;
 }
 
+/* Search */
 .user-toolbar-section .MuiTextField-root,
 .user-search-field {
-  width: 170px;
+  width: 145px;
   min-width: 0;
 }
 
 .user-toolbar-section .MuiOutlinedInput-root,
 .user-search-field .MuiOutlinedInput-root {
-  height: 31px;
+  height: 29px;
   border-radius: 6px;
-  background: #fff;
-  font-size: 11px;
+  background: #ffffff;
+  font-size: 10px;
 }
 
 .user-toolbar-section .MuiOutlinedInput-input,
 .user-search-field .MuiOutlinedInput-input {
-  padding: 6px 9px;
+  padding: 5px 8px;
   text-align: left;
 }
 
@@ -202,7 +206,7 @@
 }
 
 .user-search-field .MuiInputAdornment-root {
-  margin-right: 5px;
+  margin-right: 4px;
 }
 
 .user-search-field .MuiInputAdornment-root .MuiSvgIcon-root {
@@ -216,28 +220,26 @@
   text-align: left;
 }
 
+/* Toolbar Buttons */
 .user-toolbar-section .MuiButton-root {
-  min-height: 31px;
-  padding: 5px 9px;
+  min-height: 29px;
+  padding: 4px 9px;
   border-radius: 6px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   text-transform: none;
   white-space: nowrap;
   box-shadow: none;
 }
 
-/* =========================================
-   CREATE USER BUTTON
-========================================= */
-
+/* Create User Button */
 .create-user-button {
   min-width: 0 !important;
-  min-height: 31px !important;
-  padding: 5px 9px !important;
+  min-height: 29px !important;
+  padding: 4px 9px !important;
   border-radius: 6px !important;
   background-color: #7e3af2 !important;
-  font-size: 11px !important;
+  font-size: 10px !important;
   font-weight: 600 !important;
   line-height: 1.3 !important;
   text-transform: none !important;
@@ -268,9 +270,9 @@
   margin-top: 0;
   overflow: hidden;
   border: 1px solid #e8edf5;
-  border-radius: 7px !important;
-  background: #fff;
-  box-shadow: 0 1px 3px rgb(15 23 42 / 3%) !important;
+  border-radius: 8px !important;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgb(15 23 42 / 4%) !important;
 }
 
 .user-table-card .MuiTableContainer-root {
@@ -280,31 +282,32 @@
 
 .user-table-card .MuiTable-root {
   width: 100%;
-  min-width: 650px;
+  min-width: 680px;
   border-collapse: separate;
   border-spacing: 0;
 }
 
 .user-table-card .MuiTableHead-root .MuiTableCell-root {
-  padding: 5px 8px;
+  height: 34px;
+  padding: 6px 9px !important;
   background: #f8fafc;
   color: #64748b;
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 9px !important;
+  font-weight: 700 !important;
   white-space: nowrap;
   border-bottom: 1px solid #e8edf5;
 }
 
 .user-table-card .MuiTableBody-root .MuiTableCell-root {
-  padding: 5px 8px;
+  height: 36px;
+  padding: 6px 9px !important;
   color: #334155;
-  font-size: 11px;
+  font-size: 11px !important;
   line-height: 1.35;
   border-bottom: 1px solid #f1f5f9;
 }
 
 .user-table-card .MuiTableBody-root .MuiTableRow-root {
-  height: 36px;
   transition: background-color 0.15s ease;
 }
 
@@ -323,11 +326,11 @@
 .user-table-toolbar {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
+  gap: 8px;
   width: 100%;
   min-width: 0;
-  gap: 6px;
-  padding: 5px 0;
+  padding: 6px 0;
   box-sizing: border-box;
 }
 
@@ -356,7 +359,7 @@
 }
 
 .user-toolbar-actions .user-search-field {
-  width: 220px;
+  width: 180px;
 }
 
 /* =========================================
@@ -366,37 +369,39 @@
 .user-table-wrapper {
   width: 100%;
   min-width: 0;
-  background: #fff;
+  background: #ffffff;
 }
 
 .user-table-container {
   width: 100%;
   overflow-x: auto;
-  border: 1px solid #eee;
-  border-radius: 6px;
+  border: 1px solid #e8edf5;
+  border-radius: 7px;
+  background: #ffffff;
 }
 
 .user-table {
   width: 100%;
+  min-width: 680px;
   border-collapse: collapse;
 }
 
 .user-table .MuiTableHead-root .MuiTableCell-root {
-  height: 32px;
-  padding: 4px 7px;
+  height: 34px;
+  padding: 6px 9px !important;
   background: #f7f8fc;
-  color: #333;
-  font-size: 10px;
-  font-weight: 600;
+  color: #64748b;
+  font-size: 9px !important;
+  font-weight: 700 !important;
   white-space: nowrap;
   border-bottom: 1px solid #e5e7eb;
 }
 
 .user-table .MuiTableBody-root .MuiTableCell-root {
-  height: 34px;
-  padding: 5px 8px;
-  color: #555;
-  font-size: 11px;
+  height: 36px;
+  padding: 6px 9px !important;
+  color: #475569;
+  font-size: 11px !important;
   font-weight: 400;
   white-space: nowrap;
   border-bottom: 1px solid #f0f0f0;
@@ -417,13 +422,14 @@
 .user-info {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
+  min-width: 0;
 }
 
 .user-avatar {
   flex-shrink: 0;
-  width: 25px !important;
-  height: 25px !important;
+  width: 26px !important;
+  height: 26px !important;
   font-size: 10px !important;
   font-weight: 600 !important;
   color: #7e3af2 !important;
@@ -431,7 +437,7 @@
 }
 
 .user-name {
-  color: #333;
+  color: #334155;
   font-size: 11px !important;
   font-weight: 600 !important;
 }
@@ -443,8 +449,8 @@
 .user-status-chip,
 .user-table .MuiChip-root,
 .user-table-card .MuiChip-root {
-  height: 18px !important;
-  border-radius: 4px !important;
+  height: 19px !important;
+  border-radius: 5px !important;
   font-size: 9px !important;
   font-weight: 600 !important;
 }
@@ -452,7 +458,7 @@
 .user-status-chip .MuiChip-label,
 .user-table .MuiChip-label,
 .user-table-card .MuiChip-label {
-  padding: 0 6px !important;
+  padding: 0 7px !important;
 }
 
 /* =========================================
@@ -468,8 +474,8 @@
 }
 
 .actions-label {
-  font-size: 11px !important;
-  font-weight: 600 !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
 }
 
 .user-action-buttons {
@@ -486,7 +492,7 @@
   width: 26px;
   height: 26px;
   min-width: 26px !important;
-  padding: 3px !important;
+  padding: 4px !important;
   border-radius: 5px !important;
 }
 
@@ -498,27 +504,44 @@
    COLUMN SETTINGS
 ========================================= */
 
+.user-column-settings {
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
+  padding: 4px !important;
+  text-align: center !important;
+  white-space: nowrap;
+}
+
 .column-settings {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  height: 24px;
-  margin-bottom: 0;
+  width: 100%;
+  height: 26px;
+  margin: 0;
 }
 
 .header-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  gap: 3px;
+  gap: 5px;
   white-space: nowrap;
 }
 
 .column-settings-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
   width: 25px;
   height: 25px;
-  padding: 3px !important;
-  border-radius: 4px !important;
+  padding: 4px !important;
+  border-radius: 5px !important;
+}
+
+.column-settings-btn:hover {
+  background: #f1edff !important;
 }
 
 .column-settings-btn svg {
@@ -526,26 +549,27 @@
 }
 
 .column-settings-menu {
-  min-width: 155px !important;
-  border-radius: 6px !important;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 12%) !important;
+  min-width: 160px !important;
+  border: 1px solid #e8edf5;
+  border-radius: 7px !important;
+  box-shadow: 0 5px 18px rgb(0 0 0 / 12%) !important;
 }
 
 .column-menu-title {
   padding: 7px 10px;
+  color: #334155;
   font-size: 10px;
-  font-weight: 600;
-  color: #333;
+  font-weight: 700;
   border-bottom: 1px solid #eee;
 }
 
 .column-menu-item {
   min-height: 30px !important;
-  padding: 2px 8px !important;
+  padding: 3px 8px !important;
 }
 
 .column-menu-item .MuiCheckbox-root {
-  padding: 3px;
+  padding: 4px;
 }
 
 .column-menu-item .MuiCheckbox-root svg {
@@ -554,15 +578,6 @@
 
 .column-menu-item .MuiListItemText-primary {
   font-size: 10px;
-}
-
-.user-column-settings {
-  width: 38px;
-  min-width: 38px;
-  max-width: 38px;
-  padding: 4px !important;
-  text-align: center !important;
-  white-space: nowrap;
 }
 
 /* =========================================
@@ -578,7 +593,7 @@
 .user-table-card .MuiTablePagination-toolbar,
 .user-table-pagination .MuiToolbar-root {
   min-height: 34px;
-  padding: 0 5px;
+  padding: 0 6px;
 }
 
 .user-table-card .MuiTablePagination-selectLabel,
@@ -587,12 +602,12 @@
 .user-table-pagination .MuiTablePagination-displayedRows {
   margin: 0;
   color: #64748b;
-  font-size: 10px;
+  font-size: 9px;
 }
 
 .user-table-card .MuiTablePagination-select,
 .user-table-pagination .MuiTablePagination-select {
-  font-size: 10px;
+  font-size: 9px;
 }
 
 .user-table-pagination .MuiTablePagination-actions {
@@ -600,7 +615,7 @@
 }
 
 .user-table-pagination .MuiTablePagination-actions button {
-  padding: 2px;
+  padding: 3px;
 }
 
 .user-table-pagination .MuiSvgIcon-root {
@@ -612,22 +627,26 @@
 ========================================= */
 
 .user-table-card .MuiTableBody-root .MuiTableCell-root[colspan] {
-  padding: 15px 8px;
+  padding: 18px 10px !important;
 }
 
 .empty-users {
-  padding: 15px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90px;
+  padding: 12px 8px;
 }
 
 .empty-users p {
+  color: #94a3b8;
   font-size: 11px;
 }
 
 /* =========================================
-   USER FORM — CREATE / EDIT DIALOG
+   USER FORM — OVERLAY
 ========================================= */
 
-/* Overlay */
 .user-form-overlay {
   position: fixed;
   inset: 0;
@@ -635,55 +654,66 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  box-sizing: border-box;
+  background: rgb(15 23 42 / 42%);
   backdrop-filter: blur(3px);
   overflow-y: auto;
 }
 
-/* Dialog Card */
+/* =========================================
+   USER FORM — CARD
+========================================= */
+
 .user-form-card {
   width: 100%;
-  max-width: 680px;
-  max-height: 92vh;
+  max-width: 650px;
+  max-height: calc(100dvh - 20px);
+  overflow-x: hidden;
   overflow-y: auto;
-  border-radius: 12px !important;
-  background: #fff;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14) !important;
+  box-sizing: border-box;
+  overscroll-behavior: contain;
+
+  border-radius: 10px !important;
+  background: #ffffff;
+  box-shadow: 0 12px 40px rgb(0 0 0 / 16%) !important;
+
   animation: userFormShow 0.2s ease-out;
 }
 
 .user-form-card .MuiCardContent-root {
-  padding: 20px !important;
+  padding: 15px !important;
 }
 
-/* Header — No Bottom Border */
 .user-form-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 0;
+  gap: 9px;
+  margin-bottom: 11px;
   border-bottom: none !important;
 }
 
 .user-form-title {
-  font-size: 19px !important;
-  font-weight: 700 !important;
   color: #222;
+  font-size: 16px !important;
+  font-weight: 700 !important;
 }
 
 .user-form-subtitle {
-  font-size: 12px !important;
-  color: #888;
   margin-top: 3px !important;
+  color: #888;
+  font-size: 10px !important;
 }
 
-/* Form Grid */
+/* =========================================
+   FORM GRID
+========================================= */
+
 .user-form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 10px;
   width: 100%;
 }
 
@@ -696,70 +726,57 @@
 }
 
 /* =========================================
-   INPUT BOX
+   FORM INPUTS
 ========================================= */
 
 .user-form-card .MuiOutlinedInput-root {
-  min-height: 44px;
-  border-radius: 8px;
-  background: #fff;
-  font-size: 13px;
   display: flex;
   align-items: center;
+  min-height: 40px;
+  border-radius: 7px;
+  background: #ffffff;
+  font-size: 11px;
 }
 
-/* Input Text — Left */
 .user-form-card .MuiOutlinedInput-input {
   height: auto;
-  padding: 11px 14px !important;
+  padding: 9px 12px !important;
+  box-sizing: border-box;
   text-align: left !important;
   line-height: 1.4;
-  box-sizing: border-box;
 }
 
-/* Placeholder — Left */
 .user-form-card .MuiOutlinedInput-input::placeholder {
-  text-align: left !important;
   color: #94a3b8;
   opacity: 1;
+  text-align: left !important;
 }
 
-/* =========================================
-   LABEL — LEFT ALIGNMENT
-========================================= */
-
-/* Default Label */
 .user-form-card .MuiInputLabel-root {
   left: 0 !important;
   right: auto !important;
   width: auto;
-  max-width: calc(100% - 28px);
-  text-align: left !important;
-  font-size: 13px;
+  max-width: calc(100% - 24px);
   color: #64748b;
-  transform: translate(14px, -50px) scale(1) !important;
+  font-size: 11px;
+  text-align: left !important;
+  transform: translate(12px, 11px) scale(1) !important;
   transform-origin: top left !important;
   pointer-events: none;
 }
 
-/* Floating Label — Top Left */
 .user-form-card .MuiInputLabel-root.MuiInputLabel-shrink {
   left: 0 !important;
   right: auto !important;
   width: max-content;
   text-align: left !important;
-  transform: translate(14px, -9px) scale(0.75) !important;
+  transform: translate(12px, -8px) scale(0.75) !important;
   transform-origin: top left !important;
 }
 
-/* Focus Label */
 .user-form-card .MuiInputLabel-root.Mui-focused {
   color: #7c3aed;
 }
-
-/* =========================================
-   INPUT BORDER
-========================================= */
 
 .user-form-card .MuiOutlinedInput-notchedOutline {
   border-color: #d5deea;
@@ -774,60 +791,57 @@
 }
 
 /* =========================================
-   SELECT — LEFT ALIGNMENT
+   SELECT
 ========================================= */
 
 .user-form-card .MuiSelect-select {
   display: flex !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  text-align: left !important;
   min-height: 0 !important;
-  padding: 11px 30px 11px 14px !important;
+  padding: 9px 28px 9px 12px !important;
+  text-align: left !important;
 }
 
 .user-form-card .MuiSelect-icon {
-  right: 8px;
+  right: 7px;
 }
 
 /* =========================================
-   NRC GRID
+   NRC
 ========================================= */
 
 .user-nrc-grid {
-  grid-column: 1 / -1;
   display: grid;
+  grid-column: 1 / -1;
   grid-template-columns: 1fr 2fr 1fr 2fr;
-  gap: 12px;
+  gap: 8px;
 }
 
-/* NRC Font */
 .user-nrc-grid .MuiInputBase-input,
 .user-nrc-grid .MuiSelect-select {
-  font-size: 11px !important;
+  font-size: 10px !important;
 }
 
 .user-nrc-grid .MuiInputLabel-root {
-  font-size: 11px !important;
+  font-size: 10px !important;
 }
 
-/* NRC Dropdown */
 .MuiMenu-paper .MuiMenuItem-root {
   min-height: 30px;
-  font-size: 11px !important;
-  padding: 5px 12px;
+  padding: 5px 10px;
+  font-size: 10px !important;
 }
 
 .MuiMenu-paper .MuiMenu-list {
   padding: 3px 0;
 }
 
-/* NRC Preview */
 .user-nrc-preview {
   grid-column: 1 / -1;
-  padding: 10px 12px;
+  padding: 7px 10px;
   border: 1px solid #e0e0e0;
-  border-radius: 7px;
+  border-radius: 6px;
   background: #fafafa;
 }
 
@@ -836,13 +850,13 @@
 }
 
 .user-nrc-value {
-  font-size: 13px !important;
+  font-size: 12px !important;
   font-weight: 600 !important;
 }
 
 .user-nrc-error {
   color: #dc2626;
-  font-size: 11px !important;
+  font-size: 10px !important;
 }
 
 /* =========================================
@@ -854,15 +868,15 @@
 }
 
 .user-form-card .user-address .MuiOutlinedInput-root {
-  min-height: 45px !important;
-  height: 45px !important;
+  min-height: 42px !important;
+  height: 42px !important;
   align-items: center;
 }
 
 .user-form-card .user-address textarea.MuiInputBase-input {
-  min-height: 25px !important;
-  height: 25px !important;
-  padding: 5px 14px !important;
+  min-height: 24px !important;
+  height: 24px !important;
+  padding: 5px 12px !important;
   text-align: left !important;
   box-sizing: border-box;
 }
@@ -873,7 +887,7 @@
 
 .user-form-card .MuiFormHelperText-root {
   margin: 3px 0 0 2px;
-  font-size: 10px;
+  font-size: 9px;
   line-height: 1.4;
 }
 
@@ -890,23 +904,51 @@
 ========================================= */
 
 .user-form-actions {
-  grid-column: 1 / -1;
   display: flex;
+  grid-column: 1 / -1;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 5px;
-  padding-top: 12px;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 9px;
   border-top: 1px solid #e5e7eb;
+  background: #ffffff;
 }
 
 .user-form-actions button {
-  min-height: 34px;
-  padding: 5px 13px;
-  font-size: 11px;
+  min-height: 32px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 10px;
   font-weight: 600;
-  border-radius: 7px;
   text-transform: none;
+}
+
+/* =========================================
+   STATUS FIELD
+========================================= */
+
+.user-status-field .MuiOutlinedInput-root {
+  height: 42px;
+  border-radius: 8px;
+  background: var(--sidebar-bg, #fff);
+  color: var(--app-text, #334155);
+}
+
+.user-status-field .MuiOutlinedInput-notchedOutline {
+  border-color: var(--app-border, #e1e7ef);
+}
+
+.user-status-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--app-primary, #6366f1);
+}
+
+.user-status-field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border: 2px solid var(--app-primary, #6366f1);
+}
+
+.user-status-field .status-placeholder {
+  color: var(--app-muted, #718096);
 }
 
 /* =========================================
@@ -916,7 +958,7 @@
 @keyframes userFormShow {
   from {
     opacity: 0;
-    transform: translateY(12px) scale(0.98);
+    transform: translateY(10px) scale(0.98);
   }
 
   to {
@@ -926,122 +968,308 @@
 }
 
 /* =========================================
-   MOBILE
+   DARK MODE — VARIABLES
 ========================================= */
 
-/* Keep all form labels LEFT aligned */
-.user-form-card .MuiInputLabel-root {
-  left: 0 !important;
-  right: auto !important;
-  width: auto !important;
-  text-align: left !important;
-  transform: translate(14px, 13px) scale(1) !important;
-  transform-origin: top left !important;
+:root[data-theme="light"] {
+  --summary-card-bg: #ffffff;
+  --summary-card-border: #e8edf5;
+  --summary-card-text: #172033;
+  --summary-card-muted: #64748b;
+  --summary-card-hover: #f8fafc;
 }
 
-/* Floating label — top left */
-.user-form-card .MuiInputLabel-root.MuiInputLabel-shrink {
-  left: 0 !important;
-  right: auto !important;
-  width: max-content !important;
-  text-align: left !important;
-  transform: translate(14px, -9px) scale(0.75) !important;
-  transform-origin: top left !important;
-}
+:root[data-theme="dark"] {
+  --summary-card-bg: #1e293b;
+  --summary-card-border: #334155;
+  --summary-card-text: #f1f5f9;
+  --summary-card-muted: #94a3b8;
+  --summary-card-hover: #263449;
 
-/* Input text — always left */
-.user-form-card .MuiInputBase-input,
-.user-form-card .MuiSelect-select {
-  text-align: left !important;
-}
-
-/* Dialog default */
-.user-form-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1300;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
-.user-form-card {
-  width: 100%;
-  max-width: 680px;
-  max-height: calc(100dvh - 24px);
-  overflow-x: hidden;
-  overflow-y: auto;
-  box-sizing: border-box;
-  overscroll-behavior: contain;
-}
-
-.user-form-card .MuiCardContent-root {
-  padding: 16px !important;
-}
-
-.user-form-header {
-  margin-bottom: 12px !important;
-  padding-bottom: 0 !important;
-  border-bottom: none !important;
-}
-
-.user-form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  width: 100%;
-}
-
-.user-form-grid > * {
-  min-width: 0;
-}
-
-.user-form-card .MuiOutlinedInput-root {
-  min-height: 42px;
-  border-radius: 7px;
-}
-
-.user-form-card .MuiOutlinedInput-input {
-  padding: 10px 14px !important;
-  text-align: left !important;
-  font-size: 12px;
-}
-
-.user-form-card .MuiSelect-select {
-  justify-content: flex-start !important;
-  padding: 10px 30px 10px 14px !important;
-}
-
-.user-form-card .user-address .MuiOutlinedInput-root {
-  height: 42px !important;
-  min-height: 42px !important;
-}
-
-/* NRC */
-.user-nrc-grid {
-  grid-template-columns: 1fr 2fr 1fr 2fr;
-  gap: 8px;
-}
-
-.user-nrc-preview {
-  padding: 8px 10px;
-}
-
-/* Form buttons */
-.user-form-actions {
-  position: sticky;
-  bottom: -16px;
-  z-index: 5;
-  background: #fff;
-  padding: 10px 0 4px !important;
-  margin-top: 0 !important;
+  --status-text: #e2e8f0;
+  --status-bg: #334155;
+  --status-border: #475569;
 }
 
 /* =========================================
-   TABLET — 701px to 900px
+   DARK MODE — PAGE
+========================================= */
+
+:root[data-theme="dark"] .user-page {
+  color: var(--text-primary);
+}
+
+:root[data-theme="dark"] .user-page-title,
+:root[data-theme="dark"] .user-table-title,
+:root[data-theme="dark"] .user-summary-value,
+:root[data-theme="dark"] .user-name,
+:root[data-theme="dark"] .actions-label,
+:root[data-theme="dark"] .column-menu-title {
+  color: var(--text-primary);
+}
+
+:root[data-theme="dark"] .user-page-subtitle,
+:root[data-theme="dark"] .user-summary-label,
+:root[data-theme="dark"] .user-table-description {
+  color: var(--text-secondary);
+}
+
+/* Summary */
+.user-summary-card {
+  background: var(--summary-card-bg, #ffffff) !important;
+  border: 1px solid var(--summary-card-border, #e8edf5) !important;
+  color: var(--summary-card-text, #172033) !important;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.user-summary-card:hover {
+  background: var(--summary-card-hover, #f8fafc) !important;
+}
+
+.user-summary-card .user-summary-label {
+  color: var(--summary-card-muted, #64748b) !important;
+}
+
+.user-summary-card .user-summary-value {
+  color: var(--summary-card-text, #172033) !important;
+}
+
+/* Surfaces */
+:root[data-theme="dark"] .user-table-card,
+:root[data-theme="dark"] .user-table-wrapper,
+:root[data-theme="dark"] .user-table-container {
+  background: var(--surface);
+  border-color: var(--border-color);
+}
+
+/* Search and Inputs */
+:root[data-theme="dark"] .user-toolbar-section .MuiOutlinedInput-root,
+:root[data-theme="dark"] .user-search-field .MuiOutlinedInput-root,
+:root[data-theme="dark"] .user-form-card .MuiOutlinedInput-root {
+  background: var(--input-background);
+  color: var(--text-primary);
+}
+
+:root[data-theme="dark"] .user-toolbar-section .MuiOutlinedInput-notchedOutline,
+:root[data-theme="dark"] .user-search-field .MuiOutlinedInput-notchedOutline,
+:root[data-theme="dark"] .user-form-card .MuiOutlinedInput-notchedOutline {
+  border-color: var(--border-color);
+}
+
+:root[data-theme="dark"] .user-search-field .MuiOutlinedInput-input::placeholder,
+:root[data-theme="dark"] .user-form-card .MuiOutlinedInput-input::placeholder {
+  color: var(--muted-color);
+}
+
+/* Table */
+:root[data-theme="dark"] .user-table-card .MuiTableHead-root .MuiTableCell-root,
+:root[data-theme="dark"] .user-table .MuiTableHead-root .MuiTableCell-root {
+  background: var(--table-header-background);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+:root[data-theme="dark"] .user-table-card .MuiTableBody-root .MuiTableCell-root,
+:root[data-theme="dark"] .user-table .MuiTableBody-root .MuiTableCell-root {
+  background: var(--surface);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+:root[data-theme="dark"] .user-table-card .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root,
+:root[data-theme="dark"] .user-table .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root {
+  background: var(--table-row-hover);
+}
+
+/* Avatar */
+:root[data-theme="dark"] .user-avatar {
+  background: var(--soft-primary) !important;
+  color: var(--primary) !important;
+}
+
+/* Status */
+:root[data-theme="dark"] .user-table .MuiChip-root,
+:root[data-theme="dark"] .user-table-card .MuiChip-root,
+:root[data-theme="dark"] .user-status-chip {
+  color: var(--status-text) !important;
+  background: var(--status-bg) !important;
+  border: 1px solid var(--status-border);
+}
+
+:root[data-theme="dark"] .user-table .MuiChip-label,
+:root[data-theme="dark"] .user-table-card .MuiChip-label,
+:root[data-theme="dark"] .user-status-chip .MuiChip-label {
+  color: var(--status-text) !important;
+}
+
+/* Pagination */
+:root[data-theme="dark"] .user-table-card .MuiTablePagination-root,
+:root[data-theme="dark"] .user-table-pagination {
+  background: var(--surface);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+:root[data-theme="dark"] .user-table-card .MuiTablePagination-selectLabel,
+:root[data-theme="dark"] .user-table-card .MuiTablePagination-displayedRows {
+  color: var(--text-secondary);
+}
+
+/* Form */
+:root[data-theme="dark"] .user-form-card {
+  background: var(--surface) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color);
+}
+
+:root[data-theme="dark"] .user-form-card .MuiCardContent-root {
+  background: var(--surface);
+}
+
+:root[data-theme="dark"] .user-form-title,
+:root[data-theme="dark"] .user-form-card .MuiInputLabel-root,
+:root[data-theme="dark"] .user-form-card .MuiSelect-select {
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme="dark"] .user-form-subtitle {
+  color: var(--text-secondary) !important;
+}
+
+:root[data-theme="dark"] .user-form-card .MuiInputBase-input {
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme="dark"] .user-form-card .MuiInputBase-input::placeholder {
+  color: var(--muted-color) !important;
+  opacity: 1;
+}
+
+:root[data-theme="dark"] .user-form-card .MuiOutlinedInput-notchedOutline {
+  border-color: var(--border-color) !important;
+}
+
+:root[data-theme="dark"] .user-form-card .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
+:root[data-theme="dark"] .user-form-card .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--primary) !important;
+}
+
+:root[data-theme="dark"] .user-form-card .MuiSelect-icon {
+  color: var(--text-secondary) !important;
+}
+
+:root[data-theme="dark"] .user-form-actions {
+  background: var(--surface) !important;
+  border-color: var(--border-color) !important;
+}
+
+:root[data-theme="dark"] .user-form-card .MuiIconButton-root {
+  color: var(--text-secondary);
+}
+
+:root[data-theme="dark"] .user-form-card .MuiIconButton-root:hover {
+  background: var(--hover-background);
+}
+
+/* NRC */
+:root[data-theme="dark"] .user-nrc-preview {
+  background: var(--input-background) !important;
+  border-color: var(--border-color) !important;
+}
+
+:root[data-theme="dark"] .user-nrc-label,
+:root[data-theme="dark"] .user-nrc-value {
+  color: var(--text-primary) !important;
+}
+
+/* Status Field */
+:root[data-theme="dark"] .user-status-field .MuiOutlinedInput-root {
+  background: var(--input-background);
+  color: var(--text-primary);
+}
+
+:root[data-theme="dark"] .user-status-field .MuiOutlinedInput-notchedOutline {
+  border-color: var(--border-color);
+}
+
+:root[data-theme="dark"] .user-status-field .status-placeholder {
+  color: var(--text-secondary);
+}
+
+/* Column Settings */
+:root[data-theme="dark"] .user-column-settings {
+  background: var(--surface);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+:root[data-theme="dark"] .column-settings-btn {
+  color: var(--text-secondary) !important;
+}
+
+:root[data-theme="dark"] .column-settings-btn svg {
+  color: var(--text-secondary) !important;
+}
+
+:root[data-theme="dark"] .column-settings-btn:hover {
+  background: var(--hover-background) !important;
+  color: var(--primary) !important;
+}
+
+:root[data-theme="dark"] .column-settings-btn:hover svg {
+  color: var(--primary) !important;
+}
+
+:root[data-theme="dark"] .column-settings-menu,
+:root[data-theme="dark"] .MuiMenu-paper {
+  background: var(--surface) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme="dark"] .column-menu-title {
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+:root[data-theme="dark"] .column-menu-item,
+:root[data-theme="dark"] .column-menu-item .MuiListItemText-primary,
+:root[data-theme="dark"] .MuiMenu-paper .MuiMenuItem-root {
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme="dark"] .column-menu-item .MuiCheckbox-root {
+  color: var(--text-secondary);
+}
+
+:root[data-theme="dark"] .column-menu-item .MuiCheckbox-root.Mui-checked {
+  color: var(--primary);
+}
+
+:root[data-theme="dark"] .column-menu-item:hover,
+:root[data-theme="dark"] .MuiMenu-paper .MuiMenuItem-root:hover {
+  background: var(--hover-background) !important;
+}
+
+/* Smooth Theme Transition */
+.user-form-card,
+.user-form-card .MuiOutlinedInput-root,
+.user-form-actions,
+.user-nrc-preview,
+.user-summary-card {
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* =========================================
+   TABLET
 ========================================= */
 
 @media (min-width: 701px) and (max-width: 900px) {
@@ -1051,7 +1279,7 @@
 
   .user-summary-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    max-width: 480px;
+    max-width: 440px;
   }
 
   .user-summary-card {
@@ -1060,15 +1288,15 @@
 
   .user-toolbar-section .MuiTextField-root,
   .user-search-field {
-    width: 140px;
+    width: 130px;
   }
 
   .user-form-card {
-    max-width: 620px;
+    max-width: 600px;
   }
 
   .user-form-card .MuiCardContent-root {
-    padding: 14px !important;
+    padding: 13px !important;
   }
 
   .user-form-grid {
@@ -1077,7 +1305,7 @@
 }
 
 /* =========================================
-   MOBILE — MAX 700px
+   MOBILE
 ========================================= */
 
 @media (max-width: 700px) {
@@ -1090,14 +1318,13 @@
   }
 
   .user-page-title {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .user-page-subtitle {
-    font-size: 11px;
+    font-size: 10px;
   }
 
-  /* Summary cards */
   .user-summary-toolbar-row {
     flex-direction: column;
     align-items: stretch;
@@ -1115,9 +1342,9 @@
   }
 
   .user-summary-card {
-    min-height: 45px;
+    min-height: 43px;
     padding: 5px;
-    gap: 4px;
+    gap: 5px;
   }
 
   .user-summary-icon {
@@ -1130,7 +1357,6 @@
     font-size: 14px !important;
   }
 
-  /* Toolbar */
   .user-toolbar-section {
     width: 100%;
     margin-left: 0;
@@ -1155,7 +1381,6 @@
     width: auto;
   }
 
-  /* Table */
   .user-table-card {
     width: 100%;
     overflow: hidden;
@@ -1166,46 +1391,44 @@
     overflow-x: auto;
   }
 
-  .user-table-card .MuiTable-root {
-    min-width: 650px;
+  .user-table-card .MuiTable-root,
+  .user-table {
+    min-width: 680px;
   }
 
-  /* Dialog */
   .user-form-overlay {
     align-items: center;
-    padding: 8px !important;
+    padding: 7px !important;
   }
 
   .user-form-card {
     width: 100%;
     max-width: 100%;
-    max-height: calc(100dvh - 16px) !important;
-    border-radius: 10px !important;
+    max-height: calc(100dvh - 14px) !important;
+    border-radius: 9px !important;
   }
 
   .user-form-card .MuiCardContent-root {
-    padding: 12px !important;
+    padding: 11px !important;
   }
 
   .user-form-title {
-    font-size: 16px !important;
+    font-size: 15px !important;
   }
 
   .user-form-subtitle {
-    font-size: 11px !important;
+    font-size: 10px !important;
   }
 
-  /* One column for form fields */
   .user-form-grid {
     grid-template-columns: minmax(0, 1fr) !important;
-    gap: 9px !important;
+    gap: 8px !important;
   }
 
-  /* NRC stays two columns */
   .user-nrc-grid {
     grid-column: 1 / -1;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 8px !important;
+    gap: 7px !important;
   }
 
   .user-nrc-preview {
@@ -1216,21 +1439,20 @@
     grid-column: 1 / -1;
   }
 
-  /* Form actions */
   .user-form-actions {
     flex-direction: row !important;
     justify-content: flex-end;
-    gap: 8px;
+    gap: 7px;
   }
 
   .user-form-actions button {
     width: auto;
-    min-height: 34px;
+    min-height: 32px;
   }
 }
 
 /* =========================================
-   SMALL MOBILE — MAX 400px
+   SMALL MOBILE
 ========================================= */
 
 @media (max-width: 400px) {
@@ -1243,7 +1465,7 @@
   }
 
   .user-summary-card {
-    min-height: 42px;
+    min-height: 40px;
     padding: 4px;
   }
 
@@ -1260,11 +1482,10 @@
   }
 
   .user-toolbar-section .MuiButton-root {
-    padding: 5px 7px;
-    font-size: 10px;
+    padding: 4px 7px;
+    font-size: 9px;
   }
 
-  /* Dialog */
   .user-form-overlay {
     padding: 5px !important;
   }
@@ -1274,62 +1495,62 @@
   }
 
   .user-form-card .MuiCardContent-root {
-    padding: 10px !important;
+    padding: 9px !important;
   }
 
   .user-form-title {
-    font-size: 15px !important;
+    font-size: 14px !important;
   }
 
   .user-form-subtitle {
-    font-size: 10px !important;
+    font-size: 9px !important;
   }
 
   .user-form-grid {
-    gap: 8px !important;
+    gap: 7px !important;
   }
 
   .user-form-card .MuiOutlinedInput-root {
-    min-height: 39px;
+    min-height: 37px;
   }
 
   .user-form-card .MuiOutlinedInput-input {
-    padding: 9px 12px !important;
-    font-size: 11px;
+    padding: 8px 11px !important;
+    font-size: 10px;
   }
 
   .user-form-card .MuiSelect-select {
-    padding: 9px 27px 9px 12px !important;
-    font-size: 11px;
+    padding: 8px 25px 8px 11px !important;
+    font-size: 10px;
   }
 
   .user-form-card .MuiInputLabel-root {
-    font-size: 12px;
-    transform: translate(12px, 11px) scale(1) !important;
+    font-size: 11px;
+    transform: translate(11px, 10px) scale(1) !important;
   }
 
   .user-form-card .MuiInputLabel-root.MuiInputLabel-shrink {
-    transform: translate(12px, -9px) scale(0.75) !important;
+    transform: translate(11px, -8px) scale(0.75) !important;
   }
 
   .user-nrc-grid {
-    gap: 6px !important;
+    gap: 5px !important;
   }
 
   .user-nrc-grid .MuiInputBase-input,
   .user-nrc-grid .MuiSelect-select {
-    font-size: 10px !important;
+    font-size: 9px !important;
   }
 
   .user-form-actions {
-    gap: 6px;
+    gap: 5px;
   }
 
   .user-form-actions button {
     flex: 1;
-    min-height: 32px;
-    padding: 5px 7px;
-    font-size: 10px;
+    min-height: 30px;
+    padding: 4px 6px;
+    font-size: 9px;
   }
 }
 
@@ -1353,34 +1574,30 @@
   }
 
   .user-form-header {
-    margin-bottom: 8px !important;
+    margin-bottom: 7px !important;
   }
 
   .user-form-grid {
-    gap: 7px !important;
+    gap: 6px !important;
   }
 
   .user-form-card .MuiOutlinedInput-root {
-    min-height: 38px;
+    min-height: 36px;
   }
 
   .user-form-card .MuiOutlinedInput-input {
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
   }
 
   .user-nrc-preview {
-    padding: 6px 9px;
+    padding: 6px 8px;
   }
 
   .user-form-actions {
-    padding-top: 7px !important;
+    padding-top: 6px !important;
   }
 }
-
-/* =========================================
-   VERY SHORT SCREEN
-========================================= */
 
 @media (max-height: 550px) {
   .user-form-overlay {
@@ -1396,18 +1613,32 @@
   }
 
   .user-form-header {
-    margin-bottom: 6px !important;
+    margin-bottom: 5px !important;
   }
 
   .user-form-grid {
-    gap: 6px !important;
+    gap: 5px !important;
   }
 
   .user-form-card .MuiOutlinedInput-root {
-    min-height: 35px;
+    min-height: 34px;
   }
 
   .user-form-actions {
     padding-top: 5px !important;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

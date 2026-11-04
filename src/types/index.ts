@@ -31,6 +31,8 @@ export type User = {
   nrc:string;
   address: string;
   status: "Active" | "Inactive";
+  
+  role: "ADMIN" | "USER";
 };
 
 export type UserForm = {
@@ -42,6 +44,8 @@ export type UserForm = {
   nrc: string;
   address: string;
   status: "Active" | "Inactive";
+
+  
 };
 
 export const emptyForm: UserForm = {
@@ -58,4 +62,30 @@ export const emptyForm: UserForm = {
 export type TableColumn = {
   id: string;
   label: string;
+};
+
+export type Role ={
+  id: number;
+  name: string;
+  description: string;
+  status: "Active" | "Inactive";
+  users: number;
+  permissions: number;
+}
+
+export type Permission = {
+  id: number;
+  name: string;
+  module: string;
+  action: string;
+  description: string;
+  status: "Active" | "Inactive";
+};
+
+export type SummaryItem = {
+  label: string;
+  value: number | string;
+  icon: ReactNode;
+  color: string;
+  background: string;
 };

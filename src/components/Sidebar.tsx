@@ -58,12 +58,12 @@ const menuItems = [
 const roleSubmenu = [
   {
     label: "Roles",
-    path: "/roles",
+    path: "/role",
     icon: AdminPanelSettingsOutlinedIcon,
   },
   {
     label: "Permissions",
-    path: "/permissions",
+    path: "/permission",
     icon: SecurityOutlinedIcon,
   },
 ];
@@ -134,9 +134,13 @@ export default function Sidebar({
       {/* Brand and collapse button */}
       <Box className="sidebar-header">
         <Box className="sidebar-brand">
+          <Box className="sidebar-logo">
+            <AdminPanelSettingsOutlinedIcon />
+          </Box>
+
           {!sidebarCollapsed && (
-            <Box>
-              <Typography className="sidebar-brand-name">Main Menu</Typography>
+            <Box className="sidebar-brand-info">
+              <Typography className="sidebar-brand-subtitle">Menu</Typography>
             </Box>
           )}
         </Box>

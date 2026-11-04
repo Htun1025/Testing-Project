@@ -4,7 +4,7 @@ import { Box, Paper } from "@mui/material";
 
 import useUsers from "@/hooks/useUser";
 
-import UserSummary from "@/components/UserSummary";
+import UserSummary from "@/components/users/UserSummary";
 import UserToolbar from "@/components/users/UserToolbar";
 import UserTable from "@/components/UserTable";
 import UserDialog from "@/components/User_Add_Edit_Card";

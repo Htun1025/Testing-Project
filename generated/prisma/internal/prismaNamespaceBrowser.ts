@@ -80,7 +80,8 @@ export const UserScalarFieldEnum = {
   phone: 'phone',
   nrc: 'nrc',
   address: 'address',
-  status: 'status'
+  status: 'status',
+  role: 'role'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]

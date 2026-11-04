@@ -17,8 +17,10 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutlineOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 
 import "@/app/globals.css";
+import { useTheme } from "./ThemeProvider";
 
 type DashboardHeaderProps = {
   search: string;
@@ -31,6 +33,7 @@ export default function DashboardHeader({
   onSearchChange,
   onMenuClick,
 }: DashboardHeaderProps) {
+  const { theme, toggleTheme } = useTheme();
   const router = useRouter();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -79,8 +82,18 @@ export default function DashboardHeader({
     <AppBar position="sticky" elevation={0} className="topbar">
       <Toolbar className="topbar-toolbar">
         <Box className="topbar-actions">
-          <IconButton aria-label="Dark mode">
-            <DarkModeOutlinedIcon />
+          <IconButton
+            onClick={toggleTheme}
+            aria-label={
+              theme === "light" ? "Switch to dark mode" : "Switch to light mode"
+            }
+            title={theme === "light" ? "Dark Mode" : "Light Mode"}
+          >
+            {theme === "light" ? (
+              <DarkModeOutlinedIcon />
+            ) : (
+              <LightModeOutlinedIcon />
+            )}
           </IconButton>
 
           <IconButton
