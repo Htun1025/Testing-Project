@@ -79,7 +79,7 @@ model Role {
 
 model Permission {
   id          Int              @id @default(autoincrement())
-  nams        String
+  name        String
   module      String
   action      String
   description String?
