@@ -1,17 +1,23 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-import type { Role, SummaryItem } from "@/types";
-import { initialRoles } from "@/data/RoleData";
+import type { SummaryItem } from "@/types";
 import SummaryCards from "@/components/SummaryCard";
 
 import {
+  Alert,
   Box,
   Button,
   Chip,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   IconButton,
   InputAdornment,
+  MenuItem,
   Paper,
   Stack,
   Table,
@@ -22,11 +28,6 @@ import {
   TableRow,
   TextField,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  MenuItem,
 } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
@@ -39,30 +40,89 @@ import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 
 import "./role.css";
 
+type RoleStatus = "ACTIVE" | "INACTIVE";
+
+type Role = {
+  id: number;
+  name: string;
+  code: string;
+  status: RoleStatus;
+  createdAt: string;
+  updatedAt: string;
+  _count?: {
+    users: number;
+    rolePermissions: number;
+  };
+};
+
+type RoleForm = {
+  name: string;
+  code: string;
+  status: RoleStatus;
+};
+
+const initialForm: RoleForm = {
+  name: "",
+  code: "",
+  status: "ACTIVE",
+};
+
 export default function RolePage() {
-  const [role, setRole] = useState<Role[]>(initialRoles);
+  const [roles, setRoles] = useState<Role[]>([]);
   const [search, setSearch] = useState("");
+
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
   const [open, setOpen] = useState(false);
   const [editingRole, setEditingRole] = useState<Role | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<Role | null>(null);
 
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-    status: "Active" as "Active" | "Inactive",
-  });
+  const [form, setForm] = useState<RoleForm>(initialForm);
 
-  // Summary Counts
-  const activeRoles = role.filter((item) => item.status === "Active").length;
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const inactiveRoles = role.filter(
-    (item) => item.status === "Inactive",
+  // Fetch roles
+  const fetchRoles = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await fetch("/api/admin/role", {
+        method: "GET",
+        cache: "no-store",
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to load roles.");
+      }
+
+      setRoles(result.data ?? []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to load roles.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchRoles();
+  }, [fetchRoles]);
+
+  // Summary counts
+  const activeRoles = roles.filter((item) => item.status === "ACTIVE").length;
+
+  const inactiveRoles = roles.filter(
+    (item) => item.status === "INACTIVE",
   ).length;
 
-  // Summary Cards
   const summaries: SummaryItem[] = [
     {
       label: "Total Roles",
-      value: role.length,
+      value: roles.length,
       icon: <GroupsOutlinedIcon />,
       color: "#7c3aed",
       background: "#ede9fe",
@@ -83,94 +143,141 @@ export default function RolePage() {
     },
   ];
 
-  // Search Roles
+  // Search roles
   const filteredRoles = useMemo(() => {
     const keyword = search.trim().toLowerCase();
 
-    return role.filter((item) =>
-      `${item.name} ${item.description}`.toLowerCase().includes(keyword),
-    );
-  }, [role, search]);
+    if (!keyword) return roles;
 
-  // Open Add Dialog
+    return roles.filter((item) =>
+      `${item.name} ${item.code} ${item.status}`
+        .toLowerCase()
+        .includes(keyword),
+    );
+  }, [roles, search]);
+
+  // Open create dialog
   const openCreateDialog = () => {
     setEditingRole(null);
-
-    setForm({
-      name: "",
-      description: "",
-      status: "Active",
-    });
-
+    setForm(initialForm);
+    setError("");
     setOpen(true);
   };
 
-  // Open Edit Dialog
+  // Open edit dialog
   const openEditDialog = (item: Role) => {
     setEditingRole(item);
 
     setForm({
       name: item.name,
-      description: item.description,
+      code: item.code,
       status: item.status,
     });
 
+    setError("");
     setOpen(true);
   };
 
-  // Save Role
-  const handleSave = () => {
-    const name = form.name.trim().toLowerCase();
+  // Save role
+  const handleSave = async () => {
+    const name = form.name.trim();
+    const code = form.code.trim();
 
-    if (!name) return;
-
-    const duplicate = role.some(
-      (item) => item.name.toLowerCase() === name && item.id !== editingRole?.id,
-    );
-
-    if (duplicate) {
-      alert("This role name already exists.");
+    if (!name) {
+      setError("Please enter a role name.");
       return;
     }
 
-    if (editingRole) {
-      setRole((previous) =>
-        previous.map((item) =>
-          item.id === editingRole.id
-            ? {
-                ...item,
-                name,
-                description: form.description.trim(),
-                status: form.status,
-              }
-            : item,
-        ),
-      );
-    } else {
-      const newRole: Role = {
-        id: Math.max(0, ...role.map((item) => item.id)) + 1,
-        name,
-        description: form.description.trim(),
-        status: form.status,
-        users: 0,
-        permissions: 0,
-      };
-
-      setRole((previous) => [...previous, newRole]);
+    if (!code) {
+      setError("Please enter a role code.");
+      return;
     }
 
-    setOpen(false);
+    if (code !== code.toUpperCase()) {
+      setError("Role code must be uppercase.");
+      return;
+    }
+
+    if (!/^[A-Z][A-Z0-9_]*$/.test(code)) {
+      setError(
+        "Role code must start with a letter and contain only uppercase letters, numbers, and underscores.",
+      );
+      return;
+    }
+
+    try {
+      setSaving(true);
+      setError("");
+      setSuccess("");
+
+      const url = editingRole
+        ? `/api/admin/role/${editingRole.id}`
+        : "/api/admin/role";
+
+      const response = await fetch(url, {
+        method: editingRole ? "PATCH" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          code,
+          status: form.status,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to save role.");
+      }
+
+      setOpen(false);
+      setForm(initialForm);
+      setEditingRole(null);
+
+      setSuccess(
+        editingRole
+          ? "Role updated successfully."
+          : "Role created successfully.",
+      );
+
+      await fetchRoles();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to save role.");
+    } finally {
+      setSaving(false);
+    }
   };
 
-  // Delete Role
-  const handleDelete = (id: number) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this role?",
-    );
+  // Delete role
+  const handleDelete = async () => {
+    if (!deleteTarget) return;
 
-    if (!confirmed) return;
+    try {
+      setSaving(true);
+      setError("");
+      setSuccess("");
 
-    setRole((previous) => previous.filter((item) => item.id !== id));
+      const response = await fetch(`/api/admin/role/${deleteTarget.id}`, {
+        method: "DELETE",
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to delete role.");
+      }
+
+      setDeleteTarget(null);
+      setSuccess("Role deleted successfully.");
+
+      await fetchRoles();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete role.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -188,14 +295,29 @@ export default function RolePage() {
         </Box>
       </Box>
 
+      {/* Notifications */}
+      {error && !open && (
+        <Alert severity="error" onClose={() => setError("")} sx={{ mb: 1.5 }}>
+          {error}
+        </Alert>
+      )}
+
+      {success && (
+        <Alert
+          severity="success"
+          onClose={() => setSuccess("")}
+          sx={{ mb: 1.5 }}
+        >
+          {success}
+        </Alert>
+      )}
+
       {/* Summary Cards + Search + Add */}
       <Box className="roles-summary-row">
-        {/* Summary Cards */}
         <Box className="roles-summary-content">
           <SummaryCards items={summaries} />
         </Box>
 
-        {/* Search + Add Button */}
         <Stack direction="row" spacing={1} className="roles-header-actions">
           <TextField
             className="roles-search"
@@ -226,9 +348,13 @@ export default function RolePage() {
       </Box>
 
       {/* Roles Table */}
-      <Paper className="roles-table-card">
+      <Paper className="roles-table-card" elevation={0}>
         <Box className="roles-toolbar">
           <Typography className="roles-selection-title">All Roles</Typography>
+
+          <Button size="small" onClick={fetchRoles} disabled={loading}>
+            {loading ? "Loading..." : "Refresh"}
+          </Button>
         </Box>
 
         <TableContainer>
@@ -236,7 +362,7 @@ export default function RolePage() {
             <TableHead>
               <TableRow>
                 <TableCell>ROLE NAME</TableCell>
-                <TableCell>DESCRIPTION</TableCell>
+                <TableCell>ROLE CODE</TableCell>
                 <TableCell align="center">USERS</TableCell>
                 <TableCell align="center">PERMISSIONS</TableCell>
                 <TableCell align="center">STATUS</TableCell>
@@ -245,72 +371,99 @@ export default function RolePage() {
             </TableHead>
 
             <TableBody>
-              {filteredRoles.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>
-                    <Typography className="role-field">{item.name}</Typography>
-                  </TableCell>
-
-                  <TableCell>
-                    <Typography className="role-field">
-                      {item.description || "-"}
-                    </Typography>
-                  </TableCell>
-
-                  <TableCell align="center">{item.users}</TableCell>
-
-                  <TableCell align="center">{item.permissions}</TableCell>
-
-                  <TableCell align="center">
-                    <Chip
-                      className={`role-status ${item.status.toLowerCase()}`}
-                      label={item.status}
-                      size="small"
-                    />
-                  </TableCell>
-
-                  <TableCell align="right">
-                    <Stack
-                      direction="row"
-                      spacing={0.5}
-                      sx={{ justifyContent: "flex-end" }}
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={6} align="center">
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 1,
+                        py: 3,
+                      }}
                     >
-                      <IconButton
-                        className="role-action-button"
-                        size="small"
-                        onClick={() => openEditDialog(item)}
-                        title="Edit role"
-                      >
-                        <EditOutlinedIcon fontSize="small" />
-                      </IconButton>
-
-                      <IconButton
-                        className="role-action-button delete"
-                        size="small"
-                        onClick={() => handleDelete(item.id)}
-                        title="Delete role"
-                      >
-                        <DeleteOutlineIcon fontSize="small" />
-                      </IconButton>
-                    </Stack>
+                      <CircularProgress size={20} />
+                      <Typography sx={{ fontSize: 12 }}>
+                        Loading roles...
+                      </Typography>
+                    </Box>
                   </TableCell>
                 </TableRow>
-              ))}
-
-              {filteredRoles.length === 0 && (
+              ) : filteredRoles.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} align="center">
                     <Typography
                       sx={{
-                        py: 2,
+                        py: 3,
                         fontSize: 12,
-                        color: "#94a3b8",
+                        color: "var(--text-secondary)",
                       }}
                     >
                       No roles found.
                     </Typography>
                   </TableCell>
                 </TableRow>
+              ) : (
+                filteredRoles.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell>
+                      <Typography className="role-field">
+                        {item.name}
+                      </Typography>
+                    </TableCell>
+
+                    <TableCell>
+                      <Chip
+                        label={item.code}
+                        size="small"
+                        className="role-code-chip"
+                      />
+                    </TableCell>
+
+                    <TableCell align="center">
+                      {item._count?.users ?? 0}
+                    </TableCell>
+
+                    <TableCell align="center">
+                      {item._count?.rolePermissions ?? 0}
+                    </TableCell>
+
+                    <TableCell align="center">
+                      <Chip
+                        className={`role-status ${item.status.toLowerCase()}`}
+                        label={item.status === "ACTIVE" ? "Active" : "Inactive"}
+                        size="small"
+                      />
+                    </TableCell>
+
+                    <TableCell align="right">
+                      <Stack
+                        direction="row"
+                        spacing={0.5}
+                        sx={{ justifyContent: "flex-end" }}
+                      >
+                        <IconButton
+                          className="role-action-button"
+                          size="small"
+                          onClick={() => openEditDialog(item)}
+                          title="Edit role"
+                        >
+                          <EditOutlinedIcon fontSize="small" />
+                        </IconButton>
+
+                        <IconButton
+                          className="role-action-button delete"
+                          size="small"
+                          onClick={() => setDeleteTarget(item)}
+                          title="Delete role"
+                        >
+                          <DeleteOutlineIcon fontSize="small" />
+                        </IconButton>
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
+                ))
               )}
             </TableBody>
           </Table>
@@ -320,7 +473,7 @@ export default function RolePage() {
       {/* Add / Edit Dialog */}
       <Dialog
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => !saving && setOpen(false)}
         fullWidth
         maxWidth="sm"
       >
@@ -328,10 +481,13 @@ export default function RolePage() {
 
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 1 }}>
+            {/* Role Name */}
             <TextField
               label="Role Name"
               fullWidth
               size="small"
+              required
+              placeholder="e.g. Supervisor"
               value={form.name}
               onChange={(event) =>
                 setForm((previous) => ({
@@ -339,23 +495,41 @@ export default function RolePage() {
                   name: event.target.value,
                 }))
               }
-            />
-
-            <TextField
-              label="Description"
-              fullWidth
-              multiline
-              rows={3}
-              size="small"
-              value={form.description}
-              onChange={(event) =>
-                setForm((previous) => ({
-                  ...previous,
-                  description: event.target.value,
-                }))
+              error={
+                form.name.length > 0 && form.name !== form.name.toUpperCase()
+              }
+              helperText={
+                form.name.length > 0 && form.name !== form.name.toUpperCase()
+                  ? "Lowercase letters are not allowed. Use uppercase letters."
+                  : "Use uppercase letters, numbers and underscores."
               }
             />
 
+            {/* Role Code */}
+            <TextField
+              label="Role Code"
+              fullWidth
+              size="small"
+              required
+              placeholder="e.g. SUPERVISOR"
+              value={form.code}
+              onChange={(event) =>
+                setForm((previous) => ({
+                  ...previous,
+                  code: event.target.value,
+                }))
+              }
+              error={
+                form.code.length > 0 && form.code !== form.code.toUpperCase()
+              }
+              helperText={
+                form.code.length > 0 && form.code !== form.code.toUpperCase()
+                  ? "Lowercase letters are not allowed. Use uppercase letters."
+                  : "Use uppercase letters, numbers and underscores."
+              }
+            />
+
+            {/* Status */}
             <TextField
               select
               label="Status"
@@ -365,27 +539,75 @@ export default function RolePage() {
               onChange={(event) =>
                 setForm((previous) => ({
                   ...previous,
-                  status: event.target.value as "Active" | "Inactive",
+                  status: event.target.value as RoleStatus,
                 }))
               }
             >
-              <MenuItem value="Active">Active</MenuItem>
-              <MenuItem value="Inactive">Inactive</MenuItem>
+              <MenuItem value="ACTIVE">Active</MenuItem>
+              <MenuItem value="INACTIVE">Inactive</MenuItem>
             </TextField>
+
+            {error && <Alert severity="error">{error}</Alert>}
           </Stack>
         </DialogContent>
 
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={() => setOpen(false)} color="inherit">
+          <Button
+            onClick={() => setOpen(false)}
+            color="inherit"
+            disabled={saving}
+          >
             Cancel
           </Button>
 
           <Button
             variant="contained"
             onClick={handleSave}
-            disabled={!form.name.trim()}
+            disabled={saving || !form.name.trim() || !form.code.trim()}
           >
-            {editingRole ? "Update Role" : "Save Role"}
+            {saving ? "Saving..." : editingRole ? "Update Role" : "Save Role"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Delete Confirmation */}
+      <Dialog
+        open={Boolean(deleteTarget)}
+        onClose={() => !saving && setDeleteTarget(null)}
+        fullWidth
+        maxWidth="xs"
+      >
+        <DialogTitle>Delete Role</DialogTitle>
+
+        <DialogContent>
+          <Typography sx={{ fontSize: 13 }}>
+            Are you sure you want to delete
+            <strong> {deleteTarget?.name}</strong>?
+          </Typography>
+
+          <Typography
+            sx={{
+              mt: 1,
+              fontSize: 11,
+              color: "text.secondary",
+            }}
+          >
+            A role assigned to existing users cannot be deleted.
+          </Typography>
+        </DialogContent>
+
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button onClick={() => setDeleteTarget(null)} disabled={saving}>
+            Cancel
+          </Button>
+
+          <Button
+            color="error"
+            variant="contained"
+            onClick={handleDelete}
+            disabled={saving}
+          >
+            {saving ? "Deleting..." : "Delete"}
           </Button>
         </DialogActions>
       </Dialog>

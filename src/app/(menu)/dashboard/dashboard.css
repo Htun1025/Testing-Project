@@ -23,9 +23,9 @@
   min-width: 0;
 }
 
-/* =========================================
+/* 
    PAGE HEADING
-========================================= */
+*/
 
 .dashboard-heading {
   margin-bottom: 10px;
@@ -50,9 +50,9 @@
   line-height: 1.5;
 }
 
-/* =========================================
+/* 
    ANNOUNCEMENT
-========================================= */
+*/
 
 .dashboard-page .announcement {
   display: flex;
@@ -95,9 +95,9 @@
   flex-shrink: 0;
 }
 
-/* =========================================
+/* 
    SUMMARY CARDS
-========================================= */
+*/
 
 .dashboard-page .statistics-card {
   min-width: 0;
@@ -159,9 +159,9 @@
   font-weight: 700 !important;
 }
 
-/* =========================================
+/* 
    USER INFORMATION HEADING
-========================================= */
+*/
 
 .dashboard-page .table-heading {
   display: flex;
@@ -183,9 +183,9 @@
   margin-top: 2px;
 }
 
-/* =========================================
+/* 
    RECORDS CHIP
-========================================= */
+*/
 
 .dashboard-page .records-chip {
   display: inline-flex;
@@ -206,9 +206,9 @@
   font-weight: 600;
 }
 
-/* =========================================
+/* 
    TABLE WRAPPER
-========================================= */
+*/
 
 .dashboard-page .dashboard-table-wrapper {
   width: 100%;
@@ -251,9 +251,9 @@
   box-shadow: none !important;
 }
 
-/* =========================================
+/* 
    TABLE
-========================================= */
+*/
 
 .dashboard-page .MuiTable-root {
   width: 100%;
@@ -321,9 +321,9 @@
   border-bottom: none;
 }
 
-/* =========================================
+/* 
    PAGINATION
-========================================= */
+*/
 
 .dashboard-page .MuiTablePagination-root {
   background: var(--surface);
@@ -356,9 +356,9 @@
   color: var(--muted-color);
 }
 
-/* =========================================
+/* 
    EMPTY / LOADING / ERROR
-========================================= */
+*/
 
 .dashboard-page .empty-users {
   display: flex;
@@ -389,9 +389,9 @@
   color: var(--danger);
 }
 
-/* =========================================
+/* 
    SEARCH
-========================================= */
+*/
 
 .dashboard-page .dashboard-search {
   width: 100%;
@@ -435,9 +435,9 @@
   opacity: 1;
 }
 
-/* =========================================
+/* 
    RESPONSIVE: LARGE SCREEN
-========================================= */
+*/
 
 @media (min-width: 1200px) {
   .dashboard-page {
@@ -445,9 +445,9 @@
   }
 }
 
-/* =========================================
+/* 
    RESPONSIVE: TABLET
-========================================= */
+*/
 
 @media (max-width: 900px) {
   .dashboard-page {
@@ -463,9 +463,9 @@
   }
 }
 
-/* =========================================
+/* 
    RESPONSIVE: MOBILE
-========================================= */
+*/
 
 @media (max-width: 600px) {
   .dashboard-page {
@@ -531,9 +531,9 @@
   }
 }
 
-/* =========================================
+/* 
    RESPONSIVE: SMALL MOBILE
-========================================= */
+*/
 
 @media (max-width: 360px) {
   .dashboard-page {
@@ -554,9 +554,9 @@
   }
 }
 
-/* =========================================
+/* 
    ACCESSIBILITY
-========================================= */
+*/
 
 @media (prefers-reduced-motion: reduce) {
   .dashboard-page *,

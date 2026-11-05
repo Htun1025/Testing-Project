@@ -50,7 +50,7 @@ const menuItems = [
   },
   {
     label: "Settings",
-    path: "/settings",
+    path: "/setting",
     icon: SettingsOutlinedIcon,
   },
 ];

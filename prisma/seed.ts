@@ -1,10 +1,44 @@
 
 import "dotenv/config";
-import { db } from "@/lib/db";
+import { db } from "../src/lib/db";
 import { hash } from "bcryptjs";
 import { Prisma } from "../generated/prisma/client";
 
 async function main() {
+  console.log("Starting database seed...");
+
+  // 1. Create default dynamic roles
+  const roleData = [
+    { name: "Admin", code: "ADMIN" },
+    { name: "User", code: "USER" },
+    { name: "Checker", code: "CHECKER" },
+    { name: "Maker", code: "MAKER" },
+    { name: "Approver", code: "APPROVER" },
+  ];
+
+  const roleMap = new Map<string, number>();
+
+  for (const item of roleData) {
+    const role = await db.role.upsert({
+      where: {
+        code: item.code,
+      },
+      update: {
+        name: item.name,
+      },
+      create: {
+        name: item.name,
+        code: item.code,
+        status: "ACTIVE",
+      },
+    });
+
+    roleMap.set(item.code, role.id);
+
+    console.log("Role ready:", role.name);
+  }
+
+  // 2. User seed data
   const users = [
     {
       name: "Admin User",
@@ -14,8 +48,7 @@ async function main() {
       phone: "09123456789",
       nrc: "12/ABC(N)123456",
       address: "Yangon, Myanmar",
-      status: "ACTIVE",
-      role: "ADMIN",
+      roleCode: "ADMIN",
     },
     {
       name: "Test User",
@@ -25,8 +58,7 @@ async function main() {
       phone: "09987654321",
       nrc: "12/XYZ(N)654321",
       address: "Mandalay, Myanmar",
-      status: "ACTIVE",
-      role: "USER",
+      roleCode: "USER",
     },
     {
       name: "Test Checker",
@@ -36,8 +68,7 @@ async function main() {
       phone: "09111222333",
       nrc: "12/YK(N)654321",
       address: "Yangon, Myanmar",
-      status: "ACTIVE",
-      role: "CHECKER",
+      roleCode: "CHECKER",
     },
     {
       name: "Test Maker",
@@ -47,8 +78,7 @@ async function main() {
       phone: "09222333444",
       nrc: "12/TKT(N)654321",
       address: "Yangon, Myanmar",
-      status: "ACTIVE",
-      role: "MAKER",
+      roleCode: "MAKER",
     },
     {
       name: "Test Approver",
@@ -58,11 +88,11 @@ async function main() {
       phone: "09333444555",
       nrc: "12/TGG(N)654321",
       address: "Yangon, Myanmar",
-      status: "ACTIVE",
-      role: "APPROVER",
+      roleCode: "APPROVER",
     },
-  ] satisfies Prisma.UserCreateInput[];
+  ];
 
+  // 3. Create users and connect roles
   for (const user of users) {
     const existingUser = await db.user.findFirst({
       where: {
@@ -79,14 +109,26 @@ async function main() {
       continue;
     }
 
+    const roleId = roleMap.get(user.roleCode);
+
+    if (!roleId) {
+      throw new Error(`Role not found: ${user.roleCode}`);
+    }
+
     const hashedPassword = await hash(user.password, 12);
 
-    const { password, ...userData } = user;
+    const { password, roleCode, ...userData } = user;
 
     const createdUser = await db.user.create({
       data: {
         ...userData,
         password: hashedPassword,
+        status: "ACTIVE",
+        role: {
+          connect: {
+            id: roleId,
+          },
+        },
       },
       select: {
         id: true,
@@ -94,14 +136,25 @@ async function main() {
         username: true,
         email: true,
         status: true,
-        role: true,
+        role: {
+          select: {
+            id: true,
+            name: true,
+            code: true,
+          },
+        },
       },
     });
 
-    console.log("Created:", createdUser.username);
+    console.log(
+      `Created: ${createdUser.username} (${createdUser.role.name})`
+    );
   }
 
+  console.log("--------------------------------");
   console.log("Total users:", await db.user.count());
+  console.log("Total roles:", await db.role.count());
+  console.log("Seed completed successfully!");
 }
 
 main()

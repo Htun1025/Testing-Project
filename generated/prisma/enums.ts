@@ -17,15 +17,12 @@ export const UserStatus = {
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
 
 
-export const UserRole = {
-  ADMIN: 'ADMIN',
-  USER: 'USER',
-  CHECKER: 'CHECKER',
-  MAKER: 'MAKER',
-  APPROVER: 'APPROVER'
+export const PermissionStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
 } as const
 
-export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+export type PermissionStatus = (typeof PermissionStatus)[keyof typeof PermissionStatus]
 
 
 export const TokenType = {
@@ -34,11 +31,3 @@ export const TokenType = {
 } as const
 
 export type TokenType = (typeof TokenType)[keyof typeof TokenType]
-
-
-export const PermissionStatus = {
-  ACTIVE: 'ACTIVE',
-  INACTIVE: 'INACTIVE'
-} as const
-
-export type PermissionStatus = (typeof PermissionStatus)[keyof typeof PermissionStatus]

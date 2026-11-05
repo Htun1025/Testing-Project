@@ -1,0 +1,528 @@
+
+.settings-page {
+  width: 100%;
+  min-width: 0;
+  padding: 5px;
+  color: #172554;
+  box-sizing: border-box;
+}
+
+.settings-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.settings-title {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  color: var(--text-primary, #172554);
+}
+
+.settings-subtitle,
+.settings-section-subtitle {
+  color: var(--text-muted, #64748b) !important;
+  font-size: 11px !important;
+}
+
+.settings-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-bottom: 6px;
+}
+
+.settings-tab {
+  min-height: 29px !important;
+  padding: 4px 9px !important;
+  border-radius: 5px !important;
+  color: var(--text-primary, #334155) !important;
+  font-size: 10px !important;
+  text-transform: none !important;
+}
+
+.settings-tab.active {
+  color: #fff !important;
+  background: #2563eb !important;
+}
+
+.settings-card {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--app-border, #dce5f0);
+  border-radius: 8px !important;
+  background: var(--card-bg, #fff) !important;
+}
+
+.settings-profile-sidebar {
+  padding: 15px 10px;
+  text-align: center;
+  border-right: 1px solid var(--app-border, #dce5f0);
+}
+
+.settings-avatar-wrap {
+  position: relative;
+  width: 72px;
+  margin: 0 auto 7px;
+}
+
+.settings-avatar {
+  width: 72px !important;
+  height: 72px !important;
+  background: #2563eb !important;
+  font-size: 25px !important;
+}
+
+.settings-camera {
+  position: absolute !important;
+  right: -4px;
+  bottom: 0;
+  min-width: 25px !important;
+  width: 25px;
+  height: 25px;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+  border: 1px solid #dbeafe !important;
+  font-size: 11px !important;
+}
+
+.settings-profile-name {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: var(--text-primary, #172554);
+}
+
+.settings-role {
+  display: inline-block;
+  margin-top: 3px !important;
+  padding: 3px 8px;
+  border-radius: 15px;
+  background: #eaf1ff;
+  color: #2563eb;
+  font-size: 9px !important;
+}
+
+.settings-member {
+  margin-top: 6px !important;
+  color: var(--text-muted, #64748b);
+  font-size: 10px !important;
+}
+
+.settings-divider {
+  margin: 10px 0 !important;
+  border-color: var(--app-border, #e2e8f0) !important;
+}
+
+.settings-side-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.settings-side-item {
+  justify-content: flex-start !important;
+  min-height: 29px !important;
+  padding: 4px 8px !important;
+  border-radius: 5px !important;
+  color: var(--text-muted, #64748b) !important;
+  font-size: 10px !important;
+  text-transform: none !important;
+}
+
+.settings-side-item.active {
+  color: #1d4ed8 !important;
+  background: #eaf1ff !important;
+  border-left: 2px solid #2563eb;
+}
+
+.settings-content {
+  min-width: 0;
+  padding: 14px 18px 10px;
+}
+
+.settings-content-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.settings-section-title {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--text-primary, #172554);
+}
+
+.settings-section-subtitle {
+  margin-top: 2px !important;
+  margin-bottom: 10px !important;
+}
+
+.settings-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 12px;
+  margin-bottom: 12px;
+}
+
+.settings-content .MuiOutlinedInput-root {
+  min-height: 34px;
+  border-radius: 5px;
+  font-size: 11px;
+  background: var(--input-bg, #fff);
+}
+
+.settings-content .MuiInputBase-input {
+  padding: 8px 10px;
+}
+
+.settings-content .MuiSelect-select {
+  padding: 8px 10px;
+}
+
+.settings-content .MuiInputLabel-root {
+  font-size: 11px;
+}
+
+.settings-label {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: var(--text-primary, #334155);
+}
+
+.settings-hint {
+  color: var(--text-muted, #64748b) !important;
+  font-size: 9px !important;
+}
+
+.settings-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 7px 0 10px;
+}
+
+.settings-upload-avatar {
+  width: 40px !important;
+  height: 40px !important;
+  background: #2563eb !important;
+  font-size: 14px !important;
+}
+
+.settings-content .MuiButton-root {
+  min-height: 27px;
+  padding: 4px 9px;
+  border-radius: 5px;
+  font-size: 10px;
+  text-transform: none;
+  box-shadow: none;
+}
+
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-top: 8px;
+}
+
+.settings-actions .MuiButton-root {
+  min-width: 72px;
+  min-height: 29px;
+}
+
+.settings-about-field,
+.settings-security-field {
+  margin-bottom: 9px !important;
+}
+
+.settings-option-row,
+.settings-system-row,
+.settings-activity-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 0;
+  color: var(--text-primary, #334155);
+  font-size: 11px;
+}
+
+.settings-option-row .MuiSwitch-root {
+  transform: scale(0.8);
+  margin: -4px;
+}
+
+.settings-activity-list {
+  margin-top: 6px;
+}
+
+.settings-activity-item {
+  border-bottom: 1px solid var(--app-border, #e2e8f0);
+}
+
+.settings-activity-item p:last-child,
+.settings-system-row p:last-child {
+  color: var(--text-muted, #64748b);
+  font-size: 10px;
+}
+
+.settings-message {
+  margin-top: 8px;
+  font-size: 11px;
+}
+
+.settings-message .MuiAlert-message {
+  padding: 2px 0;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .settings-card {
+    grid-template-columns: 155px minmax(0, 1fr);
+  }
+
+  .settings-content {
+    padding: 12px;
+  }
+
+  .settings-form-grid {
+    gap: 8px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 650px) {
+  .settings-page {
+    padding: 5px;
+  }
+
+  .settings-card {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-profile-sidebar {
+    padding: 12px 9px;
+    border-right: 0;
+    border-bottom: 1px solid var(--app-border, #dce5f0);
+  }
+
+  .settings-side-menu {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .settings-form-grid {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .settings-content {
+    padding: 12px 9px;
+  }
+
+  .settings-tabs {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .settings-title {
+    font-size: 16px !important;
+  }
+
+  .settings-profile-sidebar {
+    padding: 10px 8px;
+  }
+
+  .settings-actions {
+    flex-wrap: wrap;
+  }
+}
+
+/* =================================
+   SETTINGS - USER UI SPACING
+================================= */
+
+/* Page */
+.settings-page {
+  padding: 8px;
+}
+
+/* Main Title */
+.settings-title {
+  font-size: 21px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+}
+
+/* Main Subtitle */
+.settings-subtitle {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  margin-top: 3px !important;
+}
+
+/* Heading spacing */
+.settings-heading {
+  margin-bottom: 14px;
+}
+
+/* Tabs */
+.settings-tabs {
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.settings-tab {
+  min-height: 32px !important;
+  padding: 6px 12px !important;
+  font-size: 12px !important;
+}
+
+/* Card */
+.settings-card {
+  border-radius: 9px !important;
+}
+
+/* Section title */
+.settings-section-title {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+}
+
+.settings-section-subtitle {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  margin-top: 4px !important;
+  margin-bottom: 16px !important;
+}
+
+/* Content spacing */
+.settings-content {
+  padding: 20px 22px 16px;
+}
+
+.settings-content-heading {
+  margin-bottom: 16px;
+}
+
+/* Form spacing */
+.settings-form-grid {
+  column-gap: 18px;
+  row-gap: 16px;
+  margin-bottom: 18px;
+}
+
+/* Input */
+.settings-content .MuiOutlinedInput-root {
+  min-height: 38px;
+  font-size: 13px;
+}
+
+.settings-content .MuiInputBase-input {
+  padding: 9px 11px;
+}
+
+.settings-content .MuiInputLabel-root {
+  font-size: 12px;
+}
+
+/* Profile */
+.settings-profile-sidebar {
+  padding: 20px 12px;
+}
+
+.settings-profile-name {
+  font-size: 16px !important;
+}
+
+.settings-side-item {
+  min-height: 33px !important;
+  font-size: 12px !important;
+  padding: 6px 10px !important;
+}
+
+/* Upload */
+.settings-upload-row {
+  gap: 12px;
+  margin: 10px 0 16px;
+}
+
+.settings-upload-avatar {
+  width: 48px !important;
+  height: 48px !important;
+}
+
+/* Options */
+.settings-option-row,
+.settings-system-row,
+.settings-activity-item {
+  padding: 11px 0;
+  font-size: 12px;
+}
+
+/* Buttons */
+.settings-content .MuiButton-root {
+  font-size: 12px;
+  min-height: 32px;
+  padding: 6px 12px;
+}
+
+.settings-actions {
+  gap: 8px;
+  padding-top: 14px;
+}
+
+.settings-actions .MuiButton-root {
+  min-width: 85px;
+}
+
+/* Primary Color */
+.settings-tab.active {
+  background: var(--app-primary, #6094cb) !important;
+}
+
+.settings-content .MuiButton-contained {
+  background: var(--app-primary, #6094cb) !important;
+  color: #fff !important;
+}
+
+.settings-content .MuiButton-contained:hover {
+  background: #477fb8 !important;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .settings-content {
+    padding: 16px;
+  }
+
+  .settings-form-grid {
+    column-gap: 12px;
+    row-gap: 12px;
+  }
+}
+
+@media (max-width: 650px) {
+  .settings-heading {
+    margin-bottom: 10px;
+  }
+
+  .settings-title {
+    font-size: 19px !important;
+  }
+
+  .settings-content {
+    padding: 14px 11px;
+  }
+
+  .settings-form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

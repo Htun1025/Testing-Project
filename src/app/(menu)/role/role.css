@@ -1,656 +1,667 @@
 
-/* 
-   ROLE MANAGEMENT — COMPACT UI
-*/
-
-.roles-page {
-  width: 100%;
-  max-width: 1600px;
-  min-width: 0;
-  margin: 0 auto;
-  padding: 8px;
-  box-sizing: border-box;
-  color: var(--text-primary, #1e293b);
-}
-
-/* 
-   HEADER
-*/
-
-.roles-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.roles-header-content {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-}
-
-.roles-title {
-  margin: 0 !important;
-  color: var(--text-primary, #172033);
-  font-size: 20px !important;
-  font-weight: 700 !important;
-  line-height: 1.3 !important;
-  letter-spacing: -0.4px;
-}
-
-.roles-subtitle {
-  margin: 0 !important;
-  color: var(--text-secondary, #64748b);
-  font-size: 12px !important;
-  line-height: 1.4 !important;
-}
-
-/* 
-   SUMMARY + SEARCH ROW
-*/
-
-.roles-summary-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
-  min-width: 0;
-  margin-bottom: 10px;
-}
-
-.roles-summary-content {
-  flex: 0 1 auto;
-  min-width: 0;
-}
-
-.roles-summary-content .user-summary-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 180px));
-  gap: 7px;
-  width: 100%;
-  max-width: 560px;
-  margin: 0;
-}
-
-/* 
-   SUMMARY CARDS
-*/
-
-.roles-summary-content .user-summary-card {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  min-width: 0;
-  min-height: 54px;
-  padding: 7px 9px;
-  overflow: hidden;
-  box-sizing: border-box;
-
-  border: 1px solid var(--border-color, #e8edf5);
-  border-radius: 8px !important;
-  background: var(--surface, #fff) !important;
-  box-shadow: 0 1px 3px rgb(15 23 42 / 4%) !important;
-
-  transition: box-shadow 0.2s ease;
-}
-
-.roles-summary-content .user-summary-card:hover {
-  box-shadow: 0 3px 9px rgb(15 23 42 / 7%) !important;
-}
-
-.roles-summary-content .user-summary-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 30px;
-  width: 30px !important;
-  height: 30px !important;
-  border-radius: 7px !important;
-}
-
-.roles-summary-content .user-summary-icon .MuiSvgIcon-root {
-  font-size: 17px;
-}
-
-.roles-summary-content .user-summary-card > .MuiBox-root {
-  flex: 1;
-  min-width: 0;
-}
-
-.roles-summary-content .user-summary-label {
-  margin: 0 0 3px !important;
-  overflow: hidden;
-  color: var(--text-secondary, #64748b);
-  font-size: 10px !important;
-  font-weight: 500 !important;
-  line-height: 1.3 !important;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.roles-summary-content .user-summary-value {
-  margin: 0 !important;
-  color: var(--text-primary, #172033);
-  font-size: 17px !important;
-  font-weight: 700 !important;
-  line-height: 1.2 !important;
-}
-
-/* 
-   SEARCH + ADD BUTTON
-*/
-
-.roles-header-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex: 1 1 auto;
-  min-width: 0;
-  gap: 7px;
-}
-
-.roles-search {
-  width: 180px;
-  min-width: 0;
-}
-
-.roles-search .MuiOutlinedInput-root {
-  height: 34px;
-  border-radius: 7px;
-  background: var(--input-background, #fff);
-  color: var(--text-primary, #334155);
-  font-size: 12px;
-}
-
-.roles-search .MuiOutlinedInput-input {
-  padding: 7px 10px;
-  text-align: left;
-}
-
-.roles-search .MuiInputAdornment-root {
-  margin-right: 5px;
-}
-
-.roles-search .MuiInputAdornment-root .MuiSvgIcon-root {
-  color: #94a3b8;
-  font-size: 16px;
-}
-
-.roles-search .MuiOutlinedInput-input::placeholder {
-  color: #94a3b8;
-  opacity: 1;
-}
-
-.roles-search .MuiOutlinedInput-notchedOutline {
-  border-color: var(--border-color, #dbe3ee);
-}
-
-.roles-search .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
-  border-color: #a78bfa;
-}
-
-.roles-search .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-  border-color: #7c3aed;
-  border-width: 1px;
-}
-
-/* Add Role Button */
-
-.role-add-button {
-  min-width: 0 !important;
-  min-height: 34px !important;
-  padding: 6px 11px !important;
-  border-radius: 7px !important;
-  background: #7c3aed !important;
-  box-shadow: none !important;
-  font-size: 11px !important;
-  font-weight: 600 !important;
-  line-height: 1.3 !important;
-  text-transform: none !important;
-  white-space: nowrap;
-}
-
-.role-add-button:hover {
-  background: #6929d4 !important;
-  box-shadow: none !important;
-}
-
-.role-add-button .MuiButton-startIcon {
-  margin-right: 5px;
-  margin-left: 0;
-}
-
-.role-add-button .MuiSvgIcon-root {
-  font-size: 16px;
-}
-
-/* 
-   TABLE CARD
-*/
-
-.roles-table-card {
-  width: 100%;
-  min-width: 0;
-  overflow: hidden;
-  border: 1px solid var(--border-color, #e8edf5);
-  border-radius: 9px !important;
-  background: var(--surface, #fff) !important;
-  box-shadow: 0 1px 4px rgb(15 23 42 / 4%) !important;
-}
-
-/* Table Toolbar */
-
-.roles-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  min-height: 36px;
-  padding: 0 11px;
-  border-bottom: 1px solid var(--border-color, #e8edf5);
-}
-
-.roles-selection-title {
-  margin: 0 !important;
-  color: var(--text-primary, #334155);
-  font-size: 12px !important;
-  font-weight: 700 !important;
-}
-
-/* 
-   TABLE
-*/
-
-.roles-table-card .MuiTableContainer-root {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.roles-table {
-  width: 100%;
-  min-width: 600px;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.roles-table .MuiTableCell-root {
-  height: 39px;
-  padding: 7px 10px !important;
-  color: var(--text-primary, #475569);
-  font-size: 12px !important;
-  line-height: 1.35;
-  white-space: nowrap;
-  border-bottom: 1px solid var(--border-color, #f1f5f9);
-}
-
-.roles-table .MuiTableHead-root .MuiTableCell-root {
-  height: 36px;
-  padding: 7px 10px !important;
-  background: var(--table-header-background, #f8fafc);
-  color: var(--text-secondary, #64748b);
-  font-size: 10px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.2px;
-  text-transform: uppercase;
-}
-
-.roles-table .MuiTableBody-root .MuiTableRow-root {
-  transition: background-color 0.15s ease;
-}
-
-.roles-table .MuiTableBody-root .MuiTableRow-root:hover {
-  background: var(--table-row-hover, #f7f9ff);
-}
-
-.roles-table .MuiTableBody-root .MuiTableRow-root:last-child .MuiTableCell-root {
-  border-bottom: none;
-}
-
-.role-field {
-  overflow: hidden;
-  max-width: 350px;
-  color: var(--text-primary, #334155);
-  font-size: 12px !important;
-  font-weight: 500 !important;
-  text-overflow: ellipsis;
-}
-
-/* 
-   STATUS
-*/
-
-.role-status {
-  height: 20px !important;
-  border-radius: 5px !important;
-  font-size: 10px !important;
-  font-weight: 600 !important;
-}
-
-.role-status .MuiChip-label {
-  padding: 0 7px !important;
-}
-
-.role-status.active {
-  color: #047857 !important;
-  background: #d1fae5 !important;
-}
-
-.role-status.inactive {
-  color: #b91c1c !important;
-  background: #fee2e2 !important;
-}
-
-/* 
-   ACTION BUTTONS
-*/
-
-.role-action-button {
-  width: 28px !important;
-  height: 28px !important;
-  min-width: 28px !important;
-  padding: 4px !important;
-  color: var(--text-secondary, #64748b) !important;
-  border-radius: 6px !important;
-}
-
-.role-action-button:hover {
-  color: #7c3aed !important;
-  background: #f3e8ff !important;
-}
-
-.role-action-button.delete:hover {
-  color: #dc2626 !important;
-  background: #fee2e2 !important;
-}
-
-.role-action-button .MuiSvgIcon-root {
-  font-size: 16px;
-}
-
-/* 
-   DIALOG
-*/
-
-.roles-page .MuiDialog-paper {
-  border-radius: 10px;
-}
-
-.roles-page .MuiDialogTitle-root {
-  padding: 16px 18px;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.roles-page .MuiDialogContent-root {
-  padding: 8px 18px;
-}
-
-.roles-page .MuiDialogContent-root .MuiInputBase-root {
-  font-size: 12px;
-}
-
-.roles-page .MuiDialogContent-root .MuiInputLabel-root {
-  font-size: 12px;
-}
-
-.roles-page .MuiDialogActions-root {
-  padding: 10px 18px 14px;
-}
-
-.roles-page .MuiDialogActions-root .MuiButton-root {
-  min-height: 32px;
-  font-size: 11px;
-  text-transform: none;
-}
-
-/* 
-   TABLET
-*/
-
-@media (max-width: 1100px) {
-  .roles-summary-row {
-    gap: 8px;
-  }
-
-  .roles-summary-content .user-summary-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    max-width: 480px;
-  }
-
-  .roles-summary-content .user-summary-card {
-    gap: 5px;
-    padding: 6px;
-  }
-
-  .roles-search {
-    width: 145px;
-  }
-}
-
-/* 
-   SMALL SCREEN
-*/
-
-@media (max-width: 900px) {
-  .roles-summary-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 9px;
-  }
-
-  .roles-summary-content {
-    width: 100%;
-  }
-
-  .roles-summary-content .user-summary-grid {
-    max-width: 100%;
-  }
-
-  .roles-header-actions {
-    width: 100%;
-    flex: 1 1 auto;
-  }
-
-  .roles-search {
-    flex: 1;
-    width: auto;
-  }
-}
-
-/* 
-   MOBILE
-*/
-
-@media (max-width: 700px) {
+@layer pages {
   .roles-page {
-    padding: 6px;
+    width: 100%;
+    max-width: 1600px;
+    min-width: 0;
+    margin: 0 auto;
+    padding: 8px;
+    box-sizing: border-box;
+    color: var(--text-primary, #1e293b);
   }
+
+  /* HEADER */
 
   .roles-header {
-    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .roles-header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
   }
 
   .roles-title {
-    font-size: 17px !important;
+    margin: 0 !important;
+    color: var(--text-primary, #172033);
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.4px;
   }
 
   .roles-subtitle {
-    font-size: 11px !important;
+    margin: 0 !important;
+    color: var(--text-secondary, #64748b);
+    font-size: 12px !important;
+    line-height: 1.4 !important;
   }
 
+  /* SUMMARY + SEARCH ROW */
+
+  .roles-summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0px;
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 10px;
+  }
+
+  .roles-summary-content {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+
+  /* SUMMARY CARDS — SMALL WIDTH */
+
   .roles-summary-content .user-summary-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 6px;
+    display: grid;
+    grid-template-columns: repeat(3, 125px);
+    gap: 7px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0;
   }
 
   .roles-summary-content .user-summary-card {
-    min-height: 46px;
-    padding: 5px;
-    gap: 5px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: 125px;
+    min-width: 0;
+    min-height: 48px;
+    padding: 6px 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid var(--border-color, #e8edf5);
+    border-radius: 8px !important;
+    background: var(--surface, #fff) !important;
+    box-shadow: 0 1px 3px rgb(15 23 42 / 4%) !important;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .roles-summary-content .user-summary-card:hover {
+    box-shadow: 0 3px 9px rgb(15 23 42 / 7%) !important;
   }
 
   .roles-summary-content .user-summary-icon {
-    flex: 0 0 24px;
-    width: 24px !important;
-    height: 24px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 26px;
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 6px !important;
   }
 
   .roles-summary-content .user-summary-icon .MuiSvgIcon-root {
-    font-size: 14px;
+    font-size: 15px;
   }
 
-  .roles-summary-content .user-summary-value {
-    font-size: 14px !important;
-  }
-
-  .roles-header-actions {
-    gap: 6px;
-  }
-
-  .roles-search {
+  .roles-summary-content .user-summary-card > .MuiBox-root {
     flex: 1;
-    width: auto;
-  }
-
-  .role-add-button {
-    min-height: 34px !important;
-  }
-
-  .roles-toolbar {
-    min-height: 34px;
-    padding: 0 9px;
-  }
-
-  .roles-table {
-    min-width: 600px;
-  }
-
-  .roles-table .MuiTableCell-root {
-    padding: 6px 8px !important;
-    font-size: 11px !important;
-  }
-}
-
-/* 
-   SMALL MOBILE
-*/
-
-@media (max-width: 400px) {
-  .roles-page {
-    padding: 4px;
-  }
-
-  .roles-summary-content .user-summary-grid {
-    gap: 4px;
-  }
-
-  .roles-summary-content .user-summary-card {
-    min-height: 42px;
-    padding: 4px;
-  }
-
-  .roles-summary-content .user-summary-icon {
-    display: none !important;
+    min-width: 0;
   }
 
   .roles-summary-content .user-summary-label {
-    font-size: 8px !important;
+    margin: 0 0 2px !important;
+    overflow: hidden;
+    color: var(--text-secondary, #64748b);
+    font-size: 9px !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .roles-summary-content .user-summary-value {
-    font-size: 13px !important;
+    margin: 0 !important;
+    color: var(--text-primary, #172033);
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
   }
 
+  /* SEARCH + ADD BUTTON */
+
   .roles-header-actions {
-    gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 7px;
+  }
+
+  .roles-search {
+    width: 180px;
+    min-width: 0;
   }
 
   .roles-search .MuiOutlinedInput-root {
-    height: 32px;
-    font-size: 10px;
+    height: 34px;
+    border-radius: 7px;
+    background: var(--input-background, #fff);
+    color: var(--text-primary, #334155);
+    font-size: 12px;
+  }
+
+  .roles-search .MuiOutlinedInput-input {
+    padding: 7px 10px;
+    text-align: left;
+  }
+
+  .roles-search .MuiInputAdornment-root {
+    margin-right: 5px;
+  }
+
+  .roles-search .MuiInputAdornment-root .MuiSvgIcon-root {
+    color: #94a3b8;
+    font-size: 16px;
+  }
+
+  .roles-search .MuiOutlinedInput-input::placeholder {
+    color: #94a3b8;
+    opacity: 1;
+  }
+
+  .roles-search .MuiOutlinedInput-notchedOutline {
+    border-color: var(--border-color, #dbe3ee);
+  }
+
+  .roles-search .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #a78bfa;
+  }
+
+  .roles-search .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #7c3aed;
+    border-width: 1px;
   }
 
   .role-add-button {
-    min-height: 32px !important;
-    padding: 5px 8px !important;
-    font-size: 10px !important;
+    min-width: 0 !important;
+    min-height: 34px !important;
+    padding: 6px 11px !important;
+    border-radius: 7px !important;
+    background: var(--primary, #7c3aed) !important;
+    box-shadow: none !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    text-transform: none !important;
+    white-space: nowrap;
   }
-}
 
-/* 
-   DARK MODE
-*/
+  .role-add-button:hover {
+    background: var(--primary-hover, #6929d4) !important;
+    box-shadow: none !important;
+  }
 
-:root[data-theme="dark"] .roles-page {
-  color: var(--text-primary);
-}
+  .role-add-button .MuiButton-startIcon {
+    margin-right: 5px;
+    margin-left: 0;
+  }
 
-:root[data-theme="dark"] .roles-summary-content .user-summary-card,
-:root[data-theme="dark"] .roles-table-card {
-  background: var(--surface) !important;
-  border-color: var(--border-color) !important;
-}
+  .role-add-button .MuiSvgIcon-root {
+    font-size: 16px;
+  }
 
-:root[data-theme="dark"] .roles-summary-content .user-summary-label {
-  color: var(--text-secondary);
-}
+  /* TABLE CARD */
 
-:root[data-theme="dark"] .roles-summary-content .user-summary-value,
-:root[data-theme="dark"] .roles-title,
-:root[data-theme="dark"] .roles-selection-title,
-:root[data-theme="dark"] .role-field {
-  color: var(--text-primary);
-}
+  .roles-table-card {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--border-color, #e8edf5);
+    border-radius: 9px !important;
+    background: var(--surface, #fff) !important;
+    box-shadow: 0 1px 4px rgb(15 23 42 / 4%) !important;
+  }
 
-:root[data-theme="dark"] .roles-subtitle {
-  color: var(--text-secondary);
-}
+  .roles-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 36px;
+    padding: 0 11px;
+    border-bottom: 1px solid var(--border-color, #e8edf5);
+  }
 
-:root[data-theme="dark"] .roles-table .MuiTableHead-root .MuiTableCell-root {
-  background: var(--table-header-background);
-  color: var(--text-secondary);
-  border-color: var(--border-color);
-}
+  .roles-selection-title {
+    margin: 0 !important;
+    color: var(--text-primary, #334155);
+    font-size: 12px !important;
+    font-weight: 700 !important;
+  }
 
-:root[data-theme="dark"] .roles-table .MuiTableBody-root .MuiTableCell-root {
-  background: var(--surface);
-  color: var(--text-primary);
-  border-color: var(--border-color);
-}
+  /* TABLE */
 
-:root[data-theme="dark"] .roles-table .MuiTableBody-root .MuiTableRow-root:hover,
-:root[data-theme="dark"] .roles-table .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root {
-  background: var(--table-row-hover);
-}
+  .roles-table-card .MuiTableContainer-root {
+    width: 100%;
+    overflow-x: auto;
+  }
 
-:root[data-theme="dark"] .roles-toolbar {
-  border-color: var(--border-color);
-}
+  .roles-table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
 
-:root[data-theme="dark"] .roles-search .MuiOutlinedInput-root {
-  background: var(--input-background);
-  color: var(--text-primary);
-}
+  .roles-table .MuiTableCell-root {
+    height: 39px;
+    padding: 7px 10px !important;
+    color: var(--text-primary, #475569);
+    font-size: 12px !important;
+    line-height: 1.35;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--border-color, #f1f5f9);
+  }
 
-:root[data-theme="dark"] .roles-search .MuiOutlinedInput-notchedOutline {
-  border-color: var(--border-color);
-}
+  .roles-table .MuiTableHead-root .MuiTableCell-root {
+    height: 36px;
+    padding: 7px 10px !important;
+    background: var(--table-header-background, #f8fafc);
+    color: var(--text-secondary, #64748b);
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
 
-:root[data-theme="dark"] .role-action-button {
-  color: var(--text-secondary) !important;
-}
+  .roles-table .MuiTableBody-root .MuiTableRow-root {
+    transition: background-color 0.15s ease;
+  }
 
-@media (prefers-reduced-motion: reduce) {
-  .roles-page *,
-  .roles-page *::before,
-  .roles-page *::after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
+  .roles-table .MuiTableBody-root .MuiTableRow-root:hover {
+    background: var(--table-row-hover, #f7f9ff);
+  }
+
+  .roles-table .MuiTableBody-root .MuiTableRow-root:last-child .MuiTableCell-root {
+    border-bottom: none;
+  }
+
+  .role-field {
+    overflow: hidden;
+    max-width: 350px;
+    color: var(--text-primary, #334155);
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    text-overflow: ellipsis;
+  }
+
+  /* ROLE CODE */
+
+  .role-code-chip {
+    height: 20px !important;
+    border-radius: 5px !important;
+    background: var(--soft-primary, #f3e8ff) !important;
+    color: var(--primary, #7c3aed) !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+  }
+
+  .role-code-chip .MuiChip-label {
+    padding: 0 7px !important;
+  }
+
+  /* STATUS */
+
+  .role-status {
+    height: 20px !important;
+    border-radius: 5px !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+  }
+
+  .role-status .MuiChip-label {
+    padding: 0 7px !important;
+  }
+
+  .role-status.active {
+    color: var(--success, #047857) !important;
+    background: rgb(22 163 74 / 12%) !important;
+  }
+
+  .role-status.inactive {
+    color: var(--danger, #b91c1c) !important;
+    background: rgb(220 38 38 / 12%) !important;
+  }
+
+  /* ACTION BUTTONS */
+
+  .role-action-button {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    padding: 4px !important;
+    color: var(--text-secondary, #64748b) !important;
+    border-radius: 6px !important;
+  }
+
+  .role-action-button:hover {
+    color: var(--primary, #7c3aed) !important;
+    background: var(--hover-background, #f3e8ff) !important;
+  }
+
+  .role-action-button.delete:hover {
+    color: var(--danger, #dc2626) !important;
+    background: rgb(220 38 38 / 12%) !important;
+  }
+
+  .role-action-button .MuiSvgIcon-root {
+    font-size: 16px;
+  }
+
+  /* DIALOG */
+
+  .roles-page .MuiDialog-paper {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--card-background);
+    color: var(--text-primary);
+  }
+
+  .roles-page .MuiDialogTitle-root {
+    padding: 14px 18px;
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .roles-page .MuiDialogContent-root {
+    padding: 8px 18px;
+  }
+
+  .roles-page .MuiDialogContent-root .MuiInputBase-root {
+    min-height: 35px;
+    background: var(--input-background);
+    color: var(--text-primary);
+    font-size: 11px;
+  }
+
+  .roles-page .MuiDialogContent-root .MuiInputLabel-root {
+    color: var(--text-secondary);
+    font-size: 11px;
+  }
+
+  .roles-page .MuiDialogContent-root .MuiOutlinedInput-notchedOutline {
+    border-color: var(--border-color);
+  }
+
+  .roles-page .MuiDialogContent-root .MuiFormHelperText-root {
+    font-size: 10px;
+  }
+
+  .roles-page .MuiDialogActions-root {
+    padding: 9px 18px 13px;
+  }
+
+  .roles-page .MuiDialogActions-root .MuiButton-root {
+    min-height: 32px;
+    padding: 5px 11px;
+    font-size: 11px;
+    text-transform: none;
+  }
+
+  /* ALERTS */
+
+  .roles-page .MuiAlert-root {
+    padding: 5px 10px;
+    border-radius: 7px;
+    font-size: 11px;
+  }
+
+  .roles-page .MuiAlert-message {
+    padding: 3px 0;
+    font-size: 11px;
+  }
+
+  /* TABLET */
+
+  @media (max-width: 1100px) {
+    .roles-summary-content .user-summary-grid {
+      grid-template-columns: repeat(3, 115px);
+    }
+
+    .roles-summary-content .user-summary-card {
+      width: 115px;
+      gap: 5px;
+      padding: 6px;
+    }
+
+    .roles-search {
+      width: 145px;
+    }
+  }
+
+  /* SMALL SCREEN */
+
+  @media (max-width: 900px) {
+    .roles-summary-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 9px;
+    }
+
+    .roles-summary-content {
+      width: 100%;
+    }
+
+    .roles-summary-content .user-summary-grid {
+      grid-template-columns: repeat(3, minmax(0, 125px));
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    .roles-header-actions {
+      width: 100%;
+      flex: 1 1 auto;
+    }
+
+    .roles-search {
+      flex: 1;
+      width: auto;
+    }
+  }
+
+  /* MOBILE */
+
+  @media (max-width: 700px) {
+    .roles-page {
+      padding: 6px;
+    }
+
+    .roles-header {
+      margin-bottom: 8px;
+    }
+
+    .roles-title {
+      font-size: 17px !important;
+    }
+
+    .roles-subtitle {
+      font-size: 11px !important;
+    }
+
+    .roles-summary-content .user-summary-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      width: 100%;
+      gap: 6px;
+    }
+
+    .roles-summary-content .user-summary-card {
+      width: 100%;
+      min-height: 44px;
+      padding: 5px;
+      gap: 5px;
+    }
+
+    .roles-summary-content .user-summary-icon {
+      flex: 0 0 24px;
+      width: 24px !important;
+      height: 24px !important;
+    }
+
+    .roles-summary-content .user-summary-icon .MuiSvgIcon-root {
+      font-size: 14px;
+    }
+
+    .roles-summary-content .user-summary-value {
+      font-size: 14px !important;
+    }
+
+    .roles-header-actions {
+      gap: 6px;
+    }
+
+    .roles-search {
+      flex: 1;
+      width: auto;
+    }
+
+    .role-add-button {
+      min-height: 34px !important;
+    }
+
+    .roles-toolbar {
+      min-height: 34px;
+      padding: 0 9px;
+    }
+
+    .roles-table {
+      min-width: 600px;
+    }
+
+    .roles-table .MuiTableCell-root {
+      padding: 6px 8px !important;
+      font-size: 11px !important;
+    }
+  }
+
+  /* SMALL MOBILE */
+
+  @media (max-width: 400px) {
+    .roles-page {
+      padding: 4px;
+    }
+
+    .roles-summary-content .user-summary-grid {
+      gap: 4px;
+    }
+
+    .roles-summary-content .user-summary-card {
+      min-height: 40px;
+      padding: 4px;
+    }
+
+    .roles-summary-content .user-summary-icon {
+      display: none !important;
+    }
+
+    .roles-summary-content .user-summary-label {
+      font-size: 8px !important;
+    }
+
+    .roles-summary-content .user-summary-value {
+      font-size: 13px !important;
+    }
+
+    .roles-header-actions {
+      gap: 5px;
+    }
+
+    .roles-search .MuiOutlinedInput-root {
+      height: 32px;
+      font-size: 10px;
+    }
+
+    .role-add-button {
+      min-height: 32px !important;
+      padding: 5px 8px !important;
+      font-size: 10px !important;
+    }
+  }
+
+  /* DARK MODE */
+
+  :root[data-theme="dark"] .roles-page {
+    color: var(--text-primary);
+  }
+
+  :root[data-theme="dark"] .roles-summary-content .user-summary-card,
+  :root[data-theme="dark"] .roles-table-card {
+    background: var(--surface) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  :root[data-theme="dark"] .roles-summary-content .user-summary-label {
+    color: var(--text-secondary);
+  }
+
+  :root[data-theme="dark"] .roles-summary-content .user-summary-value,
+  :root[data-theme="dark"] .roles-title,
+  :root[data-theme="dark"] .roles-selection-title,
+  :root[data-theme="dark"] .role-field {
+    color: var(--text-primary);
+  }
+
+  :root[data-theme="dark"] .roles-subtitle {
+    color: var(--text-secondary);
+  }
+
+  :root[data-theme="dark"] .roles-table .MuiTableHead-root .MuiTableCell-root {
+    background: var(--table-header-background);
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+  }
+
+  :root[data-theme="dark"] .roles-table .MuiTableBody-root .MuiTableCell-root {
+    background: var(--surface);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+
+  :root[data-theme="dark"] .roles-table .MuiTableBody-root .MuiTableRow-root:hover,
+  :root[data-theme="dark"] .roles-table .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root {
+    background: var(--table-row-hover);
+  }
+
+  :root[data-theme="dark"] .roles-toolbar {
+    border-color: var(--border-color);
+  }
+
+  :root[data-theme="dark"] .roles-search .MuiOutlinedInput-root {
+    background: var(--input-background);
+    color: var(--text-primary);
+  }
+
+  :root[data-theme="dark"] .roles-search .MuiOutlinedInput-notchedOutline {
+    border-color: var(--border-color);
+  }
+
+  :root[data-theme="dark"] .role-action-button {
+    color: var(--text-secondary) !important;
+  }
+
+  /* REDUCED MOTION */
+
+  @media (prefers-reduced-motion: reduce) {
+    .roles-page *,
+    .roles-page *::before,
+    .roles-page *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
   }
 }

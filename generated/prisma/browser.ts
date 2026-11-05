@@ -23,11 +23,6 @@ export * from './enums';
  */
 export type User = Prisma.UserModel
 /**
- * Model UserToken
- * 
- */
-export type UserToken = Prisma.UserTokenModel
-/**
  * Model Role
  * 
  */
@@ -42,3 +37,8 @@ export type Permission = Prisma.PermissionModel
  * 
  */
 export type RolePermission = Prisma.RolePermissionModel
+/**
+ * Model UserToken
+ * 
+ */
+export type UserToken = Prisma.UserTokenModel

@@ -1,14 +1,14 @@
 
-/*
+/* =========================================
    USER PAGE — MAIN LAYOUT
-*/
+========================================= */
 
 .user-page {
   width: 100%;
   max-width: 1600px;
   min-width: 0;
   margin: 0 auto;
-  padding: 6px;
+  padding: 5px;
   box-sizing: border-box;
   container-type: inline-size;
   color: var(--text-primary);
@@ -33,7 +33,7 @@
 .user-page-title {
   margin: 0;
   color: var(--text-primary);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: -0.3px;
@@ -42,11 +42,13 @@
 .user-page-subtitle {
   margin: 3px 0 0;
   color: var(--text-secondary);
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1.4;
 }
 
-/* SUMMARY + TOOLBAR */
+/* =========================================
+   SUMMARY CARDS
+========================================= */
 
 .user-summary-toolbar-row {
   display: flex;
@@ -55,7 +57,7 @@
   gap: 8px;
   width: 100%;
   min-width: 0;
-  margin-bottom: 9px;
+  margin-bottom: 8px;
 }
 
 .user-summary-wrapper {
@@ -78,15 +80,13 @@
   min-width: 0;
 }
 
-/* SUMMARY CARDS */
-
 .user-summary-card {
   display: flex;
   align-items: center;
   gap: 7px;
   width: 100%;
   min-width: 0;
-  min-height: 48px;
+  min-height: 46px;
   padding: 6px 8px;
   overflow: hidden;
   box-sizing: border-box;
@@ -138,12 +138,14 @@
 .user-summary-value {
   margin: 0 !important;
   color: var(--summary-card-text);
-  font-size: 16px !important;
+  font-size: 15px !important;
   font-weight: 700 !important;
   line-height: 1.2 !important;
 }
 
-/* USER TOOLBAR */
+/* =========================================
+   USER TOOLBAR
+========================================= */
 
 .user-toolbar-section {
   display: flex;
@@ -152,7 +154,6 @@
   flex: 1 1 auto;
   min-width: 0;
   margin-left: auto;
-  margin-top: 0;
 }
 
 .user-toolbar-section > * {
@@ -163,8 +164,6 @@
   min-width: 0;
 }
 
-/* SEARCH */
-
 .user-toolbar-section .MuiTextField-root,
 .user-search-field {
   width: 145px;
@@ -173,7 +172,7 @@
 
 .user-toolbar-section .MuiOutlinedInput-root,
 .user-search-field .MuiOutlinedInput-root {
-  height: 29px;
+  height: 30px;
   border-radius: 6px;
   background: var(--input-background);
   color: var(--text-primary);
@@ -217,10 +216,8 @@
   text-align: left;
 }
 
-/* TOOLBAR BUTTONS */
-
 .user-toolbar-section .MuiButton-root {
-  min-height: 29px;
+  min-height: 30px;
   padding: 4px 9px;
   border-radius: 6px;
   font-size: 10px;
@@ -232,11 +229,11 @@
 
 .create-user-button {
   min-width: 0 !important;
-  min-height: 29px !important;
+  min-height: 30px !important;
   padding: 4px 9px !important;
   border-radius: 6px !important;
   background-color: var(--primary) !important;
-  color: #ffffff !important;
+  color: #fff !important;
   font-size: 10px !important;
   font-weight: 600 !important;
   line-height: 1.3 !important;
@@ -258,67 +255,9 @@
   font-size: 15px;
 }
 
-/* TABLE CARD */
-
-.user-table-card {
-  width: 100%;
-  min-width: 0;
-  margin-top: 0;
-  overflow: hidden;
-  border: 1px solid var(--border-color);
-  border-radius: 8px !important;
-  background: var(--surface);
-  color: var(--text-primary);
-  box-shadow: var(--card-shadow) !important;
-}
-
-.user-table-card .MuiTableContainer-root {
-  width: 100%;
-  overflow-x: auto;
-  background: var(--surface);
-}
-
-.user-table-card .MuiTable-root {
-  width: 100%;
-  min-width: 680px;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.user-table-card .MuiTableHead-root .MuiTableCell-root {
-  height: 34px;
-  padding: 6px 9px !important;
-  background: var(--table-header-background);
-  color: var(--text-secondary);
-  font-size: 9px !important;
-  font-weight: 700 !important;
-  white-space: nowrap;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.user-table-card .MuiTableBody-root .MuiTableCell-root {
-  height: 36px;
-  padding: 6px 9px !important;
-  background: var(--surface);
-  color: var(--text-primary);
-  font-size: 11px !important;
-  line-height: 1.35;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.user-table-card .MuiTableBody-root .MuiTableRow-root {
-  transition: background-color 0.15s ease;
-}
-
-.user-table-card .MuiTableBody-root .MuiTableRow-root:hover {
-  background: var(--table-row-hover);
-}
-
-.user-table-card .MuiTableBody-root .MuiTableRow-root:last-child .MuiTableCell-root {
-  border-bottom: none;
-}
-
-/* TABLE TOOLBAR */
+/* =========================================
+   TABLE TOOLBAR
+========================================= */
 
 .user-table-toolbar {
   display: flex;
@@ -350,7 +289,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 6px;
+  gap: 8px;
   width: 100%;
   min-width: 0;
 }
@@ -359,28 +298,37 @@
   width: 180px;
 }
 
-/* TABLE WRAPPER */
+/* =========================================
+   TABLE CARD
+========================================= */
 
-.user-table-wrapper {
+.user-table-card {
   width: 100%;
   min-width: 0;
+  margin-top: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: 8px !important;
   background: var(--surface);
+  color: var(--text-primary);
+  box-shadow: var(--card-shadow) !important;
 }
 
-.user-table-container {
+.user-table-card .MuiTableContainer-root {
   width: 100%;
   overflow-x: auto;
-  border: 1px solid var(--border-color);
-  border-radius: 7px;
   background: var(--surface);
 }
 
+.user-table-card .MuiTable-root,
 .user-table {
   width: 100%;
   min-width: 680px;
   border-collapse: collapse;
+  border-spacing: 0;
 }
 
+.user-table-card .MuiTableHead-root .MuiTableCell-root,
 .user-table .MuiTableHead-root .MuiTableCell-root {
   height: 34px;
   padding: 6px 9px !important;
@@ -392,26 +340,48 @@
   border-bottom: 1px solid var(--border-color);
 }
 
+.user-table-card .MuiTableBody-root .MuiTableCell-root,
 .user-table .MuiTableBody-root .MuiTableCell-root {
-  height: 36px;
+  height: 35px;
   padding: 6px 9px !important;
   background: var(--surface);
   color: var(--text-primary);
-  font-size: 11px !important;
-  font-weight: 400;
+  font-size: 10px !important;
+  line-height: 1.35;
   white-space: nowrap;
   border-bottom: 1px solid var(--border-color);
 }
 
-.user-table .MuiTableBody-root .MuiTableRow-root:last-child .MuiTableCell-root {
-  border-bottom: none;
+.user-table-card .MuiTableBody-root .MuiTableRow-root,
+.user-table .MuiTableBody-root .MuiTableRow-root {
+  transition: background-color 0.15s ease;
 }
 
+.user-table-card .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root,
 .user-table .MuiTableBody-root .MuiTableRow-root:hover .MuiTableCell-root {
   background: var(--table-row-hover);
 }
 
-/* USER INFO */
+.user-table-card .MuiTableBody-root .MuiTableRow-root:last-child .MuiTableCell-root,
+.user-table .MuiTableBody-root .MuiTableRow-root:last-child .MuiTableCell-root {
+  border-bottom: none;
+}
+
+.user-table-wrapper {
+  width: 100%;
+  min-width: 0;
+  background: var(--surface);
+}
+
+.user-table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--surface);
+}
+
+/* =========================================
+   USER INFO
+========================================= */
 
 .user-info {
   display: flex;
@@ -453,7 +423,9 @@
   padding: 0 7px !important;
 }
 
-/* ACTIONS */
+/* =========================================
+   ACTIONS + COLUMN SETTINGS
+========================================= */
 
 .user-actions {
   width: 90px;
@@ -492,8 +464,6 @@
   font-size: 15px !important;
 }
 
-/* COLUMN SETTINGS */
-
 .user-column-settings {
   width: 44px;
   min-width: 44px;
@@ -516,7 +486,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 7px;
   white-space: nowrap;
 }
 
@@ -580,7 +550,9 @@
   font-size: 10px;
 }
 
-/* PAGINATION */
+/* =========================================
+   PAGINATION
+========================================= */
 
 .user-table-card .MuiTablePagination-root,
 .user-table-pagination {
@@ -643,7 +615,9 @@
   font-size: 11px;
 }
 
-/* USER FORM OVERLAY */
+/* =========================================
+   USER FORM
+========================================= */
 
 .user-form-overlay {
   position: fixed;
@@ -652,18 +626,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 12px;
   box-sizing: border-box;
   background: rgb(15 23 42 / 42%);
   backdrop-filter: blur(3px);
   overflow-y: auto;
 }
 
-/* USER FORM CARD */
-
 .user-form-card {
   width: 100%;
-  max-width: 650px;
+  max-width: 750px;
   max-height: calc(100dvh - 20px);
   overflow-x: hidden;
   overflow-y: auto;
@@ -678,29 +650,33 @@
 }
 
 .user-form-card .MuiCardContent-root {
-  padding: 15px !important;
+  padding: 14px !important;
   background: var(--surface);
 }
 
+/* FORM HEADER */
+
 .user-form-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 9px;
-  margin-bottom: 11px;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
   border-bottom: none !important;
 }
 
 .user-form-title {
   color: var(--text-primary);
-  font-size: 16px !important;
+  font-size: 15px !important;
   font-weight: 700 !important;
+  line-height: 1.3;
 }
 
 .user-form-subtitle {
   margin-top: 3px !important;
   color: var(--text-secondary);
   font-size: 10px !important;
+  line-height: 1.4;
 }
 
 /* FORM GRID */
@@ -708,24 +684,27 @@
 .user-form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  column-gap: 16px;
+  row-gap: 16px;
   width: 100%;
+  align-items: start;
 }
 
 .user-form-grid > * {
   min-width: 0;
 }
 
+.user-form-grid .MuiFormControl-root,
 .user-form-grid .MuiTextField-root {
   width: 100%;
+  min-width: 0;
+  margin: 0;
 }
 
 /* FORM INPUTS */
 
 .user-form-card .MuiOutlinedInput-root {
-  display: flex;
-  align-items: center;
-  min-height: 40px;
+  min-height: 42px;
   border-radius: 7px;
   background: var(--input-background);
   color: var(--text-primary);
@@ -733,11 +712,11 @@
 }
 
 .user-form-card .MuiOutlinedInput-input {
-  height: auto;
-  padding: 9px 12px !important;
+  padding: 10px 12px !important;
   box-sizing: border-box;
-  text-align: left !important;
+  font-size: 11px;
   line-height: 1.4;
+  text-align: left !important;
 }
 
 .user-form-card .MuiOutlinedInput-input::placeholder {
@@ -746,10 +725,11 @@
   text-align: left !important;
 }
 
+/* LABEL */
+
 .user-form-card .MuiInputLabel-root {
   left: 0 !important;
   right: auto !important;
-  width: auto;
   max-width: calc(100% - 24px);
   color: var(--text-secondary);
   font-size: 11px;
@@ -760,10 +740,7 @@
 }
 
 .user-form-card .MuiInputLabel-root.MuiInputLabel-shrink {
-  left: 0 !important;
-  right: auto !important;
   width: max-content;
-  text-align: left !important;
   transform: translate(12px, -8px) scale(0.75) !important;
   transform-origin: top left !important;
 }
@@ -771,6 +748,8 @@
 .user-form-card .MuiInputLabel-root.Mui-focused {
   color: var(--primary);
 }
+
+/* INPUT BORDER */
 
 .user-form-card .MuiOutlinedInput-notchedOutline {
   border-color: var(--border-color);
@@ -791,7 +770,8 @@
   align-items: center !important;
   justify-content: flex-start !important;
   min-height: 0 !important;
-  padding: 9px 28px 9px 12px !important;
+  padding: 10px 28px 10px 12px !important;
+  font-size: 11px;
   text-align: left !important;
 }
 
@@ -800,13 +780,20 @@
   color: var(--text-secondary);
 }
 
-/* NRC */
+/* NRC GRID */
 
 .user-nrc-grid {
   display: grid;
   grid-column: 1 / -1;
   grid-template-columns: 1fr 2fr 1fr 2fr;
-  gap: 8px;
+  column-gap: 10px;
+  row-gap: 10px;
+  width: 100%;
+  min-width: 0;
+}
+
+.user-nrc-grid > * {
+  min-width: 0;
 }
 
 .user-nrc-grid .MuiInputBase-input,
@@ -818,27 +805,23 @@
   font-size: 10px !important;
 }
 
-.MuiMenu-paper .MuiMenuItem-root {
-  min-height: 30px;
-  padding: 5px 10px;
-  color: var(--text-primary);
-  font-size: 10px !important;
-}
-
-.MuiMenu-paper .MuiMenu-list {
-  padding: 3px 0;
-}
+/* NRC PREVIEW */
 
 .user-nrc-preview {
+  display: flex;
+  flex-direction: column;
   grid-column: 1 / -1;
-  padding: 7px 10px;
+  gap: 3px;
+  min-width: 0;
+  padding: 8px 10px;
   border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border-radius: 7px;
   background: var(--input-background);
 }
 
 .user-nrc-label {
   color: var(--text-secondary);
+  font-size: 10px !important;
 }
 
 .user-nrc-value {
@@ -859,17 +842,16 @@
 }
 
 .user-form-card .user-address .MuiOutlinedInput-root {
-  min-height: 42px !important;
-  height: 42px !important;
-  align-items: center;
-}
+  min-height: 36px !important;
+  height: 36px !important;
+  align-items:center !important;
 
 .user-form-card .user-address textarea.MuiInputBase-input {
-  min-height: 24px !important;
-  height: 24px !important;
-  padding: 5px 12px !important;
-  text-align: left !important;
+  min-height: 20px !important;
+  height: 20px !important;
+  padding: 7px 12px !important;
   box-sizing: border-box;
+  text-align: left !important;
 }
 
 /* VALIDATION */
@@ -888,34 +870,11 @@
   border-color: var(--danger);
 }
 
-/* FORM ACTIONS */
-
-.user-form-actions {
-  display: flex;
-  grid-column: 1 / -1;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 4px;
-  padding-top: 9px;
-  border-top: 1px solid var(--border-color);
-  background: var(--surface);
-}
-
-.user-form-actions button {
-  min-height: 32px;
-  padding: 5px 12px;
-  border-radius: 6px;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: none;
-}
-
-/* STATUS FIELD */
+/* STATUS */
 
 .user-status-field .MuiOutlinedInput-root {
-  height: 42px;
-  border-radius: 8px;
+  min-height: 42px;
+  border-radius: 7px;
   background: var(--input-background);
   color: var(--text-primary);
 }
@@ -929,11 +888,58 @@
 }
 
 .user-status-field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-  border: 2px solid var(--primary);
+  border: 1.5px solid var(--primary);
 }
 
 .user-status-field .status-placeholder {
   color: var(--muted-color);
+}
+
+/* FORM ACTIONS */
+
+.user-form-actions {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 2px;
+  padding-top: 9px;
+  border-top: 1px solid var(--border-color);
+  background: var(--surface);
+}
+
+.user-form-actions button {
+  min-width: 75px;
+  min-height: 34px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+/* DROPDOWN MENU */
+
+.MuiMenu-paper {
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.MuiMenu-paper .MuiMenu-list {
+  padding: 3px 0;
+}
+
+.MuiMenu-paper .MuiMenuItem-root {
+  min-height: 30px;
+  padding: 5px 10px;
+  color: var(--text-primary);
+  font-size: 10px !important;
+}
+
+.MuiMenu-paper .MuiMenuItem-root:hover {
+  background: var(--hover-background);
 }
 
 /* ANIMATION */
@@ -941,7 +947,7 @@
 @keyframes userFormShow {
   from {
     opacity: 0;
-    transform: translateY(10px) scale(0.98);
+    transform: translateY(8px) scale(0.99);
   }
 
   to {
@@ -950,19 +956,9 @@
   }
 }
 
-/* COLUMN MENU */
-
-.MuiMenu-paper {
-  background: var(--surface);
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-}
-
-.MuiMenu-paper .MuiMenuItem-root:hover {
-  background: var(--hover-background);
-}
-
-/* SMOOTH THEME TRANSITION */
+/* =========================================
+   THEME TRANSITIONS
+========================================= */
 
 .user-form-card,
 .user-form-card .MuiOutlinedInput-root,
@@ -972,13 +968,15 @@
 .user-table-card,
 .user-table-container {
   transition:
-    background-color 0.25s ease,
-    color 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-/* TABLET */
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
 
 @media (min-width: 701px) and (max-width: 900px) {
   .user-page {
@@ -1000,15 +998,16 @@
   }
 
   .user-form-card {
-    max-width: 600px;
+    max-width: 650px;
   }
 
   .user-form-card .MuiCardContent-root {
-    padding: 13px !important;
+    padding: 12px !important;
   }
 
   .user-form-grid {
-    gap: 9px;
+    column-gap: 12px;
+    row-gap: 14px;
   }
 }
 
@@ -1102,6 +1101,8 @@
     min-width: 680px;
   }
 
+  /* MOBILE FORM */
+
   .user-form-overlay {
     align-items: center;
     padding: 7px !important;
@@ -1119,7 +1120,7 @@
   }
 
   .user-form-title {
-    font-size: 15px !important;
+    font-size: 14px !important;
   }
 
   .user-form-subtitle {
@@ -1128,19 +1129,18 @@
 
   .user-form-grid {
     grid-template-columns: minmax(0, 1fr) !important;
-    gap: 8px !important;
+    column-gap: 0;
+    row-gap: 12px;
   }
 
   .user-nrc-grid {
     grid-column: 1 / -1;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 7px !important;
+    column-gap: 8px;
+    row-gap: 10px;
   }
 
-  .user-nrc-preview {
-    grid-column: 1 / -1;
-  }
-
+  .user-nrc-preview,
   .user-form-grid .user-address {
     grid-column: 1 / -1;
   }
@@ -1203,7 +1203,7 @@
   }
 
   .user-form-title {
-    font-size: 14px !important;
+    font-size: 13px !important;
   }
 
   .user-form-subtitle {
@@ -1211,7 +1211,7 @@
   }
 
   .user-form-grid {
-    gap: 7px !important;
+    row-gap: 10px;
   }
 
   .user-form-card .MuiOutlinedInput-root {
@@ -1229,7 +1229,7 @@
   }
 
   .user-form-card .MuiInputLabel-root {
-    font-size: 11px;
+    font-size: 10px;
     transform: translate(11px, 10px) scale(1) !important;
   }
 
@@ -1238,7 +1238,8 @@
   }
 
   .user-nrc-grid {
-    gap: 5px !important;
+    column-gap: 6px;
+    row-gap: 8px;
   }
 
   .user-nrc-grid .MuiInputBase-input,
@@ -1258,7 +1259,7 @@
   }
 }
 
-/* SHORT SCREEN HEIGHT */
+/* SHORT SCREEN */
 
 @media (max-height: 750px) {
   .user-form-overlay {
@@ -1276,11 +1277,11 @@
   }
 
   .user-form-header {
-    margin-bottom: 7px !important;
+    margin-bottom: 7px;
   }
 
   .user-form-grid {
-    gap: 6px !important;
+    row-gap: 10px;
   }
 
   .user-form-card .MuiOutlinedInput-root {
@@ -1297,7 +1298,7 @@
   }
 
   .user-form-actions {
-    padding-top: 6px !important;
+    padding-top: 6px;
   }
 }
 
@@ -1315,11 +1316,11 @@
   }
 
   .user-form-header {
-    margin-bottom: 5px !important;
+    margin-bottom: 5px;
   }
 
   .user-form-grid {
-    gap: 5px !important;
+    row-gap: 8px;
   }
 
   .user-form-card .MuiOutlinedInput-root {
@@ -1327,7 +1328,7 @@
   }
 
   .user-form-actions {
-    padding-top: 5px !important;
+    padding-top: 5px;
   }
 }
 
@@ -1341,4 +1342,5 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
 }

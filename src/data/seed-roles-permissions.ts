@@ -3,7 +3,6 @@ import "dotenv/config";
 
 import {
   PrismaClient,
-  UserRole,
   UserStatus,
   PermissionStatus,
 } from "../../generated/prisma/client";
@@ -19,14 +18,16 @@ if (!connectionString) {
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
+// Dynamic roles
 const roles = [
-  { name: "Admin", code: UserRole.ADMIN },
-  { name: "User", code: UserRole.USER },
-  { name: "Checker", code: UserRole.CHECKER },
-  { name: "Maker", code: UserRole.MAKER },
-  { name: "Approver", code: UserRole.APPROVER },
+  { name: "Admin", code: "ADMIN" },
+  { name: "User", code: "USER" },
+  { name: "Checker", code: "CHECKER" },
+  { name: "Maker", code: "MAKER" },
+  { name: "Approver", code: "APPROVER" },
 ];
 
+// Permissions
 const permissions = [
   {
     name: "Dashboard Read",
@@ -115,22 +116,32 @@ const permissions = [
 ];
 
 async function main() {
+  console.log("Starting roles and permissions seed...");
+
+  // 1. Create or update roles
   console.log("Seeding roles...");
 
   for (const role of roles) {
     await prisma.role.upsert({
-      where: { code: role.code },
-      update: {},
+      where: {
+        code: role.code,
+      },
+      update: {
+        name: role.name,
+      },
       create: {
         name: role.name,
         code: role.code,
         status: UserStatus.ACTIVE,
       },
     });
+
+    console.log(`Role ready: ${role.name}`);
   }
 
-  console.log("Roles created.");
+  console.log("Roles completed.");
 
+  // 2. Create or update permissions
   console.log("Seeding permissions...");
 
   for (const permission of permissions) {
@@ -141,36 +152,56 @@ async function main() {
           action: permission.action,
         },
       },
-      update: {},
+      update: {
+        name: permission.name,
+        description: permission.description,
+        status: PermissionStatus.ACTIVE,
+      },
       create: {
         ...permission,
         status: PermissionStatus.ACTIVE,
       },
     });
+
+    console.log(`Permission ready: ${permission.name}`);
   }
 
-  console.log("Permissions created.");
+  console.log("Permissions completed.");
 
+  // 3. Find Admin role
   const adminRole = await prisma.role.findUnique({
-    where: { code: UserRole.ADMIN },
+    where: {
+      code: "ADMIN",
+    },
   });
 
-  const activePermissions = await prisma.permission.findMany({
-    where: { status: PermissionStatus.ACTIVE },
-    select: { id: true },
-  });
-
-  if (adminRole) {
-    await prisma.rolePermission.createMany({
-      data: activePermissions.map((permission) => ({
-        roleId: adminRole.id,
-        permissionId: permission.id,
-      })),
-      skipDuplicates: true,
-    });
+  if (!adminRole) {
+    throw new Error("ADMIN role not found.");
   }
 
-  console.log("Admin permissions assigned.");
+  // 4. Get all active permissions
+  const activePermissions = await prisma.permission.findMany({
+    where: {
+      status: PermissionStatus.ACTIVE,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  // 5. Assign all permissions to Admin
+  await prisma.rolePermission.createMany({
+    data: activePermissions.map((permission) => ({
+      roleId: adminRole.id,
+      permissionId: permission.id,
+    })),
+    skipDuplicates: true,
+  });
+
+  console.log(
+    `Assigned ${activePermissions.length} permissions to Admin.`
+  );
+
   console.log("Seed completed successfully!");
 }
 
