@@ -2945,3 +2945,363 @@ button {
   }
 }
 
+
+/* 
+   PERMISSION MATRIX
+   LIGHT + DARK MODE
+*/
+
+.permission-matrix {
+  --matrix-bg: #ffffff;
+  --matrix-border: #e5e7eb;
+  --matrix-text: #1e293b;
+  --matrix-muted: #64748b;
+  --matrix-header: #f8fafc;
+  --matrix-row: #ffffff;
+  --matrix-row-alt: #f8fafc;
+  --matrix-hover: #f1edff;
+  --matrix-scrollbar: #cbd5e1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--matrix-text);
+}
+
+/* DARK THEME */
+
+:root[data-theme="dark"] .permission-matrix {
+  --matrix-bg: #221c35;
+  --matrix-border: #3b3450;
+  --matrix-text: #f1effa;
+  --matrix-muted: #aaa3bd;
+  --matrix-header: #29233d;
+  --matrix-row: #221c35;
+  --matrix-row-alt: #29233d;
+  --matrix-hover: #332b4a;
+  --matrix-scrollbar: #51476a;
+}
+
+/* CARD */
+
+.permission-matrix-card {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--matrix-border) !important;
+  border-radius: 9px !important;
+  background: var(--matrix-bg) !important;
+  color: var(--matrix-text);
+  box-shadow: none !important;
+}
+
+/* HEADER */
+
+.permission-matrix-toolbar {
+  min-height: 46px;
+  padding: 7px 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: var(--matrix-bg);
+  border-bottom: 1px solid var(--matrix-border);
+}
+
+.permission-matrix-heading {
+  min-width: 130px;
+}
+
+.permission-matrix-title {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  color: var(--matrix-text) !important;
+}
+
+.permission-matrix-subtitle {
+  margin-top: 2px !important;
+  font-size: 10px !important;
+  line-height: 1.3 !important;
+  color: var(--matrix-muted) !important;
+}
+
+/* FILTERS */
+
+.permission-matrix-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.matrix-filter {
+  min-width: 120px !important;
+}
+
+.matrix-filter .MuiInputBase-root {
+  height: 32px;
+  border-radius: 6px;
+  font-size: 11px;
+  color: var(--matrix-text);
+  background: var(--matrix-bg);
+}
+
+.matrix-filter .MuiInputLabel-root {
+  font-size: 11px;
+  color: var(--matrix-muted);
+}
+
+.matrix-filter .MuiOutlinedInput-notchedOutline {
+  border-color: var(--matrix-border);
+}
+
+.matrix-filter .MuiSelect-icon {
+  color: var(--matrix-muted);
+}
+
+.matrix-filter .MuiSelect-select {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.permission-matrix-controls .MuiChip-root {
+  height: 23px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* TABLE CONTAINER */
+
+.permission-matrix-container {
+  width: 100%;
+  max-height: 300px;
+  overflow: auto;
+  background: var(--matrix-bg);
+  scrollbar-width: thin;
+  scrollbar-color: var(--matrix-scrollbar) transparent;
+}
+
+.permission-matrix-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  background: var(--matrix-bg);
+}
+
+/* HIDE TABLE LINES */
+
+.permission-matrix-table .MuiTableCell-root {
+  border: none !important;
+}
+
+/* TABLE HEADER */
+
+.permission-matrix-table .MuiTableHead-root .MuiTableCell-root {
+  height: 34px;
+  padding: 3px 7px;
+  background: var(--matrix-header) !important;
+  color: var(--matrix-muted) !important;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+/* TABLE BODY */
+
+.permission-matrix-table .MuiTableBody-root .MuiTableCell-root {
+  height: 33px;
+  padding: 2px 7px;
+  font-size: 11px;
+  color: var(--matrix-text);
+}
+
+/* ROW BACKGROUND */
+
+.permission-matrix-table .matrix-module-row {
+  background: var(--matrix-row);
+  transition: background 0.15s ease;
+}
+
+.permission-matrix-table .matrix-module-row:nth-of-type(even) {
+  background: var(--matrix-row-alt);
+}
+
+.permission-matrix-table .matrix-module-row:hover {
+  background: var(--matrix-hover);
+}
+
+/* ID */
+
+.matrix-id-column {
+  width: 42px;
+  min-width: 42px;
+  max-width: 42px;
+  text-align: center !important;
+}
+
+.matrix-id {
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  color: var(--matrix-muted) !important;
+}
+
+/* MODULE */
+
+.matrix-module-column {
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+}
+
+.matrix-module-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.matrix-module-name {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  color: var(--matrix-text) !important;
+}
+
+.matrix-module-count {
+  font-size: 9px !important;
+  line-height: 1.2 !important;
+  color: var(--matrix-muted) !important;
+}
+
+/* ACTION */
+
+.matrix-action-column {
+  width: 72px;
+  min-width: 72px;
+  text-align: center !important;
+}
+
+.matrix-action-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.matrix-action-header .MuiTypography-root {
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--matrix-muted);
+}
+
+.matrix-action-header .MuiCheckbox-root {
+  padding: 0;
+}
+
+/* CHECKBOX */
+
+.permission-matrix-table .MuiCheckbox-root,
+.matrix-footer-actions .MuiCheckbox-root {
+  padding: 2px;
+  color: var(--matrix-muted);
+}
+
+.permission-matrix-table .MuiCheckbox-root .MuiSvgIcon-root,
+.matrix-footer-actions .MuiCheckbox-root .MuiSvgIcon-root {
+  font-size: 17px;
+}
+
+.permission-matrix-table .MuiCheckbox-root.Mui-checked,
+.matrix-footer-actions .MuiCheckbox-root.Mui-checked {
+  color: #8b5cf6;
+}
+
+.permission-matrix-table .MuiCheckbox-root.Mui-disabled {
+  opacity: 0.35;
+}
+
+/* EMPTY */
+
+.matrix-empty {
+  font-size: 11px !important;
+  color: var(--matrix-muted) !important;
+}
+
+/* FOOTER */
+
+.permission-matrix-footer {
+  min-height: 34px;
+  padding: 4px 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--matrix-bg);
+  border-top: 1px solid var(--matrix-border);
+  color: var(--matrix-muted);
+}
+
+.permission-matrix-footer > .MuiTypography-root,
+.matrix-footer-actions .MuiTypography-root {
+  font-size: 10px;
+}
+
+.matrix-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--matrix-text);
+}
+
+.permission-matrix-empty {
+  padding: 24px 12px;
+  text-align: center;
+}
+
+/* EMPTY TEXT */
+
+.permission-matrix-empty .MuiTypography-root {
+  color: var(--matrix-muted);
+}
+
+/* SELECT MENU */
+
+.MuiPopover-root .MuiMenu-paper,
+.MuiMenu-paper {
+  border: 1px solid var(--matrix-border, #e5e7eb);
+  border-radius: 7px !important;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+  .permission-matrix-toolbar {
+    align-items: flex-start;
+  }
+
+  .permission-matrix-controls {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .matrix-filter {
+    flex: 1;
+    min-width: 105px !important;
+  }
+
+  .permission-matrix-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+}

@@ -64,15 +64,6 @@ export type TableColumn = {
   label: string;
 };
 
-export type Role ={
-  id: number;
-  name: string;
-  description: string;
-  status: "Active" | "Inactive";
-  users: number;
-  permissions: number;
-}
-
 export type Permission = {
   id: number;
   name: string;
@@ -88,4 +79,26 @@ export type SummaryItem = {
   icon: ReactNode;
   color: string;
   background: string;
+};
+
+export type RoleStatus = "ACTIVE" | "INACTIVE";
+
+export type Role = {
+  id: number;
+  name: string;
+  code: string;
+  description: string;
+  status: RoleStatus;
+  createdAt: string;
+  updatedAt: string;
+  _count?: {
+    users: number;
+    rolePermissions: number;
+  };
+};
+
+export type RoleForm = {
+  name: string;
+  code: string;
+  status: RoleStatus;
 };

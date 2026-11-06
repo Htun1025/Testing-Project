@@ -1,16 +1,19 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import type { SummaryItem, Role, RoleForm, RoleStatus } from "@/types";
 
-import type { SummaryItem } from "@/types";
 import SummaryCards from "@/components/SummaryCard";
+import PermissionMatrix from "@/components/PermissionMatrix";
+
+import { initialRoles } from "@/data/RoleData";
+import { initialPermissions } from "@/data/PermissionData";
 
 import {
   Alert,
   Box,
   Button,
   Chip,
-  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -25,6 +28,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
   Typography,
@@ -40,26 +44,7 @@ import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 
 import "./role.css";
 
-type RoleStatus = "ACTIVE" | "INACTIVE";
-
-type Role = {
-  id: number;
-  name: string;
-  code: string;
-  status: RoleStatus;
-  createdAt: string;
-  updatedAt: string;
-  _count?: {
-    users: number;
-    rolePermissions: number;
-  };
-};
-
-type RoleForm = {
-  name: string;
-  code: string;
-  status: RoleStatus;
-};
+const DRAFT_ROLE_ID = -1;
 
 const initialForm: RoleForm = {
   name: "",
@@ -68,11 +53,10 @@ const initialForm: RoleForm = {
 };
 
 export default function RolePage() {
-  const [roles, setRoles] = useState<Role[]>([]);
-  const [search, setSearch] = useState("");
+  // STATE
 
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const [roles, setRoles] = useState<Role[]>(initialRoles);
+  const [search, setSearch] = useState("");
 
   const [open, setOpen] = useState(false);
   const [editingRole, setEditingRole] = useState<Role | null>(null);
@@ -83,40 +67,38 @@ export default function RolePage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // Fetch roles
-  const fetchRoles = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError("");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
-      const response = await fetch("/api/admin/role", {
-        method: "GET",
-        cache: "no-store",
-      });
+  // ACTIVE PERMISSIONS
 
-      const result = await response.json();
+  const activePermissionIds = useMemo(
+    () =>
+      initialPermissions
+        .filter((permission) => permission.status === "Active")
+        .map((permission) => permission.id),
+    [],
+  );
 
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to load roles.");
-      }
+  // PERMISSION MATRIX
 
-      setRoles(result.data ?? []);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to load roles.");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const [permissionMatrix, setPermissionMatrix] = useState<
+    Record<number, number[]>
+  >(() =>
+    Object.fromEntries(
+      initialRoles.map((role) => [
+        role.id,
+        role.code === "ADMIN" ? activePermissionIds : [],
+      ]),
+    ),
+  );
 
-  useEffect(() => {
-    fetchRoles();
-  }, [fetchRoles]);
+  // SUMMARY
 
-  // Summary counts
-  const activeRoles = roles.filter((item) => item.status === "ACTIVE").length;
+  const activeRoles = roles.filter((role) => role.status === "ACTIVE").length;
 
   const inactiveRoles = roles.filter(
-    (item) => item.status === "INACTIVE",
+    (role) => role.status === "INACTIVE",
   ).length;
 
   const summaries: SummaryItem[] = [
@@ -143,48 +125,124 @@ export default function RolePage() {
     },
   ];
 
-  // Search roles
+  // SEARCH
+
   const filteredRoles = useMemo(() => {
     const keyword = search.trim().toLowerCase();
 
     if (!keyword) return roles;
 
-    return roles.filter((item) =>
-      `${item.name} ${item.code} ${item.status}`
+    return roles.filter((role) =>
+      `${role.name} ${role.code} ${role.status}`
         .toLowerCase()
         .includes(keyword),
     );
   }, [roles, search]);
 
-  // Open create dialog
+  // PAGINATION
+
+  const safePage = Math.min(
+    page,
+    Math.max(0, Math.ceil(filteredRoles.length / rowsPerPage) - 1),
+  );
+
+  const paginatedRoles = useMemo(() => {
+    const start = safePage * rowsPerPage;
+    return filteredRoles.slice(start, start + rowsPerPage);
+  }, [filteredRoles, safePage, rowsPerPage]);
+
+  // OPEN CREATE DIALOG
+
   const openCreateDialog = () => {
     setEditingRole(null);
     setForm(initialForm);
     setError("");
+
+    setPermissionMatrix((previous) => ({
+      ...previous,
+      [DRAFT_ROLE_ID]: [],
+    }));
+
     setOpen(true);
   };
 
-  // Open edit dialog
-  const openEditDialog = (item: Role) => {
-    setEditingRole(item);
+  // OPEN EDIT DIALOG
+
+  const openEditDialog = (role: Role) => {
+    setEditingRole(role);
 
     setForm({
-      name: item.name,
-      code: item.code,
-      status: item.status,
+      name: role.name,
+      code: role.code,
+      status: role.status,
     });
+
+    setPermissionMatrix((previous) => ({
+      ...previous,
+      [role.id]: previous[role.id] ?? [],
+    }));
 
     setError("");
     setOpen(true);
   };
 
-  // Save role
-  const handleSave = async () => {
+  // CLOSE DIALOG
+
+  const closeDialog = () => {
+    setOpen(false);
+    setEditingRole(null);
+    setForm(initialForm);
+    setError("");
+
+    setPermissionMatrix((previous) => {
+      const { [DRAFT_ROLE_ID]: removed, ...rest } = previous;
+      return rest;
+    });
+  };
+
+  // PERMISSION TOGGLE
+
+  const handlePermissionToggle = (
+    roleId: number,
+    permissionId: number,
+    checked: boolean,
+  ) => {
+    setPermissionMatrix((previous) => {
+      const currentIds = previous[roleId] ?? [];
+
+      const updatedIds = checked
+        ? [...new Set([...currentIds, permissionId])]
+        : currentIds.filter((id) => id !== permissionId);
+
+      return {
+        ...previous,
+        [roleId]: updatedIds,
+      };
+    });
+  };
+
+  // SELECT ALL PERMISSIONS
+
+  const handleSelectAllPermissions = (roleId: number, checked: boolean) => {
+    setPermissionMatrix((previous) => ({
+      ...previous,
+      [roleId]: checked ? [...activePermissionIds] : [],
+    }));
+  };
+
+  // SAVE ROLE
+
+  const handleSave = () => {
     const name = form.name.trim();
     const code = form.code.trim();
 
     if (!name) {
       setError("Please enter a role name.");
+      return;
+    }
+
+    if (name !== name.toUpperCase()) {
+      setError("Role name must be uppercase.");
       return;
     }
 
@@ -205,84 +263,134 @@ export default function RolePage() {
       return;
     }
 
-    try {
-      setSaving(true);
-      setError("");
-      setSuccess("");
+    const duplicateCode = roles.some(
+      (role) =>
+        role.code.toLowerCase() === code.toLowerCase() &&
+        role.id !== editingRole?.id,
+    );
 
-      const url = editingRole
-        ? `/api/admin/role/${editingRole.id}`
-        : "/api/admin/role";
+    if (duplicateCode) {
+      setError("This role code already exists.");
+      return;
+    }
 
-      const response = await fetch(url, {
-        method: editingRole ? "PATCH" : "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          code,
-          status: form.status,
-        }),
-      });
+    const now = new Date().toISOString();
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to save role.");
-      }
-
-      setOpen(false);
-      setForm(initialForm);
-      setEditingRole(null);
-
-      setSuccess(
-        editingRole
-          ? "Role updated successfully."
-          : "Role created successfully.",
+    if (editingRole) {
+      setRoles((previous) =>
+        previous.map((role) =>
+          role.id === editingRole.id
+            ? {
+                ...role,
+                name,
+                code,
+                status: form.status,
+                updatedAt: now,
+              }
+            : role,
+        ),
       );
 
-      await fetchRoles();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to save role.");
-    } finally {
-      setSaving(false);
-    }
-  };
+      setSuccess("Role updated successfully.");
+    } else {
+      const newRole: Role = {
+        id: Math.max(0, ...roles.map((role) => role.id)) + 1,
+        name,
+        code,
+        description: `${name} role`,
+        status: form.status,
+        createdAt: now,
+        updatedAt: now,
+        _count: {
+          users: 0,
+          rolePermissions: 0,
+        },
+      };
 
-  // Delete role
-  const handleDelete = async () => {
-    if (!deleteTarget) return;
+      setRoles((previous) => [newRole, ...previous]);
 
-    try {
-      setSaving(true);
-      setError("");
-      setSuccess("");
+      setPermissionMatrix((previous) => {
+        const selectedIds = previous[DRAFT_ROLE_ID] ?? [];
+        const { [DRAFT_ROLE_ID]: removed, ...rest } = previous;
 
-      const response = await fetch(`/api/admin/role/${deleteTarget.id}`, {
-        method: "DELETE",
+        return {
+          ...rest,
+          [newRole.id]: selectedIds,
+        };
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to delete role.");
-      }
-
-      setDeleteTarget(null);
-      setSuccess("Role deleted successfully.");
-
-      await fetchRoles();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to delete role.");
-    } finally {
-      setSaving(false);
+      setPage(0);
+      setSuccess("Role created successfully.");
     }
+
+    closeDialog();
   };
+
+  // DELETE ROLE
+
+  const handleDelete = () => {
+    if (!deleteTarget) return;
+
+    if ((deleteTarget._count?.users ?? 0) > 0) {
+      setError("A role assigned to existing users cannot be deleted.");
+      setDeleteTarget(null);
+      return;
+    }
+
+    const deletedId = deleteTarget.id;
+
+    setRoles((previous) => previous.filter((role) => role.id !== deletedId));
+
+    setPermissionMatrix((previous) => {
+      const { [deletedId]: removed, ...rest } = previous;
+      return rest;
+    });
+
+    setDeleteTarget(null);
+    setSuccess("Role deleted successfully.");
+
+    const remainingCount = filteredRoles.length - 1;
+    const lastPage = Math.max(0, Math.ceil(remainingCount / rowsPerPage) - 1);
+
+    setPage((currentPage) => Math.min(currentPage, lastPage));
+  };
+
+  // REFRESH FAKE DATA
+
+  const handleRefresh = () => {
+    setRoles(initialRoles);
+
+    setPermissionMatrix(
+      Object.fromEntries(
+        initialRoles.map((role) => [
+          role.id,
+          role.code === "ADMIN" ? activePermissionIds : [],
+        ]),
+      ),
+    );
+
+    setSearch("");
+    setPage(0);
+    setError("");
+    setSuccess("Role data refreshed.");
+  };
+
+  // MATRIX ROLE
+
+  const matrixRole = {
+    id: editingRole?.id ?? DRAFT_ROLE_ID,
+    name: form.name.trim() || "NEW ROLE",
+  };
+
+  const selectedPermissionCount = (
+    permissionMatrix[matrixRole.id] ?? []
+  ).filter((id) => activePermissionIds.includes(id)).length;
+
+  // UI
 
   return (
     <Box className="roles-page">
-      {/* Page Header */}
+      {/* PAGE HEADER */}
       <Box className="roles-header">
         <Box className="roles-header-content">
           <Typography component="h1" className="roles-title">
@@ -295,7 +403,7 @@ export default function RolePage() {
         </Box>
       </Box>
 
-      {/* Notifications */}
+      {/* NOTIFICATIONS */}
       {error && !open && (
         <Alert severity="error" onClose={() => setError("")} sx={{ mb: 1.5 }}>
           {error}
@@ -312,7 +420,7 @@ export default function RolePage() {
         </Alert>
       )}
 
-      {/* Summary Cards + Search + Add */}
+      {/* SUMMARY + SEARCH + ADD */}
       <Box className="roles-summary-row">
         <Box className="roles-summary-content">
           <SummaryCards items={summaries} />
@@ -324,7 +432,10 @@ export default function RolePage() {
             size="small"
             placeholder="Search roles..."
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              setSearch(event.target.value);
+              setPage(0);
+            }}
             slotProps={{
               input: {
                 startAdornment: (
@@ -347,18 +458,18 @@ export default function RolePage() {
         </Stack>
       </Box>
 
-      {/* Roles Table */}
+      {/* ROLES TABLE */}
       <Paper className="roles-table-card" elevation={0}>
         <Box className="roles-toolbar">
           <Typography className="roles-selection-title">All Roles</Typography>
 
-          <Button size="small" onClick={fetchRoles} disabled={loading}>
-            {loading ? "Loading..." : "Refresh"}
+          <Button size="small" onClick={handleRefresh}>
+            Refresh
           </Button>
         </Box>
 
         <TableContainer>
-          <Table className="roles-table">
+          <Table className="roles-table" size="small" sx={{ minWidth: 650 }}>
             <TableHead>
               <TableRow>
                 <TableCell>ROLE NAME</TableCell>
@@ -371,68 +482,47 @@ export default function RolePage() {
             </TableHead>
 
             <TableBody>
-              {loading ? (
+              {filteredRoles.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} align="center">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 1,
-                        py: 3,
-                      }}
-                    >
-                      <CircularProgress size={20} />
-                      <Typography sx={{ fontSize: 12 }}>
-                        Loading roles...
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                </TableRow>
-              ) : filteredRoles.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={6} align="center">
-                    <Typography
-                      sx={{
-                        py: 3,
-                        fontSize: 12,
-                        color: "var(--text-secondary)",
-                      }}
-                    >
+                    <Typography sx={{ py: 3, fontSize: 12 }}>
                       No roles found.
                     </Typography>
                   </TableCell>
                 </TableRow>
               ) : (
-                filteredRoles.map((item) => (
-                  <TableRow key={item.id}>
+                paginatedRoles.map((role) => (
+                  <TableRow key={role.id}>
                     <TableCell>
                       <Typography className="role-field">
-                        {item.name}
+                        {role.name}
                       </Typography>
                     </TableCell>
 
                     <TableCell>
                       <Chip
-                        label={item.code}
+                        label={role.code}
                         size="small"
                         className="role-code-chip"
                       />
                     </TableCell>
 
                     <TableCell align="center">
-                      {item._count?.users ?? 0}
+                      {role._count?.users ?? 0}
                     </TableCell>
 
                     <TableCell align="center">
-                      {item._count?.rolePermissions ?? 0}
+                      {
+                        (permissionMatrix[role.id] ?? []).filter((id) =>
+                          activePermissionIds.includes(id),
+                        ).length
+                      }
                     </TableCell>
 
                     <TableCell align="center">
                       <Chip
-                        className={`role-status ${item.status.toLowerCase()}`}
-                        label={item.status === "ACTIVE" ? "Active" : "Inactive"}
+                        className={`role-status ${role.status.toLowerCase()}`}
+                        label={role.status === "ACTIVE" ? "Active" : "Inactive"}
                         size="small"
                       />
                     </TableCell>
@@ -446,7 +536,7 @@ export default function RolePage() {
                         <IconButton
                           className="role-action-button"
                           size="small"
-                          onClick={() => openEditDialog(item)}
+                          onClick={() => openEditDialog(role)}
                           title="Edit role"
                         >
                           <EditOutlinedIcon fontSize="small" />
@@ -455,7 +545,7 @@ export default function RolePage() {
                         <IconButton
                           className="role-action-button delete"
                           size="small"
-                          onClick={() => setDeleteTarget(item)}
+                          onClick={() => setDeleteTarget(role)}
                           title="Delete role"
                         >
                           <DeleteOutlineIcon fontSize="small" />
@@ -468,112 +558,188 @@ export default function RolePage() {
             </TableBody>
           </Table>
         </TableContainer>
+
+        {/* PAGINATION */}
+        <TablePagination
+          component="div"
+          count={filteredRoles.length}
+          page={safePage}
+          onPageChange={(_, newPage) => setPage(newPage)}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={(event) => {
+            setRowsPerPage(Number(event.target.value));
+            setPage(0);
+          }}
+          rowsPerPageOptions={[5, 10, 25, 50]}
+          labelRowsPerPage="Rows:"
+          sx={{
+            borderTop: "1px solid var(--border-color, #e2e8f0)",
+            "& .MuiTablePagination-toolbar": {
+              minHeight: 38,
+              fontSize: 11,
+            },
+            "& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows":
+              {
+                fontSize: 10,
+              },
+            "& .MuiTablePagination-select": {
+              fontSize: 10,
+            },
+            "& .MuiIconButton-root": {
+              padding: "4px",
+            },
+          }}
+        />
       </Paper>
 
-      {/* Add / Edit Dialog */}
+      {/* ADD / EDIT ROLE DIALOG */}
       <Dialog
         open={open}
-        onClose={() => !saving && setOpen(false)}
+        onClose={closeDialog}
         fullWidth
-        maxWidth="sm"
+        maxWidth="lg"
+        scroll="paper"
+        className="role-dialog"
       >
-        <DialogTitle>{editingRole ? "Edit Role" : "Add New Role"}</DialogTitle>
+        <DialogTitle className="role-dialog-title">
+          <Box>
+            <Typography className="role-dialog-heading">
+              {editingRole ? "Edit Role" : "Add New Role"}
+            </Typography>
 
-        <DialogContent>
-          <Stack spacing={2} sx={{ mt: 1 }}>
-            {/* Role Name */}
-            <TextField
-              label="Role Name"
-              fullWidth
-              size="small"
-              required
-              placeholder="e.g. Supervisor"
-              value={form.name}
-              onChange={(event) =>
-                setForm((previous) => ({
-                  ...previous,
-                  name: event.target.value,
-                }))
-              }
-              error={
-                form.name.length > 0 && form.name !== form.name.toUpperCase()
-              }
-              helperText={
-                form.name.length > 0 && form.name !== form.name.toUpperCase()
-                  ? "Lowercase letters are not allowed. Use uppercase letters."
-                  : "Use uppercase letters, numbers and underscores."
-              }
-            />
+            <Typography className="role-dialog-subtitle">
+              Configure role information and access permissions
+            </Typography>
+          </Box>
+        </DialogTitle>
 
-            {/* Role Code */}
-            <TextField
-              label="Role Code"
-              fullWidth
-              size="small"
-              required
-              placeholder="e.g. SUPERVISOR"
-              value={form.code}
-              onChange={(event) =>
-                setForm((previous) => ({
-                  ...previous,
-                  code: event.target.value,
-                }))
-              }
-              error={
-                form.code.length > 0 && form.code !== form.code.toUpperCase()
-              }
-              helperText={
-                form.code.length > 0 && form.code !== form.code.toUpperCase()
-                  ? "Lowercase letters are not allowed. Use uppercase letters."
-                  : "Use uppercase letters, numbers and underscores."
-              }
-            />
+        <DialogContent className="role-dialog-content" dividers>
+          <Stack spacing={1.5}>
+            {/* ROLE INFORMATION */}
+            <Box className="role-form-section">
+              <Typography className="role-section-title">
+                Role Information
+              </Typography>
 
-            {/* Status */}
-            <TextField
-              select
-              label="Status"
-              fullWidth
-              size="small"
-              value={form.status}
-              onChange={(event) =>
-                setForm((previous) => ({
-                  ...previous,
-                  status: event.target.value as RoleStatus,
-                }))
-              }
-            >
-              <MenuItem value="ACTIVE">Active</MenuItem>
-              <MenuItem value="INACTIVE">Inactive</MenuItem>
-            </TextField>
+              <Box className="role-form-grid">
+                <TextField
+                  label="Role Name"
+                  required
+                  fullWidth
+                  size="small"
+                  placeholder="e.g. SUPERVISOR"
+                  value={form.name}
+                  onChange={(event) =>
+                    setForm((previous) => ({
+                      ...previous,
+                      name: event.target.value,
+                    }))
+                  }
+                  error={
+                    form.name.length > 0 &&
+                    form.name !== form.name.toUpperCase()
+                  }
+                  helperText={
+                    form.name.length > 0 &&
+                    form.name !== form.name.toUpperCase()
+                      ? "Use uppercase letters."
+                      : "Uppercase letters, numbers and underscores."
+                  }
+                />
+
+                <TextField
+                  label="Role Code"
+                  required
+                  fullWidth
+                  size="small"
+                  placeholder="e.g. SUPERVISOR"
+                  value={form.code}
+                  onChange={(event) =>
+                    setForm((previous) => ({
+                      ...previous,
+                      code: event.target.value,
+                    }))
+                  }
+                  error={
+                    form.code.length > 0 &&
+                    form.code !== form.code.toUpperCase()
+                  }
+                  helperText={
+                    form.code.length > 0 &&
+                    form.code !== form.code.toUpperCase()
+                      ? "Use uppercase letters."
+                      : "Start with a letter; use uppercase and underscores."
+                  }
+                />
+
+                <TextField
+                  select
+                  label="Status"
+                  fullWidth
+                  size="small"
+                  value={form.status}
+                  onChange={(event) =>
+                    setForm((previous) => ({
+                      ...previous,
+                      status: event.target.value as RoleStatus,
+                    }))
+                  }
+                >
+                  <MenuItem value="ACTIVE">Active</MenuItem>
+                  <MenuItem value="INACTIVE">Inactive</MenuItem>
+                </TextField>
+              </Box>
+            </Box>
+
+            {/* PERMISSION MATRIX */}
+            <Box className="role-matrix-section">
+              <Box className="role-matrix-heading">
+                <Box>
+                  <Typography className="role-section-title">
+                    Role Permissions
+                  </Typography>
+
+                  <Typography className="role-matrix-description">
+                    Select which permissions this role can access.
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Box className="role-matrix-container">
+                <PermissionMatrix
+                  roles={[matrixRole]}
+                  permissions={initialPermissions}
+                  matrix={permissionMatrix}
+                  activePermissionIds={activePermissionIds}
+                  onPermissionToggle={handlePermissionToggle}
+                  onSelectAll={handleSelectAllPermissions}
+                />
+              </Box>
+            </Box>
 
             {error && <Alert severity="error">{error}</Alert>}
           </Stack>
         </DialogContent>
 
-        <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button
-            onClick={() => setOpen(false)}
-            color="inherit"
-            disabled={saving}
-          >
+        <DialogActions className="role-dialog-actions">
+          <Button onClick={closeDialog} color="inherit">
             Cancel
           </Button>
 
           <Button
             variant="contained"
             onClick={handleSave}
-            disabled={saving || !form.name.trim() || !form.code.trim()}
+            disabled={!form.name.trim() || !form.code.trim()}
           >
-            {saving ? "Saving..." : editingRole ? "Update Role" : "Save Role"}
+            {editingRole ? "Update Role" : "Save Role"}
           </Button>
         </DialogActions>
       </Dialog>
 
-      {/* Delete Confirmation */}
+      {/* DELETE CONFIRMATION */}
       <Dialog
         open={Boolean(deleteTarget)}
-        onClose={() => !saving && setDeleteTarget(null)}
+        onClose={() => setDeleteTarget(null)}
         fullWidth
         maxWidth="xs"
       >
@@ -597,17 +763,10 @@ export default function RolePage() {
         </DialogContent>
 
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={() => setDeleteTarget(null)} disabled={saving}>
-            Cancel
-          </Button>
+          <Button onClick={() => setDeleteTarget(null)}>Cancel</Button>
 
-          <Button
-            color="error"
-            variant="contained"
-            onClick={handleDelete}
-            disabled={saving}
-          >
-            {saving ? "Deleting..." : "Delete"}
+          <Button color="error" variant="contained" onClick={handleDelete}>
+            Delete
           </Button>
         </DialogActions>
       </Dialog>

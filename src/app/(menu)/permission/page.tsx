@@ -25,6 +25,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   Tabs,
   TextField,
@@ -39,6 +40,7 @@ import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import LayersOutlinedIcon from "@mui/icons-material/LayersOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import "./permission.css";
+import PermissionMatrix from "@/components/PermissionMatrix";
 
 type PermissionForm = {
   name: string;
@@ -72,6 +74,7 @@ const createInitialMatrix = (roles: Role[]) => {
 
 export default function PermissionPage() {
   const [roles] = useState<Role[]>(initialRoles);
+
   const [permissions, setPermissions] =
     useState<Permission[]>(initialPermissions);
 
@@ -83,7 +86,12 @@ export default function PermissionPage() {
   const [search, setSearch] = useState("");
   const [moduleFilter, setModuleFilter] = useState("All");
 
+  // Pagination
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
   const [open, setOpen] = useState(false);
+
   const [editingPermission, setEditingPermission] = useState<Permission | null>(
     null,
   );
@@ -120,9 +128,15 @@ export default function PermissionPage() {
     });
   }, [permissions, search, moduleFilter]);
 
+  // Pagination
+  const paginatedPermissions = useMemo(() => {
+    const start = page * rowsPerPage;
+
+    return filteredPermissions.slice(start, start + rowsPerPage);
+  }, [filteredPermissions, page, rowsPerPage]);
+
   // Summary values
   const activeCount = activePermissionIds.length;
-
   const activeModules = modules.length;
 
   // Open add dialog
@@ -167,6 +181,9 @@ export default function PermissionPage() {
       };
 
       setPermissions((previous) => [...previous, newPermission]);
+
+      // Go to the last page after adding
+      setPage(Math.floor(permissions.length / rowsPerPage));
     }
 
     setOpen(false);
@@ -174,7 +191,26 @@ export default function PermissionPage() {
 
   // Delete permission
   const handleDelete = (id: number) => {
-    setPermissions((previous) => previous.filter((item) => item.id !== id));
+    setPermissions((previous) => {
+      const updated = previous.filter((item) => item.id !== id);
+
+      const filteredCount = updated.filter((item) => {
+        const searchText =
+          `${item.name} ${item.module} ${item.action} ${item.description}`.toLowerCase();
+
+        const matchesSearch = searchText.includes(search.toLowerCase());
+        const matchesModule =
+          moduleFilter === "All" || item.module === moduleFilter;
+
+        return matchesSearch && matchesModule;
+      }).length;
+
+      const lastPage = Math.max(0, Math.ceil(filteredCount / rowsPerPage) - 1);
+
+      setPage((current) => Math.min(current, lastPage));
+
+      return updated;
+    });
 
     // Remove deleted permission from every role
     setMatrix((previous) => {
@@ -228,6 +264,7 @@ export default function PermissionPage() {
     setTab(newValue);
     setSearch("");
     setModuleFilter("All");
+    setPage(0);
   };
 
   return (
@@ -308,7 +345,10 @@ export default function PermissionPage() {
               size="small"
               placeholder="Search permissions..."
               value={search}
-              onChange={(event) => setSearch(event.target.value)}
+              onChange={(event) => {
+                setSearch(event.target.value);
+                setPage(0);
+              }}
               slotProps={{
                 input: {
                   startAdornment: (
@@ -366,7 +406,10 @@ export default function PermissionPage() {
                 size="small"
                 className="permission-module-filter"
                 value={moduleFilter}
-                onChange={(event) => setModuleFilter(event.target.value)}
+                onChange={(event) => {
+                  setModuleFilter(event.target.value);
+                  setPage(0);
+                }}
               >
                 <MenuItem value="All">All Modules</MenuItem>
 
@@ -392,7 +435,7 @@ export default function PermissionPage() {
                 </TableHead>
 
                 <TableBody>
-                  {filteredPermissions.map((item) => (
+                  {paginatedPermissions.map((item) => (
                     <TableRow key={item.id}>
                       <TableCell>
                         <Typography className="permission-name">
@@ -468,136 +511,51 @@ export default function PermissionPage() {
                 </TableBody>
               </Table>
             </TableContainer>
+
+            <TablePagination
+              component="div"
+              count={filteredPermissions.length}
+              page={page}
+              onPageChange={(_, newPage) => setPage(newPage)}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={(event) => {
+                setRowsPerPage(parseInt(event.target.value, 10));
+                setPage(0);
+              }}
+              rowsPerPageOptions={[5, 10, 25, 50]}
+              labelRowsPerPage="Rows:"
+              sx={{
+                borderTop: "1px solid var(--border-color, #e2e8f0)",
+                "& .MuiTablePagination-toolbar": {
+                  minHeight: 42,
+                  fontSize: 12,
+                },
+                "& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows":
+                  {
+                    fontSize: 11,
+                  },
+                "& .MuiTablePagination-select": {
+                  fontSize: 11,
+                },
+                "& .MuiIconButton-root": {
+                  padding: "4px",
+                },
+              }}
+            />
           </>
         )}
 
         {/* Role Permission Matrix */}
         {tab === 1 && (
-          <>
-            <Box className="permission-toolbar matrix-toolbar">
-              <Box>
-                <Typography className="permission-section-title">
-                  Role × Permission Matrix
-                </Typography>
-
-                <Typography className="permission-matrix-subtitle">
-                  Select permissions for each role
-                </Typography>
-              </Box>
-            </Box>
-
-            <TableContainer className="permission-table-container">
-              <Table className="permission-matrix-table" stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className="matrix-permission-column">
-                      PERMISSION
-                    </TableCell>
-
-                    {roles.map((role) => {
-                      const selectedIds = matrix[role.id] || [];
-
-                      const selectedActiveCount = activePermissionIds.filter(
-                        (id) => selectedIds.includes(id),
-                      ).length;
-
-                      const allSelected =
-                        activePermissionIds.length > 0 &&
-                        selectedActiveCount === activePermissionIds.length;
-
-                      const someSelected =
-                        selectedActiveCount > 0 && !allSelected;
-
-                      return (
-                        <TableCell
-                          key={role.id}
-                          align="center"
-                          className="matrix-role-column"
-                        >
-                          <Typography className="matrix-role-name">
-                            {role.name}
-                          </Typography>
-
-                          <Checkbox
-                            size="small"
-                            checked={allSelected}
-                            indeterminate={someSelected}
-                            onChange={(event) =>
-                              handleSelectAll(role.id, event.target.checked)
-                            }
-                            title="Select all active permissions"
-                          />
-
-                          <Typography className="matrix-count">
-                            {getRolePermissionCount(role.id)} selected
-                          </Typography>
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                </TableHead>
-
-                <TableBody>
-                  {permissions.map((permission) => (
-                    <TableRow key={permission.id}>
-                      <TableCell className="matrix-permission-cell">
-                        <Typography className="permission-name">
-                          {permission.name}
-                        </Typography>
-
-                        <Typography className="permission-description">
-                          {permission.module} / {permission.action}
-                        </Typography>
-                      </TableCell>
-
-                      {roles.map((role) => {
-                        const checked = (matrix[role.id] || []).includes(
-                          permission.id,
-                        );
-
-                        return (
-                          <TableCell
-                            key={role.id}
-                            align="center"
-                            className="matrix-checkbox-cell"
-                          >
-                            <Checkbox
-                              size="small"
-                              checked={checked}
-                              disabled={permission.status === "Inactive"}
-                              onChange={(event) =>
-                                handlePermissionToggle(
-                                  role.id,
-                                  permission.id,
-                                  event.target.checked,
-                                )
-                              }
-                            />
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  ))}
-
-                  {permissions.length === 0 && (
-                    <TableRow>
-                      <TableCell colSpan={roles.length + 1} align="center">
-                        <Typography className="permission-empty">
-                          No permissions available.
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-
-            <Box className="matrix-footer">
-              <Typography className="permission-matrix-subtitle">
-                Inactive permissions cannot be assigned.
-              </Typography>
-            </Box>
-          </>
+          <PermissionMatrix
+            roles={roles}
+            permissions={permissions}
+            matrix={matrix}
+            activePermissionIds={activePermissionIds}
+            onPermissionToggle={handlePermissionToggle}
+            onSelectAll={handleSelectAll}
+            showFilters
+          />
         )}
       </Paper>
 
