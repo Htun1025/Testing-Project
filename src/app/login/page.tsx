@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import {
   Box,
@@ -18,13 +19,16 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
+import { initialLoginUsers } from "@/data/UserData";
+
 import "./login.css";
 
 export default function LoginPage() {
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const [form, setForm] = useState({
     username: "",
@@ -34,7 +38,7 @@ export default function LoginPage() {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     setUsernameError("");
@@ -57,36 +61,36 @@ export default function LoginPage() {
 
     if (hasError) return;
 
-    try {
-      setLoading(true);
+    setLoading(true);
 
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ identifier, password }),
-      });
+    const foundUser = initialLoginUsers.find(
+      (user) =>
+        (user.username.toLowerCase() === identifier.toLowerCase() ||
+          user.email.toLowerCase() === identifier.toLowerCase()) &&
+        user.password === password &&
+        user.status === "Active",
+    );
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          setPasswordError("Invalid username/email or password");
-        } else {
-          setPasswordError(data.message || "Login failed");
-        }
-        return;
-      }
-
-      window.location.href = "/dashboard";
-    } catch (error) {
-      console.error("Login error:", error);
-      setPasswordError("Unable to connect to the server");
-    } finally {
+    if (!foundUser) {
+      setPasswordError("Invalid username/email or password");
       setLoading(false);
+      return;
     }
+
+    // Password မပါသော user data ကို သိမ်းမယ်
+    const { password: _, ...safeUser } = foundUser;
+
+    // Remember Me ရွေးထားရင် localStorage၊ မရွေးရင် sessionStorage
+    const storage = rememberMe ? localStorage : sessionStorage;
+
+    // Login data သိမ်းမယ်
+    localStorage.removeItem("fake-auth-user");
+    sessionStorage.removeItem("fake-auth-user");
+
+    storage.setItem("fake-auth-user", JSON.stringify(safeUser));
+
+    // Dashboard သို့သွားမယ်
+    router.push("/dashboard");
   }
 
   return (
@@ -156,6 +160,7 @@ export default function LoginPage() {
             error={Boolean(passwordError)}
             helperText={passwordError}
             autoComplete="current-password"
+            className="login-input"
             disabled={loading}
             slotProps={{
               input: {
@@ -183,12 +188,6 @@ export default function LoginPage() {
               },
             }}
           />
-
-          {error && (
-            <Typography color="error" sx={{ mt: 1, fontSize: 14 }}>
-              {error}
-            </Typography>
-          )}
 
           <Box className="login-options">
             <FormControlLabel

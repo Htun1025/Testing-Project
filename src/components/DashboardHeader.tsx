@@ -19,7 +19,6 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutlineOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 
-import "@/app/globals.css";
 import { useTheme } from "./ThemeProvider";
 
 type DashboardHeaderProps = {
@@ -82,7 +81,9 @@ export default function DashboardHeader({
     <AppBar position="sticky" elevation={0} className="topbar">
       <Toolbar className="topbar-toolbar">
         <Box className="topbar-actions">
+          {/* Theme Toggle */}
           <IconButton
+            className="topbar-icon-button"
             onClick={toggleTheme}
             aria-label={
               theme === "light" ? "Switch to dark mode" : "Switch to light mode"
@@ -96,9 +97,10 @@ export default function DashboardHeader({
             )}
           </IconButton>
 
+          {/* Notifications */}
           <IconButton
             aria-label="Notifications"
-            className="notification-button"
+            className="topbar-icon-button notification-button"
           >
             <NotificationsNoneOutlinedIcon />
             <span className="notification-dot" />
@@ -106,6 +108,7 @@ export default function DashboardHeader({
 
           {/* Profile Avatar */}
           <IconButton
+            className="topbar-profile-trigger"
             onClick={handleAvatarClick}
             aria-label="Open profile menu"
             aria-controls={open ? "profile-menu" : undefined}
@@ -129,18 +132,23 @@ export default function DashboardHeader({
               vertical: "top",
               horizontal: "right",
             }}
+            slotProps={{
+              paper: {
+                className: "topbar-profile-menu",
+              },
+            }}
           >
-            <MenuItem onClick={handleViewProfile}>
-              <PersonOutlineIcon fontSize="small" sx={{ mr: 1 }} />
+            <MenuItem onClick={handleViewProfile} className="topbar-menu-item">
+              <PersonOutlineIcon className="topbar-menu-icon" />
               View Profile
             </MenuItem>
 
             <MenuItem
               onClick={handleLogout}
               disabled={loggingOut}
-              sx={{ color: "error.main" }}
+              className="topbar-menu-item topbar-logout-item"
             >
-              <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
+              <LogoutIcon className="topbar-menu-icon" />
               {loggingOut ? "Logging out..." : "Logout"}
             </MenuItem>
           </Menu>

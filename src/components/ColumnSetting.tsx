@@ -14,7 +14,7 @@ import {
 
 import ViewColumnIcon from "@mui/icons-material/ViewColumn";
 import type { TableColumn } from "@/types";
-import "@/app/(menu)/user/user.css";
+
 type ColumnSettingsProps = {
   columns: TableColumn[];
   visibleColumns: string[];

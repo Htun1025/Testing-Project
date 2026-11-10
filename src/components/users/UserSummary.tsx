@@ -6,6 +6,7 @@ import PersonOffOutlinedIcon from "@mui/icons-material/PersonOffOutlined";
 
 import type { User, SummaryItem } from "@/types";
 import SummaryCards from "@/components/SummaryCard";
+import "@/app/globals.css";
 
 type Props = {
   users: User[];

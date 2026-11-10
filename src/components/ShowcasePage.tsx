@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import type { ReactNode } from "react";
-
+import "@/app/globals.css";
 type ShowcasePageProps = {
   title: string;
   description: string;

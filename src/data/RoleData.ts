@@ -137,9 +137,5 @@ export const initialRoles: Role[] = [
 
 //database in calling use data
 /* 
-export const initialForm: RoleForm = {
-  name: "",
-  code: "",
-  status: "ACTIVE",
-};
+
 */

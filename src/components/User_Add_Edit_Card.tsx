@@ -19,9 +19,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import type { User, UserForm } from "@/types";
 import AppButton from "@/components/AppButton";
 import nrcData from "@/data/nrc.json";
-
-import "@/app/(menu)/user/user.css";
-
+import "@/app/globals.css";
 type UserDialogProps = {
   open: boolean;
   editingUser: User | null;
@@ -227,16 +225,16 @@ export default function UserForm({
   );
 
   return (
-    <Box className="user-form-overlay">
-      <Card className="user-form-card" elevation={0}>
+    <Box className="form-overlay">
+      <Card className="form-card" elevation={0}>
         <CardContent>
-          <Box className="user-form-header">
+          <Box className="form-header">
             <Box>
-              <Typography className="user-form-title">
+              <Typography className="form-title">
                 {isEditing ? "Edit User" : "Create User"}
               </Typography>
 
-              <Typography className="user-form-subtitle">
+              <Typography className="form-subtitle">
                 {isEditing
                   ? "Update user information"
                   : "Enter details to create a new user"}
@@ -246,7 +244,7 @@ export default function UserForm({
             <IconButton
               onClick={handleClose}
               aria-label="Close form"
-              className="user-form-close"
+              className="form-close"
               disabled={loading}
             >
               <CloseIcon />
@@ -254,7 +252,7 @@ export default function UserForm({
           </Box>
 
           <form onSubmit={handleSubmit} noValidate>
-            <Box className="user-form-grid">
+            <Box className="form-grid">
               <TextField
                 label="Name"
                 value={form.name}
@@ -304,7 +302,7 @@ export default function UserForm({
                 fullWidth
               />
 
-              <Box className="user-nrc-grid">
+              <Box className="nrc-grid">
                 <TextField
                   label="Region / State"
                   select
@@ -385,19 +383,17 @@ export default function UserForm({
                 />
               </Box>
 
-              <Box className="user-nrc-preview">
+              <Box className="nrc-preview">
                 <Typography className="user-nrc-label" variant="caption">
                   NRC Preview
                 </Typography>
 
-                <Typography className="user-nrc-value">
+                <Typography className="nrc-value">
                   {fullNrc || "Your NRC information"}
                 </Typography>
 
                 {errors.nrc && (
-                  <Typography className="user-nrc-error">
-                    {errors.nrc}
-                  </Typography>
+                  <Typography className="nrc-error">{errors.nrc}</Typography>
                 )}
               </Box>
 
@@ -430,13 +426,13 @@ export default function UserForm({
                         );
                       }
 
-                      return selected === "ACTIVE" ? "Active" : "Inactive";
+                      return selected === "ACTIVE" ? "ACTIVE" : "INACTIVE";
                     },
                   },
                 }}
               >
-                <MenuItem value="ACTIVE">Active</MenuItem>
-                <MenuItem value="INACTIVE">Inactive</MenuItem>
+                <MenuItem value="ACTIVE">ACTIVE</MenuItem>
+                <MenuItem value="INACTIVE">INACTIVE</MenuItem>
               </TextField>
               {error && (
                 <Box sx={{ gridColumn: "1 / -1" }}>
@@ -444,7 +440,7 @@ export default function UserForm({
                 </Box>
               )}
 
-              <Box className="user-form-actions">
+              <Box className="form-actions">
                 <AppButton
                   onClick={handleClose}
                   color="inherit"

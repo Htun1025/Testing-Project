@@ -1,158 +1,86 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
-import { Box, Chip, Typography, CircularProgress } from "@mui/material";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import PersonOffOutlinedIcon from "@mui/icons-material/PersonOffOutlined";
 
-import AnnouncementBanner from "@/components/AnnouncementBanner";
-import UserSummary from "@/components/users/UserSummary";
-import UserTable from "@/components/UserTable";
+import SummaryCards from "@/components/SummaryCard";
+import UserActivityChart from "@/components/dashboard/UserActivityChart";
+import UserGrowthChart from "@/components/dashboard/UserGrowthChart";
 
-import type { User } from "@/types";
+import useDashboardUser from "@/hooks/useDashboardUser";
 
-import "./dashboard.css";
-import "../user/user.css";
+import type { SummaryItem } from "@/types";
 
 export default function DashboardPage() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [search, setSearch] = useState("");
+  const {
+    loading,
+    error,
+    totalUsers,
+    activeUsers,
+    inactiveUsers,
+    growthData,
+    totalNewUsers,
+  } = useDashboardUser();
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  // Fetch users
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setLoading(true);
-        setError("");
-
-        const response = await fetch("/api/admin/users");
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || "Failed to load users.");
-        }
-
-        const userList = Array.isArray(data)
-          ? data
-          : (data.users ?? data.data ?? []);
-
-        setUsers(userList);
-      } catch (err) {
-        console.error("Dashboard users error:", err);
-
-        setError(err instanceof Error ? err.message : "Something went wrong.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
-  // Search users
-  const filteredUsers = useMemo(() => {
-    const keyword = search.trim().toLowerCase();
-
-    if (!keyword) return users;
-
-    return users.filter((user) =>
-      [
-        user.id,
-        user.name,
-        user.username,
-        user.email,
-        user.phone,
-        user.nrc,
-        user.address,
-        user.status,
-      ].some((value) =>
-        String(value ?? "")
-          .toLowerCase()
-          .includes(keyword),
-      ),
-    );
-  }, [users, search]);
-
-  // Pagination
-  const paginatedUsers = useMemo(() => {
-    const startIndex = page * rowsPerPage;
-
-    return filteredUsers.slice(startIndex, startIndex + rowsPerPage);
-  }, [filteredUsers, page, rowsPerPage]);
-
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleRowsPerPageChange = (value: string) => {
-    setRowsPerPage(Number(value));
-    setPage(0);
-  };
+  const summaryItems: SummaryItem[] = [
+    {
+      label: "Total Users",
+      value: loading ? "—" : totalUsers.toLocaleString(),
+      icon: <PeopleAltOutlinedIcon />,
+      color: "#7251b3",
+      background: "rgba(114, 81, 179, 0.12)",
+    },
+    {
+      label: "Active Users",
+      value: loading ? "—" : activeUsers.toLocaleString(),
+      icon: <PersonOutlineOutlinedIcon />,
+      color: "#16a34a",
+      background: "rgba(22, 163, 74, 0.12)",
+    },
+    {
+      label: "Inactive Users",
+      value: loading ? "—" : inactiveUsers.toLocaleString(),
+      icon: <PersonOffOutlinedIcon />,
+      color: "#d97706",
+      background: "rgba(217, 119, 6, 0.12)",
+    },
+  ];
 
   return (
-    <Box className="dashboard-page">
-      <Box className="dashboard-heading">
-        <Box className="dashboard-heading-content">
-          <h1 className="dashboard-title">Dashboard</h1>
+    <Box className="page-container dashboard-page">
+      {/* USER SUMMARY */}
+      <SummaryCards items={summaryItems} />
 
-          <p className="dashboard-subtitle">
-            Welcome back! Here's what's happening today.
-          </p>
+      {/* CHARTS */}
+      {!loading && !error && (
+        <Box className="dashboard-charts-grid">
+          <UserActivityChart />
+
+          <UserGrowthChart
+            growthData={growthData}
+            totalNewUsers={totalNewUsers}
+          />
         </Box>
-      </Box>
+      )}
 
-      {/* Announcement */}
-      <AnnouncementBanner />
-
-      {/* User Summary */}
-      <UserSummary users={users} />
-
-      {/* User Information */}
-      <Box className="table-heading">
-        <Box>
-          <Typography component="h2" className="section-title">
-            User Information
-          </Typography>
-
-          <Typography className="section-subtitle">
-            View your registered users
-          </Typography>
-        </Box>
-
-        <Chip
-          label={`${filteredUsers.length} records`}
-          className="records-chip"
-        />
-      </Box>
-
-      {/* Loading */}
-      {loading ? (
+      {/* LOADING */}
+      {loading && (
         <Box className="dashboard-loading">
-          <CircularProgress />
+          <CircularProgress className="dashboard-loading-spinner" size={26} />
+
+          <Typography className="dashboard-loading-text">
+            Loading dashboard...
+          </Typography>
         </Box>
-      ) : error ? (
-        /* Error */
+      )}
+
+      {/* ERROR */}
+      {!loading && error && (
         <Box className="empty-users">
           <Typography className="dashboard-error">{error}</Typography>
-        </Box>
-      ) : (
-        /* User Table */
-        <Box className="dashboard-table-wrapper">
-          <UserTable
-            users={paginatedUsers}
-            totalCount={filteredUsers.length}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            onPageChange={handlePageChange}
-            onRowsPerPageChange={handleRowsPerPageChange}
-            showActions={false}
-            showColumnSettings={true}
-          />
         </Box>
       )}
     </Box>

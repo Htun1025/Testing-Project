@@ -33,7 +33,7 @@ export default function MenuLayoutClient({ children }: MenuLayoutClientProps) {
         sidebarExpanded ? "sidebar-expanded" : "sidebar-collapsed"
       }`}
     >
-      {/* Sidebar */}
+      {/* Fixed Sidebar */}
       <Box
         className="sidebar-hover-area"
         onMouseEnter={() => setHovered(true)}
@@ -50,7 +50,7 @@ export default function MenuLayoutClient({ children }: MenuLayoutClientProps) {
         />
       </Box>
 
-      {/* Main UI */}
+      {/* Scrollable Main UI */}
       <Box component="main" className="main-content">
         <DashboardHeader
           search={headerSearch}

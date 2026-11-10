@@ -1,5 +1,15 @@
 import type { ReactNode } from "react";
 
+export type FakeLoginUser = {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  status: "Active" | "Inactive";
+  role: "ADMIN" | "USER";
+};
+
+
 export type UserFormData = {
     name: string;
     username: string;
@@ -73,6 +83,14 @@ export type Permission = {
   status: "Active" | "Inactive";
 };
 
+export type PermissionForm = {
+  name: string;
+  module: string;
+  action: string;
+  description: string;
+  status: "Active" | "Inactive";
+};
+
 export type SummaryItem = {
   label: string;
   value: number | string;
@@ -101,4 +119,13 @@ export type RoleForm = {
   name: string;
   code: string;
   status: RoleStatus;
+};
+
+
+export type SettingsProfile = {
+  name: string;
+  email: string;
+  phone: string;
+  status: string;
+  about: string;
 };

@@ -6,16 +6,15 @@ import useUsers from "@/hooks/useUser";
 
 import UserSummary from "@/components/users/UserSummary";
 import UserToolbar from "@/components/users/UserToolbar";
-import UserTable from "@/components/UserTable";
+import UserTable from "@/components/users/UserTable";
 import UserDialog from "@/components/User_Add_Edit_Card";
 
-import type { UserForm } from "@/types";
-
-import "./user.css";
+import type { User, UserForm } from "@/types";
 
 export default function UserPage() {
   const userState = useUsers();
 
+  // Form input ပြောင်းလဲမှုကို handle လုပ်ရန်
   const handleFormChange = (field: keyof UserForm, value: string) => {
     userState.setForm((previous) => ({
       ...previous,
@@ -23,24 +22,31 @@ export default function UserPage() {
     }));
   };
 
-  return (
-    <Box className="user-page">
-      <Box className="user-page-heading">
-        <Box className="user-page-heading-content">
-          <h1 className="user-page-title">User Management</h1>
+  // Edit button နှိပ်သောအခါ Dialog ဖွင့်ရန်
+  const handleEdit = (user: User) => {
+    userState.openEditDialog(user);
+  };
 
-          <p className="user-page-subtitle">
+  return (
+    <Box className="page-container user-page">
+      {/* PAGE HEADER */}
+      <Box className="page-header">
+        <Box className="page-header-content">
+          <h1 className="page-title">User Management</h1>
+
+          <p className="page-subtitle">
             Manage users, contact information and account status.
           </p>
         </Box>
       </Box>
 
-      <Box className="user-summary-toolbar-row">
-        <Box className="user-summary-wrapper">
+      {/* SUMMARY + TOOLBAR */}
+      <Box className="summary-row">
+        <Box className="summary-content">
           <UserSummary users={userState.users} />
         </Box>
 
-        <Box className="user-toolbar-section">
+        <Box className="page-actions">
           <UserToolbar
             search={userState.search}
             onSearchChange={(value) => {
@@ -53,25 +59,29 @@ export default function UserPage() {
         </Box>
       </Box>
 
+      {/* ERROR MESSAGE */}
       {userState.error && !userState.dialogOpen && (
-        <Box sx={{ mb: 1, color: "error.main", fontSize: 13 }}>
-          {userState.error}
-        </Box>
+        <Box className="user-page-error">{userState.error}</Box>
       )}
 
-      <Paper className="user-table-card" elevation={0}>
+      {/* USER TABLE */}
+      <Paper className="table-card" elevation={0}>
         <UserTable
-          users={userState.visibleUsers}
+          users={userState.paginatedUsers}
           totalCount={userState.filteredUsers.length}
           page={userState.page}
           rowsPerPage={userState.rowsPerPage}
-          onEdit={userState.openEditDialog}
+          onEdit={handleEdit}
           onDelete={userState.handleDelete}
           onPageChange={userState.setPage}
-          onRowsPerPageChange={userState.handleRowsPerPageChange}
+          onRowsPerPageChange={(value) => {
+            userState.setRowsPerPage(Number(value));
+            userState.setPage(0);
+          }}
         />
       </Paper>
 
+      {/* ADD / EDIT DIALOG */}
       <UserDialog
         open={userState.dialogOpen}
         editingUser={userState.editingUser}
