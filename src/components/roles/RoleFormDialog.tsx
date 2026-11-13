@@ -17,6 +17,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+
+import { useTranslations } from "next-intl";
 import "@/app/globals.css";
 
 type MatrixRole = {
@@ -61,6 +63,14 @@ export default function RoleFormDialog({
   onPermissionToggle,
   onSelectAll,
 }: RoleFormDialogProps) {
+  const t = useTranslations("Roles");
+
+  const nameInvalid =
+    form.name.length > 0 && form.name !== form.name.toUpperCase();
+
+  const codeInvalid =
+    form.code.length > 0 && form.code !== form.code.toUpperCase();
+
   return (
     <Dialog
       open={open}
@@ -73,11 +83,11 @@ export default function RoleFormDialog({
       <DialogTitle className="form-dialog-title">
         <Box>
           <Typography className="role-dialog-heading">
-            {editingRole ? "Edit Role" : "Add New Role"}
+            {editingRole ? t("editRole") : t("addNewRole")}
           </Typography>
 
           <Typography className="role-dialog-subtitle">
-            Configure role information and access permissions
+            {t("roleDialogSubtitle")}
           </Typography>
         </Box>
       </DialogTitle>
@@ -86,49 +96,41 @@ export default function RoleFormDialog({
         <Stack spacing={1.5}>
           <Box className="role-form-section">
             <Typography className="role-section-title">
-              Role Information
+              {t("roleInformation")}
             </Typography>
 
             <Box className="role-form-grid">
               <TextField
-                label="Role Name"
+                label={t("roleName")}
                 required
                 fullWidth
                 size="small"
-                placeholder="e.g. SUPERVISOR"
+                placeholder={t("roleNamePlaceholder")}
                 value={form.name}
                 onChange={(event) => onNameChange(event.target.value)}
-                error={
-                  form.name.length > 0 && form.name !== form.name.toUpperCase()
-                }
+                error={nameInvalid}
                 helperText={
-                  form.name.length > 0 && form.name !== form.name.toUpperCase()
-                    ? "Use uppercase letters."
-                    : "Uppercase letters, numbers and underscores."
+                  nameInvalid ? t("uppercaseOnly") : t("roleNameHelper")
                 }
               />
 
               <TextField
-                label="Role Code"
+                label={t("roleCode")}
                 required
                 fullWidth
                 size="small"
-                placeholder="e.g. SUPERVISOR"
+                placeholder={t("roleCodePlaceholder")}
                 value={form.code}
                 onChange={(event) => onCodeChange(event.target.value)}
-                error={
-                  form.code.length > 0 && form.code !== form.code.toUpperCase()
-                }
+                error={codeInvalid}
                 helperText={
-                  form.code.length > 0 && form.code !== form.code.toUpperCase()
-                    ? "Use uppercase letters."
-                    : "Start with a letter; use uppercase and underscores."
+                  codeInvalid ? t("uppercaseOnly") : t("roleCodeHelper")
                 }
               />
 
               <TextField
                 select
-                label="Status"
+                label={t("status")}
                 fullWidth
                 size="small"
                 value={form.status}
@@ -136,8 +138,8 @@ export default function RoleFormDialog({
                   onStatusChange(event.target.value as RoleStatus)
                 }
               >
-                <MenuItem value="ACTIVE">Active</MenuItem>
-                <MenuItem value="INACTIVE">Inactive</MenuItem>
+                <MenuItem value="ACTIVE">{t("active")}</MenuItem>
+                <MenuItem value="INACTIVE">{t("inactive")}</MenuItem>
               </TextField>
             </Box>
           </Box>
@@ -146,11 +148,11 @@ export default function RoleFormDialog({
             <Box className="role-matrix-heading">
               <Box>
                 <Typography className="role-section-title">
-                  Role Permissions
+                  {t("rolePermissions")}
                 </Typography>
 
                 <Typography className="role-matrix-description">
-                  Select which permissions this role can access.
+                  {t("rolePermissionsDescription")}
                 </Typography>
               </Box>
             </Box>
@@ -173,7 +175,7 @@ export default function RoleFormDialog({
 
       <DialogActions className="form-dialog-actions">
         <Button onClick={onClose} color="inherit">
-          Cancel
+          {t("cancel")}
         </Button>
 
         <Button
@@ -181,7 +183,7 @@ export default function RoleFormDialog({
           onClick={onSave}
           disabled={!form.name.trim() || !form.code.trim()}
         >
-          {editingRole ? "Update Role" : "Save Role"}
+          {editingRole ? t("updateRole") : t("saveRole")}
         </Button>
       </DialogActions>
     </Dialog>

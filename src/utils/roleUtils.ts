@@ -17,7 +17,7 @@ export const createInitialRoleMatrix = (
   permissions: Permission[] = initialPermissions,
 ): Record<number, number[]> => {
   const activePermissionIds = permissions
-    .filter((permission) => permission.status === "Active")
+    .filter((permission) => permission.status === "ACTIVE")
     .map((permission) => permission.id);
 
   return Object.fromEntries(

@@ -2,19 +2,16 @@ import type { ReactNode } from "react";
 
 export type FakeLoginUser = {
   id: number;
+  name: string;
   username: string;
   email: string;
+  phone: string;
+  nrc:string;
   password: string;
-  status: "Active" | "Inactive";
-  role: "ADMIN" | "USER";
-};
+  address: string;
+  status: "ACTIVE" | "INACTIVE";
+ role: "ADMIN" | "USER" | "CHECKER" | "MAKER" | "APPROVER";
 
-
-export type UserFormData = {
-    name: string;
-    username: string;
-    email: string;
-    password: string;
 };
 
 export type Props ={
@@ -40,9 +37,9 @@ export type User = {
   phone: string;
   nrc:string;
   address: string;
-  status: "Active" | "Inactive";
-  
-  role: "ADMIN" | "USER";
+  status: "ACTIVE" | "INACTIVE";
+ role: "ADMIN" | "USER" | "CHECKER" | "APPROVER";
+
 };
 
 export type UserForm = {
@@ -53,7 +50,7 @@ export type UserForm = {
   password?: string;
   nrc: string;
   address: string;
-  status: "Active" | "Inactive";
+  status: "ACTIVE" | "INACTIVE";
 
   
 };
@@ -65,7 +62,7 @@ export const emptyForm: UserForm = {
   phone: "",
   nrc: "",
   address: "",
-  status: "Active",
+  status: "ACTIVE",
 };
 
 
@@ -80,7 +77,7 @@ export type Permission = {
   module: string;
   action: string;
   description: string;
-  status: "Active" | "Inactive";
+  status: "ACTIVE" | "INACTIVE";
 };
 
 export type PermissionForm = {
@@ -88,7 +85,7 @@ export type PermissionForm = {
   module: string;
   action: string;
   description: string;
-  status: "Active" | "Inactive";
+  status: "ACTIVE" | "INACTIVE";
 };
 
 export type SummaryItem = {

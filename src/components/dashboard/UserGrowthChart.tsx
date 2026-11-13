@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
-
 import { LineChart } from "@mui/x-charts/LineChart";
+import { useTranslations } from "next-intl";
 import "@/app/globals.css";
 
 type GrowthData = {
@@ -19,15 +19,17 @@ export default function UserGrowthChart({
   growthData,
   totalNewUsers,
 }: UserGrowthChartProps) {
+  const t = useTranslations("Dashboard");
+
   return (
     <Card className="dashboard-chart-card" elevation={0}>
       <CardContent>
         <Stack direction="row" className="dashboard-chart-header">
           <Box>
-            <Typography className="chart-title">User Growth</Typography>
+            <Typography className="chart-title">{t("userGrowth")}</Typography>
 
             <Typography className="chart-subtitle">
-              Total users by User ID
+              {t("growthSubtitle")}
             </Typography>
           </Box>
 
@@ -36,7 +38,9 @@ export default function UserGrowthChart({
               {totalNewUsers}
             </Typography>
 
-            <Typography className="chart-subtitle">Total Users</Typography>
+            <Typography className="chart-subtitle">
+              {t("totalUsers")}
+            </Typography>
           </Box>
         </Stack>
 
@@ -47,13 +51,13 @@ export default function UserGrowthChart({
               {
                 scaleType: "point",
                 dataKey: "userId",
-                label: "User ID",
+                label: t("userId"),
               },
             ]}
             series={[
               {
                 dataKey: "users",
-                label: "Total Users",
+                label: t("totalUsers"),
                 color: "#16a34a",
                 curve: "linear",
                 area: true,

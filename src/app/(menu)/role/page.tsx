@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Alert, Typography } from "@mui/material";
+import { useLocale, useTranslations } from "next-intl";
 
 import RoleSummary from "@/components/roles/RoleSummary";
 import RoleToolbar from "@/components/roles/RoleToolbar";
@@ -11,6 +12,12 @@ import useRoles from "@/hooks/useRole";
 import "@/app/globals.css";
 
 export default function RolePage() {
+  const t = useTranslations("Roles");
+  const locale = useLocale();
+
+  console.log("Current Locale:", locale);
+  console.log("Role Title:", t("title"));
+  console.log("Add Role:", t("addRole"));
   const {
     roles,
     permissionMatrix,
@@ -55,11 +62,11 @@ export default function RolePage() {
       <Box className="page-header">
         <Box className="page-header-content">
           <Typography component="h1" className="page-title">
-            Role Management
+            {t("title")}
           </Typography>
 
           <Typography component="p" className="page-subtitle">
-            Manage system roles and access levels
+            {t("subtitle")}
           </Typography>
         </Box>
       </Box>
@@ -117,10 +124,7 @@ export default function RolePage() {
       {/* ROLE FORM DIALOG */}
       <RoleFormDialog
         open={open}
-        editingRole={Boolean(
-          // Editing role ရှိ/မရှိကို Hook ကနေ ပေးထားတဲ့ flag ဖြင့် စစ်နိုင်ပါတယ်။
-          false,
-        )}
+        editingRole={false}
         form={form}
         error={error}
         matrixRole={matrixRole}

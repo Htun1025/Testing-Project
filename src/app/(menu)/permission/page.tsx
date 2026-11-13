@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Paper, Tab, Tabs, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import LayersOutlinedIcon from "@mui/icons-material/LayersOutlined";
@@ -16,6 +17,8 @@ import usePermissions from "@/hooks/usePermissions";
 import "@/app/globals.css";
 
 export default function PermissionPage() {
+  const t = useTranslations("Permissions");
+
   const {
     roles,
     permissions,
@@ -60,11 +63,11 @@ export default function PermissionPage() {
       <Box className="page-header">
         <Box className="page-header-content">
           <Typography component="h1" className="page-title">
-            Permission Management
+            {t("title")}
           </Typography>
 
           <Typography component="p" className="page-subtitle">
-            Manage system permissions and role access
+            {t("subtitle")}
           </Typography>
         </Box>
       </Box>
@@ -96,13 +99,13 @@ export default function PermissionPage() {
           <Tab
             icon={<SecurityOutlinedIcon />}
             iconPosition="start"
-            label="Permissions"
+            label={t("permissionsTab")}
           />
 
           <Tab
             icon={<LayersOutlinedIcon />}
             iconPosition="start"
-            label="Role Matrix"
+            label={t("roleMatrix")}
           />
         </Tabs>
 

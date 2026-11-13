@@ -48,11 +48,11 @@ export default function useDashboardUser() {
   const totalUsers = users.length;
 
   const activeUsers = users.filter(
-    (user) => user.status === "Active",
+    (user) => user.status === "ACTIVE",
   ).length;
 
   const inactiveUsers = users.filter(
-    (user) => user.status === "Inactive",
+    (user) => user.status === "INACTIVE",
   ).length;
 
   // User Growth - User ID အလိုက်

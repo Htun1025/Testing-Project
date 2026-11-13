@@ -11,6 +11,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useTranslations } from "next-intl";
+
 import type { SettingsProfile } from "@/types";
 import "@/app/globals.css";
 
@@ -33,13 +35,10 @@ export type SettingsContentProps = {
   message: string;
 
   onProfileChange: (field: keyof SettingsProfile, value: string) => void;
-
   onChoosePhoto: () => void;
-
   onNotificationsChange: (value: boolean) => void;
   onEmailNotificationsChange: (value: boolean) => void;
   onDarkModeChange: (value: boolean) => void;
-
   onReset: () => void;
   onSave: () => void;
 };
@@ -60,6 +59,8 @@ export default function SettingsContent({
   onReset,
   onSave,
 }: SettingsContentProps) {
+  const t = useTranslations("Settings");
+
   return (
     <Box className="settings-content">
       {/* ACCOUNT INFO */}
@@ -68,18 +69,18 @@ export default function SettingsContent({
           <Box className="settings-content-heading">
             <Box>
               <Typography className="settings-section-title">
-                Account Information
+                {t("accountInformation")}
               </Typography>
 
               <Typography className="settings-section-subtitle">
-                Update your personal information
+                {t("updatePersonalInfo")}
               </Typography>
             </Box>
           </Box>
 
           <Box className="settings-form-grid">
             <TextField
-              label="Full Name"
+              label={t("fullName")}
               value={profile.name}
               onChange={(e) => onProfileChange("name", e.target.value)}
               fullWidth
@@ -87,7 +88,7 @@ export default function SettingsContent({
             />
 
             <TextField
-              label="Phone Number"
+              label={t("phoneNumber")}
               value={profile.phone}
               onChange={(e) => onProfileChange("phone", e.target.value)}
               fullWidth
@@ -95,7 +96,7 @@ export default function SettingsContent({
             />
 
             <TextField
-              label="Email Address"
+              label={t("emailAddress")}
               type="email"
               value={profile.email}
               onChange={(e) => onProfileChange("email", e.target.value)}
@@ -105,23 +106,25 @@ export default function SettingsContent({
 
             <TextField
               select
-              label="Status"
+              label={t("status")}
               value={profile.status}
               onChange={(e) => onProfileChange("status", e.target.value)}
               fullWidth
               size="small"
             >
-              <MenuItem value="ACTIVE">Active</MenuItem>
-              <MenuItem value="INACTIVE">Inactive</MenuItem>
+              <MenuItem value="ACTIVE">{t("active")}</MenuItem>
+              <MenuItem value="INACTIVE">{t("inactive")}</MenuItem>
             </TextField>
           </Box>
 
           <Divider className="settings-divider" />
 
-          <Typography className="settings-label">Profile Photo</Typography>
+          <Typography className="settings-label">
+            {t("profilePhoto")}
+          </Typography>
 
           <Typography className="settings-hint">
-            Upload a new photo (JPG, PNG)
+            {t("uploadPhotoHint")}
           </Typography>
 
           <Box className="settings-upload-row">
@@ -130,7 +133,7 @@ export default function SettingsContent({
             </Avatar>
 
             <Button variant="outlined" onClick={onChoosePhoto}>
-              Choose Photo
+              {t("choosePhoto")}
             </Button>
           </Box>
         </>
@@ -139,15 +142,17 @@ export default function SettingsContent({
       {/* ABOUT ME */}
       {section === "About Me" && (
         <>
-          <Typography className="settings-section-title">About Me</Typography>
+          <Typography className="settings-section-title">
+            {t("aboutMe")}
+          </Typography>
 
           <Typography className="settings-section-subtitle">
-            Add a short description about yourself
+            {t("aboutMeSubtitle")}
           </Typography>
 
           <TextField
             className="settings-about-field"
-            label="About Me"
+            label={t("aboutMe")}
             multiline
             minRows={5}
             fullWidth
@@ -161,30 +166,27 @@ export default function SettingsContent({
       {section === "Activity Log" && (
         <>
           <Typography className="settings-section-title">
-            Activity Log
+            {t("activityLog")}
           </Typography>
 
           <Typography className="settings-section-subtitle">
-            Recent account activities
+            {t("recentActivities")}
           </Typography>
 
           <Box className="settings-activity-list">
             <Box className="settings-activity-item">
-              <Typography>Logged in to the system</Typography>
-
-              <Typography>Today</Typography>
+              <Typography>{t("loggedIn")}</Typography>
+              <Typography>{t("today")}</Typography>
             </Box>
 
             <Box className="settings-activity-item">
-              <Typography>Opened account settings</Typography>
-
-              <Typography>Today</Typography>
+              <Typography>{t("openedSettings")}</Typography>
+              <Typography>{t("today")}</Typography>
             </Box>
 
             <Box className="settings-activity-item">
-              <Typography>Profile information viewed</Typography>
-
-              <Typography>Recently</Typography>
+              <Typography>{t("profileViewed")}</Typography>
+              <Typography>{t("recently")}</Typography>
             </Box>
           </Box>
         </>
@@ -194,19 +196,19 @@ export default function SettingsContent({
       {section === "Notifications" && (
         <>
           <Typography className="settings-section-title">
-            Notification Settings
+            {t("notificationSettings")}
           </Typography>
 
           <Typography className="settings-section-subtitle">
-            Choose which notifications you want to receive
+            {t("notificationSubtitle")}
           </Typography>
 
           <Box className="settings-option-row">
             <Box>
-              <Typography>Push Notifications</Typography>
+              <Typography>{t("pushNotifications")}</Typography>
 
               <Typography className="settings-hint">
-                Receive notifications in the application
+                {t("pushNotificationsHint")}
               </Typography>
             </Box>
 
@@ -220,10 +222,10 @@ export default function SettingsContent({
 
           <Box className="settings-option-row">
             <Box>
-              <Typography>Email Notifications</Typography>
+              <Typography>{t("emailNotifications")}</Typography>
 
               <Typography className="settings-hint">
-                Receive updates through email
+                {t("emailNotificationsHint")}
               </Typography>
             </Box>
 
@@ -239,15 +241,15 @@ export default function SettingsContent({
       {section === "Security" && (
         <>
           <Typography className="settings-section-title">
-            Security Settings
+            {t("securitySettings")}
           </Typography>
 
           <Typography className="settings-section-subtitle">
-            Manage your account security
+            {t("securitySubtitle")}
           </Typography>
 
           <TextField
-            label="Current Password"
+            label={t("currentPassword")}
             type="password"
             fullWidth
             size="small"
@@ -255,7 +257,7 @@ export default function SettingsContent({
           />
 
           <TextField
-            label="New Password"
+            label={t("newPassword")}
             type="password"
             fullWidth
             size="small"
@@ -263,7 +265,7 @@ export default function SettingsContent({
           />
 
           <TextField
-            label="Confirm New Password"
+            label={t("confirmNewPassword")}
             type="password"
             fullWidth
             size="small"
@@ -275,18 +277,20 @@ export default function SettingsContent({
       {/* APPEARANCE */}
       {section === "Appearance" && (
         <>
-          <Typography className="settings-section-title">Appearance</Typography>
+          <Typography className="settings-section-title">
+            {t("appearance")}
+          </Typography>
 
           <Typography className="settings-section-subtitle">
-            Customize how your application looks
+            {t("appearanceSubtitle")}
           </Typography>
 
           <Box className="settings-option-row">
             <Box>
-              <Typography>Dark Mode</Typography>
+              <Typography>{t("darkMode")}</Typography>
 
               <Typography className="settings-hint">
-                Switch between light and dark appearance
+                {t("darkModeHint")}
               </Typography>
             </Box>
 
@@ -302,25 +306,25 @@ export default function SettingsContent({
       {section === "System" && (
         <>
           <Typography className="settings-section-title">
-            System Settings
+            {t("systemSettings")}
           </Typography>
 
           <Typography className="settings-section-subtitle">
-            Application information
+            {t("systemSubtitle")}
           </Typography>
 
           <Box className="settings-system-row">
-            <Typography>Application</Typography>
+            <Typography>{t("application")}</Typography>
             <Typography>User Management System</Typography>
           </Box>
 
           <Box className="settings-system-row">
-            <Typography>Version</Typography>
+            <Typography>{t("version")}</Typography>
             <Typography>1.0.0</Typography>
           </Box>
 
           <Box className="settings-system-row">
-            <Typography>Framework</Typography>
+            <Typography>{t("framework")}</Typography>
             <Typography>Next.js + MUI</Typography>
           </Box>
         </>
@@ -338,11 +342,11 @@ export default function SettingsContent({
       {/* ACTIONS */}
       <Box className="settings-actions">
         <Button variant="outlined" onClick={onReset}>
-          Reset
+          {t("reset")}
         </Button>
 
         <Button variant="contained" onClick={onSave}>
-          Save Changes
+          {t("saveChanges")}
         </Button>
       </Box>
     </Box>

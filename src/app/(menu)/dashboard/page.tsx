@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, CircularProgress, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
@@ -15,6 +16,8 @@ import useDashboardUser from "@/hooks/useDashboardUser";
 import type { SummaryItem } from "@/types";
 
 export default function DashboardPage() {
+  const t = useTranslations("Dashboard");
+
   const {
     loading,
     error,
@@ -27,21 +30,21 @@ export default function DashboardPage() {
 
   const summaryItems: SummaryItem[] = [
     {
-      label: "Total Users",
+      label: t("totalUsers"),
       value: loading ? "—" : totalUsers.toLocaleString(),
       icon: <PeopleAltOutlinedIcon />,
       color: "#7251b3",
       background: "rgba(114, 81, 179, 0.12)",
     },
     {
-      label: "Active Users",
+      label: t("activeUsers"),
       value: loading ? "—" : activeUsers.toLocaleString(),
       icon: <PersonOutlineOutlinedIcon />,
       color: "#16a34a",
       background: "rgba(22, 163, 74, 0.12)",
     },
     {
-      label: "Inactive Users",
+      label: t("inactiveUsers"),
       value: loading ? "—" : inactiveUsers.toLocaleString(),
       icon: <PersonOffOutlinedIcon />,
       color: "#d97706",
@@ -72,7 +75,7 @@ export default function DashboardPage() {
           <CircularProgress className="dashboard-loading-spinner" size={26} />
 
           <Typography className="dashboard-loading-text">
-            Loading dashboard...
+            {t("loading")}
           </Typography>
         </Box>
       )}

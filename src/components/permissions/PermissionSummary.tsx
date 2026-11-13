@@ -3,6 +3,7 @@
 import type { Permission, SummaryItem } from "@/types";
 
 import { Box } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import LayersOutlinedIcon from "@mui/icons-material/LayersOutlined";
@@ -17,29 +18,31 @@ interface PermissionSummaryProps {
 export default function PermissionSummary({
   permissions,
 }: PermissionSummaryProps) {
+  const t = useTranslations("Permissions");
+
   const activeCount = permissions.filter(
-    (item) => item.status === "Active",
+    (item) => item.status === "ACTIVE",
   ).length;
 
   const activeModules = new Set(permissions.map((item) => item.module)).size;
 
   const summaries: SummaryItem[] = [
     {
-      label: "Total Permissions",
+      label: t("totalPermissions"),
       value: permissions.length,
       icon: <SecurityOutlinedIcon />,
       color: "#7c3aed",
       background: "#ede9fe",
     },
     {
-      label: "Modules",
+      label: t("modules"),
       value: activeModules,
       icon: <LayersOutlinedIcon />,
       color: "#2563eb",
       background: "#dbeafe",
     },
     {
-      label: "Active Permissions",
+      label: t("activePermissions"),
       value: activeCount,
       icon: <CheckCircleOutlineIcon />,
       color: "#059669",

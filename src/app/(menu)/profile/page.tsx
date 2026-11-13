@@ -1,42 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 
 import { Box, Grid, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 import type { UserForm as UserFormData } from "@/types";
+import useAuth from "@/hooks/useAuth";
 
 import UserForm from "@/components/User_Add_Edit_Card";
 import ProfileCard from "@/components/profile/ProfileCard";
 import "@/app/globals.css";
 
-const initialProfile: UserFormData = {
-  name: "Admin User",
-  username: "admin",
-  email: "admin@gmail.com",
-  password: "",
-  phone: "09123456789",
-  nrc: "12/TAMANA(N)123456",
-  address: "Yangon, Myanmar",
-  status: "Active",
-};
-
 export default function ProfilePage() {
-  const [profile, setProfile] = useState<UserFormData>({
-    ...initialProfile,
-  });
+  const t = useTranslations("Profile");
 
-  const [form, setForm] = useState<UserFormData>({
-    ...initialProfile,
-  });
+  // လက်ရှိ Login ဝင်ထားတဲ့ User ကိုယူခြင်း
+  const { user, loading: authLoading } = useAuth();
+
+  const [profile, setProfile] = useState<UserFormData | null>(null);
+  const [form, setForm] = useState<UserFormData | null>(null);
 
   const [openEdit, setOpenEdit] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  // Open Edit Dialog
+  // Login User data ကို Profile Form အတွက် ပြောင်းလဲခြင်း
+  useEffect(() => {
+    if (!user) return;
+
+    const userProfile: UserFormData = {
+      name: user.name ?? "",
+      username: user.username ?? "",
+      email: user.email ?? "",
+      password: "",
+      phone: user.phone ?? "",
+      nrc: user.nrc ?? "",
+      address: user.address ?? "",
+      status: user.status ?? "ACTIVE",
+    };
+
+    setProfile(userProfile);
+    setForm(userProfile);
+  }, [user]);
+
+  // Edit Dialog ဖွင့်ခြင်း
   const handleOpenEdit = () => {
+    if (!profile) return;
+
     setForm({
       ...profile,
       password: "",
@@ -46,26 +58,32 @@ export default function ProfilePage() {
     setOpenEdit(true);
   };
 
-  // Close Edit Dialog
+  // Edit Dialog ပိတ်ခြင်း
   const handleCloseEdit = () => {
     setOpenEdit(false);
     setError("");
   };
 
-  // Handle Form Changes
+  // Form Input ပြောင်းလဲခြင်း
   const handleFormChange = (field: keyof UserFormData, value: string) => {
-    setForm((previous) => ({
-      ...previous,
-      [field]: value,
-    }));
+    setForm((previous) =>
+      previous
+        ? {
+            ...previous,
+            [field]: value,
+          }
+        : previous,
+    );
   };
 
-  // Save Profile
+  // Profile သိမ်းခြင်း
   const handleSave = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!form) return;
+
     try {
-      setLoading(true);
+      setSaving(true);
       setError("");
 
       setProfile({
@@ -76,11 +94,20 @@ export default function ProfilePage() {
       setOpenEdit(false);
     } catch (err) {
       console.error("Save profile error:", err);
-      setError("Failed to save profile.");
+      setError(t("saveError"));
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
+
+  // Auth User Loading
+  if (authLoading || !profile || !form) {
+    return (
+      <Box className="page-container">
+        <Typography>{t("loading")}</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box className="page-container">
@@ -88,16 +115,16 @@ export default function ProfilePage() {
       <Box className="page-header">
         <Box className="page-header-content">
           <Typography component="h1" className="page-title">
-            My Profile
+            {t("myProfile")}
           </Typography>
 
           <Typography className="page-subtitle">
-            Manage your personal information and account details.
+            {t("profileSubtitle")}
           </Typography>
         </Box>
       </Box>
 
-      {/* Profile Card */}
+      {/* Logged-in User Profile */}
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 12 }}>
           <ProfileCard profile={profile} onEdit={handleOpenEdit} />
@@ -110,7 +137,7 @@ export default function ProfilePage() {
         editingUser={null}
         form={form}
         error={error}
-        loading={loading}
+        loading={saving}
         onFormChange={handleFormChange}
         onClose={handleCloseEdit}
         onSubmit={handleSave}

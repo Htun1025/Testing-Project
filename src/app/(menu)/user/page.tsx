@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Paper } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 import useUsers from "@/hooks/useUser";
 
@@ -12,6 +13,8 @@ import UserDialog from "@/components/User_Add_Edit_Card";
 import type { User, UserForm } from "@/types";
 
 export default function UserPage() {
+  const t = useTranslations("Users");
+
   const userState = useUsers();
 
   // Form input ပြောင်းလဲမှုကို handle လုပ်ရန်
@@ -32,11 +35,9 @@ export default function UserPage() {
       {/* PAGE HEADER */}
       <Box className="page-header">
         <Box className="page-header-content">
-          <h1 className="page-title">User Management</h1>
+          <h1 className="page-title">{t("title")}</h1>
 
-          <p className="page-subtitle">
-            Manage users, contact information and account status.
-          </p>
+          <p className="page-subtitle">{t("subtitle")}</p>
         </Box>
       </Box>
 

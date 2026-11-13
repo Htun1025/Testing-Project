@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import {
   AppBar,
@@ -20,20 +21,28 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 
 import { useTheme } from "./ThemeProvider";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import useAuth from "@/hooks/useAuth";
+
+import "@/app/globals.css";
 
 type DashboardHeaderProps = {
-  search: string;
-  onSearchChange: (value: string) => void;
-  onMenuClick: () => void;
+  search?: string;
+  onSearchChange?: (value: string) => void;
+  onMenuClick?: () => void;
+  showProfile?: boolean;
+  showLanguageOnly?: boolean;
 };
 
 export default function DashboardHeader({
-  search,
-  onSearchChange,
-  onMenuClick,
+  showProfile = true,
+  showLanguageOnly = false,
 }: DashboardHeaderProps) {
   const { theme, toggleTheme } = useTheme();
   const router = useRouter();
+  const t = useTranslations("Common");
+
+  const { logout } = useAuth();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [loggingOut, setLoggingOut] = useState(false);
@@ -48,27 +57,19 @@ export default function DashboardHeader({
     setAnchorEl(null);
   };
 
-  // View Profile
   const handleViewProfile = () => {
     handleClose();
     router.push("/profile");
   };
 
-  // Logout
-  const handleLogout = async () => {
+  const handleLogout = () => {
+    if (loggingOut) return;
+
+    setLoggingOut(true);
+    handleClose();
+
     try {
-      setLoggingOut(true);
-      handleClose();
-
-      const response = await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        throw new Error("Logout failed");
-      }
-
+      logout();
       router.replace("/login");
       router.refresh();
     } catch (error) {
@@ -77,18 +78,34 @@ export default function DashboardHeader({
     }
   };
 
+  // Login page တွင် Language Switcher တစ်ခုပဲ ပြမယ်
+  if (showLanguageOnly) {
+    return (
+      <AppBar position="sticky" elevation={0} className="topbar">
+        <Toolbar className="topbar-toolbar">
+          <Box className="topbar-actions">
+            <LanguageSwitcher />
+          </Box>
+        </Toolbar>
+      </AppBar>
+    );
+  }
+
   return (
     <AppBar position="sticky" elevation={0} className="topbar">
       <Toolbar className="topbar-toolbar">
         <Box className="topbar-actions">
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+
           {/* Theme Toggle */}
           <IconButton
             className="topbar-icon-button"
             onClick={toggleTheme}
             aria-label={
-              theme === "light" ? "Switch to dark mode" : "Switch to light mode"
+              theme === "light" ? t("switchToDarkMode") : t("switchToLightMode")
             }
-            title={theme === "light" ? "Dark Mode" : "Light Mode"}
+            title={theme === "light" ? t("darkMode") : t("lightMode")}
           >
             {theme === "light" ? (
               <DarkModeOutlinedIcon />
@@ -98,60 +115,69 @@ export default function DashboardHeader({
           </IconButton>
 
           {/* Notifications */}
-          <IconButton
-            aria-label="Notifications"
-            className="topbar-icon-button notification-button"
-          >
-            <NotificationsNoneOutlinedIcon />
-            <span className="notification-dot" />
-          </IconButton>
+          {showProfile && (
+            <IconButton
+              aria-label={t("notifications")}
+              className="topbar-icon-button notification-button"
+            >
+              <NotificationsNoneOutlinedIcon />
+              <span className="notification-dot" />
+            </IconButton>
+          )}
 
           {/* Profile Avatar */}
-          <IconButton
-            className="topbar-profile-trigger"
-            onClick={handleAvatarClick}
-            aria-label="Open profile menu"
-            aria-controls={open ? "profile-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-          >
-            <Avatar className="profile-avatar">A</Avatar>
-          </IconButton>
+          {showProfile && (
+            <>
+              <IconButton
+                className="topbar-profile-trigger"
+                onClick={handleAvatarClick}
+                aria-label={t("openProfileMenu")}
+                aria-controls={open ? "profile-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+              >
+                <Avatar className="profile-avatar">A</Avatar>
+              </IconButton>
 
-          {/* Profile Menu */}
-          <Menu
-            id="profile-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            slotProps={{
-              paper: {
-                className: "topbar-profile-menu",
-              },
-            }}
-          >
-            <MenuItem onClick={handleViewProfile} className="topbar-menu-item">
-              <PersonOutlineIcon className="topbar-menu-icon" />
-              View Profile
-            </MenuItem>
+              {/* Profile Menu */}
+              <Menu
+                id="profile-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                slotProps={{
+                  paper: {
+                    className: "topbar-profile-menu",
+                  },
+                }}
+              >
+                <MenuItem
+                  onClick={handleViewProfile}
+                  className="topbar-menu-item"
+                >
+                  <PersonOutlineIcon className="topbar-menu-icon" />
+                  {t("viewProfile")}
+                </MenuItem>
 
-            <MenuItem
-              onClick={handleLogout}
-              disabled={loggingOut}
-              className="topbar-menu-item topbar-logout-item"
-            >
-              <LogoutIcon className="topbar-menu-icon" />
-              {loggingOut ? "Logging out..." : "Logout"}
-            </MenuItem>
-          </Menu>
+                <MenuItem
+                  onClick={handleLogout}
+                  disabled={loggingOut}
+                  className="topbar-menu-item topbar-logout-item"
+                >
+                  <LogoutIcon className="topbar-menu-icon" />
+                  {loggingOut ? t("loggingOut") : t("logout")}
+                </MenuItem>
+              </Menu>
+            </>
+          )}
         </Box>
       </Toolbar>
     </AppBar>

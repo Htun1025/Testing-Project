@@ -7,6 +7,8 @@ import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 
+import { useTranslations } from "next-intl";
+
 import type { UserForm as UserFormData } from "@/types";
 import "@/app/globals.css";
 
@@ -15,7 +17,9 @@ type ProfileDetailsProps = {
 };
 
 export default function ProfileDetails({ profile }: ProfileDetailsProps) {
-  const fullNrc = profile.nrc || "Not provided";
+  const t = useTranslations("Profile");
+
+  const fullNrc = profile.nrc || t("notProvided");
 
   return (
     <Box className="profile-summary-details">
@@ -26,11 +30,11 @@ export default function ProfileDetails({ profile }: ProfileDetailsProps) {
 
           <Box>
             <Typography className="profile-detail-label">
-              Email Address
+              {t("emailAddress")}
             </Typography>
 
             <Typography className="profile-detail-value">
-              {profile.email || "Not provided"}
+              {profile.email || t("notProvided")}
             </Typography>
           </Box>
         </Box>
@@ -41,11 +45,11 @@ export default function ProfileDetails({ profile }: ProfileDetailsProps) {
 
           <Box>
             <Typography className="profile-detail-label">
-              Phone Number
+              {t("phoneNumber")}
             </Typography>
 
             <Typography className="profile-detail-value">
-              {profile.phone || "Not provided"}
+              {profile.phone || t("notProvided")}
             </Typography>
           </Box>
         </Box>
@@ -55,7 +59,9 @@ export default function ProfileDetails({ profile }: ProfileDetailsProps) {
           <BadgeOutlinedIcon className="profile-detail-icon" />
 
           <Box>
-            <Typography className="profile-detail-label">NRC Number</Typography>
+            <Typography className="profile-detail-label">
+              {t("nrcNumber")}
+            </Typography>
 
             <Typography className="profile-detail-value">{fullNrc}</Typography>
           </Box>
@@ -66,10 +72,12 @@ export default function ProfileDetails({ profile }: ProfileDetailsProps) {
           <LocationOnOutlinedIcon className="profile-detail-icon" />
 
           <Box>
-            <Typography className="profile-detail-label">Address</Typography>
+            <Typography className="profile-detail-label">
+              {t("address")}
+            </Typography>
 
             <Typography className="profile-detail-value">
-              {profile.address || "Not provided"}
+              {profile.address || t("notProvided")}
             </Typography>
           </Box>
         </Box>

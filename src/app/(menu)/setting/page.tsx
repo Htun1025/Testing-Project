@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Box, Button, Paper, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 import type { SettingsSection } from "@/components/setting/SettingsContent";
 import type { SettingsProfile } from "@/types";
@@ -10,16 +11,9 @@ import type { SettingsProfile } from "@/types";
 import SettingsProfileSidebar from "@/components/setting/SettingsProfileSidebar";
 import SettingsContent from "@/components/setting/SettingsContent";
 import { useTheme } from "@/components/ThemeProvider";
+import useAuth from "@/hooks/useAuth";
 
 import "@/app/globals.css";
-
-const initialProfile: SettingsProfile = {
-  name: "John Doe",
-  email: "john.doe@example.com",
-  phone: "+95 987 654 321",
-  status: "ACTIVE",
-  about: "Administrator of the application.",
-};
 
 const menuItems: SettingsSection[] = [
   "Account Info",
@@ -32,10 +26,19 @@ const menuItems: SettingsSection[] = [
 ];
 
 export default function SettingsPage() {
+  const t = useTranslations("Settings");
+
+  // လက်ရှိ Login ဝင်ထားတဲ့ User
+  const { user, loading: authLoading } = useAuth();
+
   const [section, setSection] = useState<SettingsSection>("Account Info");
 
   const [profile, setProfile] = useState<SettingsProfile>({
-    ...initialProfile,
+    name: "",
+    email: "",
+    phone: "",
+    status: "ACTIVE",
+    about: "",
   });
 
   const [photo, setPhoto] = useState("");
@@ -45,10 +48,22 @@ export default function SettingsPage() {
 
   // Global Theme
   const { theme, toggleTheme } = useTheme();
-
   const darkMode = theme === "dark";
 
   const fileRef = useRef<HTMLInputElement>(null);
+
+  // Login User Data ကို Settings ထဲသို့ ထည့်ခြင်း
+  useEffect(() => {
+    if (!user) return;
+
+    setProfile({
+      name: user.name ?? "",
+      email: user.email ?? "",
+      phone: user.phone ?? "",
+      status: user.status ?? "ACTIVE",
+      about: "",
+    });
+  }, [user]);
 
   // Update Profile
   const updateProfile = (field: keyof SettingsProfile, value: string) => {
@@ -75,7 +90,7 @@ export default function SettingsPage() {
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      setMessage("Please select an image file.");
+      setMessage(t("invalidImage"));
       return;
     }
 
@@ -83,28 +98,45 @@ export default function SettingsPage() {
     setMessage("");
   };
 
-  // Reset Settings
+  // Reset Settings ကို Login User Data ဖြင့် ပြန်ထားခြင်း
   const handleReset = () => {
-    setProfile({ ...initialProfile });
+    if (!user) return;
+
+    setProfile({
+      name: user.name ?? "",
+      email: user.email ?? "",
+      phone: user.phone ?? "",
+      status: user.status ?? "ACTIVE",
+      about: "",
+    });
+
     setPhoto("");
-    setMessage("Form has been reset.");
+    setMessage(t("resetSuccess"));
   };
 
   // Save Settings
   const handleSave = () => {
-    setMessage("Changes are ready. Connect your API to save them permanently.");
+    // လက်ရှိအချိန်တွင် React state ထဲ၌သာ သိမ်းထားပါသည်။
+    setMessage(t("saveInfo"));
   };
+
+  // Login User Loading
+  if (authLoading || !user) {
+    return (
+      <Box className="settings-page">
+        <Typography>{t("loading")}</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box className="settings-page">
       {/* PAGE HEADING */}
       <Box className="settings-heading">
         <Box>
-          <Typography className="settings-title">⚙ Settings</Typography>
+          <Typography className="settings-title">⚙ {t("title")}</Typography>
 
-          <Typography className="settings-subtitle">
-            Customize your account and application preferences
-          </Typography>
+          <Typography className="settings-subtitle">{t("subtitle")}</Typography>
         </Box>
       </Box>
 
@@ -119,7 +151,7 @@ export default function SettingsPage() {
               setMessage("");
             }}
           >
-            {item}
+            {t(`tabs.${item}`)}
           </Button>
         ))}
       </Box>

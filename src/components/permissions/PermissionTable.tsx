@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import type { Permission } from "@/types";
 
 import {
@@ -20,11 +19,14 @@ import {
   Typography,
 } from "@mui/material";
 
+import { useTranslations } from "next-intl";
+
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 import DeleteCard from "../DeleteCard";
 import "@/app/globals.css";
+import { useState } from "react";
 
 interface PermissionTableProps {
   permissions: Permission[];
@@ -34,10 +36,8 @@ interface PermissionTableProps {
   page: number;
   rowsPerPage: number;
   totalCount: number;
-
   onEdit: (permission: Permission) => void;
   onDelete: (id: number) => void;
-
   onPageChange: (page: number) => void;
   onRowsPerPageChange: (value: number) => void;
 }
@@ -45,6 +45,8 @@ interface PermissionTableProps {
 export default function PermissionTable({
   permissions,
   modules,
+  moduleFilter,
+  onModuleFilterChange,
   page,
   rowsPerPage,
   totalCount,
@@ -53,7 +55,7 @@ export default function PermissionTable({
   onPageChange,
   onRowsPerPageChange,
 }: PermissionTableProps) {
-  const [moduleFilter, setModuleFilter] = useState("All");
+  const t = useTranslations("Permissions");
   const [deleteTarget, setDeleteTarget] = useState<Permission | null>(null);
 
   const handleDeleteConfirm = () => {
@@ -65,9 +67,8 @@ export default function PermissionTable({
 
   return (
     <>
-      {/* TABLE TOOLBAR */}
       <Box className="table-toolbar">
-        <Typography className="table-title">All Permissions</Typography>
+        <Typography className="table-title">{t("allPermissions")}</Typography>
 
         <TextField
           select
@@ -75,7 +76,7 @@ export default function PermissionTable({
           className="permission-module-filter"
           value={moduleFilter}
           onChange={(event) => {
-            setModuleFilter(event.target.value);
+            onModuleFilterChange(event.target.value);
             onPageChange(0);
           }}
           slotProps={{
@@ -90,27 +91,26 @@ export default function PermissionTable({
             },
           }}
         >
-          <MenuItem value="All">All Modules</MenuItem>
+          <MenuItem value="All">{t("allModules")}</MenuItem>
 
           {modules.map((module) => (
             <MenuItem key={module} value={module}>
-              {module}
+              {t(`moduleNames.${module}`)}
             </MenuItem>
           ))}
         </TextField>
       </Box>
 
-      {/* PERMISSION TABLE */}
       <TableContainer className="table-container">
         <Table className="data-table">
           <TableHead>
             <TableRow>
-              <TableCell>PERMISSION</TableCell>
-              <TableCell>MODULE</TableCell>
-              <TableCell>ACTION</TableCell>
-              <TableCell>DESCRIPTION</TableCell>
-              <TableCell align="center">STATUS</TableCell>
-              <TableCell align="right">ACTIONS</TableCell>
+              <TableCell>{t("permission").toUpperCase()}</TableCell>
+              <TableCell>{t("module").toUpperCase()}</TableCell>
+              <TableCell>{t("action").toUpperCase()}</TableCell>
+              <TableCell>{t("description").toUpperCase()}</TableCell>
+              <TableCell align="center">{t("status").toUpperCase()}</TableCell>
+              <TableCell align="right">{t("actions").toUpperCase()}</TableCell>
             </TableRow>
           </TableHead>
 
@@ -119,7 +119,7 @@ export default function PermissionTable({
               <TableRow>
                 <TableCell colSpan={6} align="center">
                   <Typography className="permission-empty">
-                    No permissions found.
+                    {t("noPermissionsFound")}
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -135,14 +135,14 @@ export default function PermissionTable({
                   <TableCell>
                     <Chip
                       className="permission-module-chip"
-                      label={item.module}
+                      label={t(`moduleNames.${item.module}`)}
                       size="small"
                     />
                   </TableCell>
 
                   <TableCell>
                     <Typography className="permission-cell">
-                      {item.action}
+                      {t(`actionNames.${item.action}`)}
                     </Typography>
                   </TableCell>
 
@@ -155,7 +155,9 @@ export default function PermissionTable({
                   <TableCell align="center">
                     <Chip
                       className={`permission-status ${item.status.toLowerCase()}`}
-                      label={item.status}
+                      label={t(
+                        item.status === "ACTIVE" ? "active" : "inactive",
+                      )}
                       size="small"
                     />
                   </TableCell>
@@ -169,7 +171,7 @@ export default function PermissionTable({
                       <IconButton
                         className="permission-action-button"
                         size="small"
-                        title="Edit permission"
+                        title={t("editPermission")}
                         onClick={() => onEdit(item)}
                       >
                         <EditOutlinedIcon />
@@ -178,7 +180,7 @@ export default function PermissionTable({
                       <IconButton
                         className="permission-action-button delete"
                         size="small"
-                        title="Delete permission"
+                        title={t("deletePermission")}
                         onClick={() => setDeleteTarget(item)}
                       >
                         <DeleteOutlineIcon />
@@ -192,7 +194,6 @@ export default function PermissionTable({
         </Table>
       </TableContainer>
 
-      {/* PAGINATION */}
       <TablePagination
         component="div"
         count={totalCount}
@@ -203,7 +204,7 @@ export default function PermissionTable({
           onRowsPerPageChange(Number(event.target.value))
         }
         rowsPerPageOptions={[5, 10, 25, 50]}
-        labelRowsPerPage="Rows:"
+        labelRowsPerPage={t("rowsPerPage")}
         sx={{
           borderTop: "1px solid var(--border-color, #e2e8f0)",
           "& .MuiTablePagination-toolbar": {
@@ -223,11 +224,10 @@ export default function PermissionTable({
         }}
       />
 
-      {/* GLOBAL DELETE CARD */}
       <DeleteCard
         open={Boolean(deleteTarget)}
-        title="Delete Permission"
-        message="Are you sure you want to delete this permission?"
+        title={t("deletePermission")}
+        message={t("deletePermissionMessage")}
         itemName={deleteTarget?.name}
         onCancel={() => setDeleteTarget(null)}
         onConfirm={handleDeleteConfirm}

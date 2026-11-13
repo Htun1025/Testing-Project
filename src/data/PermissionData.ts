@@ -7,7 +7,7 @@ export const initialPermissions: Permission[] = [
     module: "User",
     action: "Create",
     description: "Create new users",
-    status: "Active",
+    status: "ACTIVE",
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ export const initialPermissions: Permission[] = [
     module: "User",
     action: "Read",
     description: "View user information",
-    status: "Active",
+    status: "ACTIVE",
   },
   {
     id: 3,
@@ -23,7 +23,7 @@ export const initialPermissions: Permission[] = [
     module: "User",
     action: "Update",
     description: "Update user information",
-    status: "Active",
+    status: "ACTIVE",
   },
   {
     id: 4,
@@ -31,7 +31,7 @@ export const initialPermissions: Permission[] = [
     module: "User",
     action: "Delete",
     description: "Delete users",
-    status: "Active",
+    status: "ACTIVE",
   },
   {
     id: 5,
@@ -39,7 +39,7 @@ export const initialPermissions: Permission[] = [
     module: "Role",
     action: "Create",
     description: "Create new roles",
-    status: "Active",
+    status: "ACTIVE",
   },
   {
     id: 6,
@@ -47,7 +47,7 @@ export const initialPermissions: Permission[] = [
     module: "Role",
     action: "Read",
     description: "View role information",
-    status: "Active",
+    status: "ACTIVE",
   },
   {
     id: 7,
@@ -55,7 +55,7 @@ export const initialPermissions: Permission[] = [
     module: "Role",
     action: "Update",
     description: "Update existing roles",
-    status: "Active",
+    status: "ACTIVE",
   },
   {
     id: 8,
@@ -63,7 +63,7 @@ export const initialPermissions: Permission[] = [
     module: "Role",
     action: "Delete",
     description: "Delete roles",
-    status: "Active",
+    status: "ACTIVE",
   },
   {
     id: 9,
@@ -71,7 +71,7 @@ export const initialPermissions: Permission[] = [
     module: "Dashboard",
     action: "Read",
     description: "Access dashboard",
-    status: "Active",
+    status: "ACTIVE",
   },
   {
     id: 10,
@@ -79,7 +79,7 @@ export const initialPermissions: Permission[] = [
     module: "Permission",
     action: "Manage",
     description: "Manage system permissions",
-    status: "Active",
+    status: "ACTIVE",
   },
   {
     id: 11,
@@ -87,6 +87,6 @@ export const initialPermissions: Permission[] = [
     module: "Settings",
     action: "Update",
     description: "Update system settings",
-    status: "Inactive",
+    status: "INACTIVE",
   },
 ];

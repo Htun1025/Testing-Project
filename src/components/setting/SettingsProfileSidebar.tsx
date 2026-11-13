@@ -2,6 +2,7 @@
 
 import { Avatar, Box, Button, Divider, Typography } from "@mui/material";
 import "@/app/globals.css";
+import { useTranslations } from "next-intl";
 
 type SettingsProfileSidebarProps = {
   name: string;
@@ -14,6 +15,7 @@ export default function SettingsProfileSidebar({
   photo,
   onChoosePhoto,
 }: SettingsProfileSidebarProps) {
+  const t = useTranslations("Settings");
   return (
     <Box className="settings-profile-sidebar">
       <Box className="settings-avatar-wrap">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import type { Role } from "@/types";
 
 import {
@@ -57,8 +58,8 @@ export default function RoleTable({
   onRowsPerPageChange,
 }: RoleTableProps) {
   const [deleteTarget, setDeleteTarget] = useState<Role | null>(null);
+  const t = useTranslations("Roles");
 
-  // DELETE CONFIRMATION
   const handleDeleteConfirm = () => {
     if (!deleteTarget) return;
 
@@ -75,10 +76,10 @@ export default function RoleTable({
       <Paper className="table-card" elevation={0}>
         {/* TABLE TOOLBAR */}
         <Box className="table-toolbar">
-          <Typography className="table-title">All Roles</Typography>
+          <Typography className="table-title">{t("allRoles")}</Typography>
 
           <Button size="small" onClick={onRefresh} className="refresh">
-            Refresh
+            {t("refresh")}
           </Button>
         </Box>
 
@@ -87,12 +88,18 @@ export default function RoleTable({
           <Table className="data-table" size="small" sx={{ minWidth: 650 }}>
             <TableHead>
               <TableRow>
-                <TableCell>ROLE NAME</TableCell>
-                <TableCell>ROLE CODE</TableCell>
-                <TableCell align="center">USERS</TableCell>
-                <TableCell align="center">PERMISSIONS</TableCell>
-                <TableCell align="center">STATUS</TableCell>
-                <TableCell align="right">ACTIONS</TableCell>
+                <TableCell>{t("roleName").toUpperCase()}</TableCell>
+                <TableCell>{t("roleCode").toUpperCase()}</TableCell>
+                <TableCell align="center">{t("users").toUpperCase()}</TableCell>
+                <TableCell align="center">
+                  {t("permissions").toUpperCase()}
+                </TableCell>
+                <TableCell align="center">
+                  {t("status").toUpperCase()}
+                </TableCell>
+                <TableCell align="right">
+                  {t("actions").toUpperCase()}
+                </TableCell>
               </TableRow>
             </TableHead>
 
@@ -101,7 +108,7 @@ export default function RoleTable({
                 <TableRow>
                   <TableCell colSpan={6} align="center">
                     <Typography sx={{ py: 3, fontSize: 12 }}>
-                      No roles found.
+                      {t("noRolesFound")}
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -137,7 +144,9 @@ export default function RoleTable({
                     <TableCell align="center">
                       <Chip
                         className={`role-status ${role.status.toLowerCase()}`}
-                        label={role.status === "ACTIVE" ? "Active" : "Inactive"}
+                        label={
+                          role.status === "ACTIVE" ? t("active") : t("inactive")
+                        }
                         size="small"
                       />
                     </TableCell>
@@ -152,7 +161,8 @@ export default function RoleTable({
                           className="role-action-button"
                           size="small"
                           onClick={() => onEdit(role)}
-                          title="Edit role"
+                          title={t("editRole")}
+                          aria-label={t("editRole")}
                         >
                           <EditOutlinedIcon fontSize="small" />
                         </IconButton>
@@ -161,7 +171,8 @@ export default function RoleTable({
                           className="role-action-button delete"
                           size="small"
                           onClick={() => setDeleteTarget(role)}
-                          title="Delete role"
+                          title={t("deleteRole")}
+                          aria-label={t("deleteRole")}
                         >
                           <DeleteOutlineIcon fontSize="small" />
                         </IconButton>
@@ -185,7 +196,7 @@ export default function RoleTable({
             onRowsPerPageChange(Number(event.target.value))
           }
           rowsPerPageOptions={[5, 10, 25, 50]}
-          labelRowsPerPage="Rows:"
+          labelRowsPerPage={t("rowsPerPage")}
           sx={{
             borderTop: "1px solid var(--border-color, #e2e8f0)",
             "& .MuiTablePagination-toolbar": {
@@ -209,8 +220,8 @@ export default function RoleTable({
       {/* DELETE CARD */}
       <DeleteCard
         open={Boolean(deleteTarget)}
-        title="Delete Role"
-        message="Are you sure you want to delete this role?"
+        title={t("deleteRole")}
+        message={t("deleteRoleMessage")}
         itemName={deleteTarget?.name}
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}

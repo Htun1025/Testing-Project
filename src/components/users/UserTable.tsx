@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 import {
   Box,
   Chip,
-  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -39,20 +39,19 @@ type UserTableProps = {
   onPageChange: (page: number) => void;
   onRowsPerPageChange: (value: string) => void;
 
-  // UI Settings
   showActions?: boolean;
   showColumnSettings?: boolean;
 };
 
 const columns = [
   { id: "id", label: "ID" },
-  { id: "user", label: "User" },
-  { id: "username", label: "Username" },
-  { id: "email", label: "Email" },
-  { id: "phone", label: "Phone" },
-  { id: "nrc", label: "NRC" },
-  { id: "address", label: "Address" },
-  { id: "status", label: "Status" },
+  { id: "user", label: "name" },
+  { id: "username", label: "username" },
+  { id: "email", label: "email" },
+  { id: "phone", label: "phone" },
+  { id: "nrc", label: "nrc" },
+  { id: "address", label: "address" },
+  { id: "status", label: "status" },
 ] satisfies TableColumn[];
 
 type ColumnId = (typeof columns)[number]["id"];
@@ -73,13 +72,14 @@ export default function UserTable({
   showActions = true,
   showColumnSettings = true,
 }: UserTableProps) {
+  const t = useTranslations("Users");
+  const common = useTranslations("Common");
+
   const [visibleColumns, setVisibleColumns] =
     useState<ColumnId[]>(DEFAULT_COLUMNS);
 
   const [isLoaded, setIsLoaded] = useState(false);
-
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-
   const [showDeleteCard, setShowDeleteCard] = useState(false);
 
   // Load saved columns
@@ -175,9 +175,15 @@ export default function UserTable({
       case "status":
         return (
           <Chip
-            label={user.status || "-"}
+            label={
+              user.status === "ACTIVE"
+                ? t("active")
+                : user.status === "INACTIVE"
+                  ? t("inactive")
+                  : user.status || "-"
+            }
             size="small"
-            color={user.status === "Active" ? "success" : "default"}
+            color={user.status === "ACTIVE" ? "success" : "default"}
             variant="outlined"
             className="user-status-chip"
           />
@@ -193,7 +199,6 @@ export default function UserTable({
   }
 
   const visibleActionColumn = showActions && Boolean(onEdit || onDelete);
-
   const extraColumns = Number(visibleActionColumn) + Number(showColumnSettings);
 
   return (
@@ -202,8 +207,8 @@ export default function UserTable({
       {onDelete && (
         <DeleteCard
           open={showDeleteCard}
-          title="Delete User?"
-          message="Are you sure you want to delete this user?"
+          title={t("deleteUserTitle")}
+          message={t("deleteUserMessage")}
           itemName={selectedUser?.name}
           onCancel={handleCancelDelete}
           onConfirm={handleConfirmDelete}
@@ -213,29 +218,31 @@ export default function UserTable({
       {/* User Table */}
       <TableContainer className="table-container">
         <Table size="small" className="user-table">
-          {/* Table Header */}
           <TableHead>
             <TableRow>
               {columns
                 .filter((column) => visibleColumns.includes(column.id))
                 .map((column) => (
-                  <TableCell key={column.id}>{column.label}</TableCell>
+                  <TableCell key={column.id}>
+                    {column.id === "id" ? "ID" : t(column.label)}
+                  </TableCell>
                 ))}
 
-              {/* Actions Header */}
               {visibleActionColumn && (
                 <TableCell align="center" className="actions">
                   <Typography component="span" className="actions-label">
-                    Actions
+                    {t("actions")}
                   </Typography>
                 </TableCell>
               )}
 
-              {/* Column Settings Header */}
               {showColumnSettings && (
                 <TableCell align="center" className="column-settings">
                   <ColumnSettings
-                    columns={columns}
+                    columns={columns.map((column) => ({
+                      ...column,
+                      label: column.id === "id" ? "ID" : t(column.label),
+                    }))}
                     visibleColumns={visibleColumns}
                     onToggle={handleToggleColumn}
                   />
@@ -244,7 +251,6 @@ export default function UserTable({
             </TableRow>
           </TableHead>
 
-          {/* Table Body */}
           <TableBody>
             {users.length === 0 ? (
               <TableRow>
@@ -254,7 +260,7 @@ export default function UserTable({
                 >
                   <Box className="empty-users">
                     <Typography color="text.secondary">
-                      No users found.
+                      {t("noUsersFound")}
                     </Typography>
                   </Box>
                 </TableCell>
@@ -262,7 +268,6 @@ export default function UserTable({
             ) : (
               users.map((user) => (
                 <TableRow hover key={user.id}>
-                  {/* User Information */}
                   {columns
                     .filter((column) => visibleColumns.includes(column.id))
                     .map((column) => (
@@ -271,20 +276,18 @@ export default function UserTable({
                       </TableCell>
                     ))}
 
-                  {/* Actions */}
                   {visibleActionColumn && (
                     <TableCell align="center" className="actions">
                       <Box className="action-buttons">
-                        {/* Edit */}
                         {onEdit && (
-                          <Tooltip title="Edit user">
+                          <Tooltip title={t("editUser")}>
                             <span>
                               <AppButton
                                 color="primary"
                                 size="small"
                                 variant="text"
                                 className="action-btn"
-                                aria-label={`Edit ${user.name}`}
+                                aria-label={t("editUser")}
                                 onClick={() => onEdit(user)}
                               >
                                 <EditOutlinedIcon className="action-icon" />
@@ -293,16 +296,15 @@ export default function UserTable({
                           </Tooltip>
                         )}
 
-                        {/* Delete */}
                         {onDelete && (
-                          <Tooltip title="Delete user">
+                          <Tooltip title={t("deleteUser")}>
                             <span>
                               <AppButton
                                 color="error"
                                 size="small"
                                 variant="text"
                                 className="action-btn"
-                                aria-label={`Delete ${user.name}`}
+                                aria-label={t("deleteUser")}
                                 onClick={() => handleDeleteClick(user)}
                               >
                                 <DeleteOutlineIcon className="action-icon" />
@@ -314,7 +316,6 @@ export default function UserTable({
                     </TableCell>
                   )}
 
-                  {/* Column Settings Empty Cell */}
                   {showColumnSettings && (
                     <TableCell className="column-settings" />
                   )}
@@ -335,6 +336,7 @@ export default function UserTable({
         onPageChange={(_, newPage) => onPageChange(newPage)}
         onRowsPerPageChange={(event) => onRowsPerPageChange(event.target.value)}
         rowsPerPageOptions={[5, 10, 25]}
+        labelRowsPerPage={common("rowsPerPage")}
       />
     </Box>
   );

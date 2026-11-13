@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { MouseEvent } from "react";
 
+import { useTranslations } from "next-intl";
+
 import {
   Avatar,
   Box,
@@ -35,21 +37,22 @@ type SidebarProps = {
   pathname: string;
   onToggle: () => void;
   onNavigate?: () => void;
+  onLogout: () => void;
 };
 
 const menuItems = [
   {
-    label: "Dashboard",
+    key: "dashboard",
     path: "/dashboard",
     icon: DashboardOutlinedIcon,
   },
   {
-    label: "Users",
+    key: "users",
     path: "/user",
     icon: PeopleAltOutlinedIcon,
   },
   {
-    label: "Settings",
+    key: "settings",
     path: "/setting",
     icon: SettingsOutlinedIcon,
   },
@@ -57,12 +60,12 @@ const menuItems = [
 
 const roleSubmenu = [
   {
-    label: "Roles",
+    key: "roles",
     path: "/role",
     icon: AdminPanelSettingsOutlinedIcon,
   },
   {
-    label: "Permissions",
+    key: "permissions",
     path: "/permission",
     icon: SecurityOutlinedIcon,
   },
@@ -73,21 +76,22 @@ export default function Sidebar({
   pathname,
   onToggle,
   onNavigate,
+  onLogout,
 }: SidebarProps) {
+  const t = useTranslations("Sidebar");
+  const common = useTranslations("Common");
+
   const [rolesOpen, setRolesOpen] = useState(
-    pathname.startsWith("/roles") || pathname.startsWith("/permissions"),
+    pathname.startsWith("/role") || pathname.startsWith("/permission"),
   );
 
   const [profileAnchor, setProfileAnchor] = useState<HTMLElement | null>(null);
 
-  const [loggingOut, setLoggingOut] = useState(false);
-
-  // Sidebar width depends only on the toggle button.
   const sidebarCollapsed = collapsed;
   const profileOpen = Boolean(profileAnchor);
 
   useEffect(() => {
-    if (pathname.startsWith("/roles") || pathname.startsWith("/permissions")) {
+    if (pathname.startsWith("/role") || pathname.startsWith("/permission")) {
       setRolesOpen(true);
     }
   }, [pathname]);
@@ -100,26 +104,9 @@ export default function Sidebar({
     setProfileAnchor(null);
   }
 
-  async function handleLogout() {
-    if (loggingOut) return;
-
-    setLoggingOut(true);
+  function handleLogout() {
     handleProfileClose();
-
-    try {
-      const response = await fetch("/api/auth/logout", {
-        method: "POST",
-      });
-
-      if (!response.ok) {
-        throw new Error("Logout failed");
-      }
-
-      window.location.href = "/login";
-    } catch (error) {
-      console.error("Logout failed:", error);
-      setLoggingOut(false);
-    }
+    onLogout();
   }
 
   function isActive(path: string) {
@@ -140,18 +127,24 @@ export default function Sidebar({
 
           {!sidebarCollapsed && (
             <Box className="sidebar-brand-info">
-              <Typography className="sidebar-brand-subtitle">Menu</Typography>
+              <Typography className="sidebar-brand-subtitle">
+                {t("menu")}
+              </Typography>
             </Box>
           )}
         </Box>
 
         <Tooltip
-          title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          title={
+            sidebarCollapsed
+              ? common("expandSidebar")
+              : common("collapseSidebar")
+          }
         >
           <Button
             className="sidebar-toggle"
             onClick={onToggle}
-            aria-label="Toggle sidebar"
+            aria-label={common("toggleSidebar")}
           >
             {sidebarCollapsed ? (
               <KeyboardDoubleArrowRightIcon />
@@ -171,7 +164,7 @@ export default function Sidebar({
           return (
             <Tooltip
               key={item.path}
-              title={sidebarCollapsed ? item.label : ""}
+              title={sidebarCollapsed ? t(item.key) : ""}
               placement="right"
             >
               <Box
@@ -185,7 +178,7 @@ export default function Sidebar({
 
                 {!sidebarCollapsed && (
                   <Typography className="sidebar-link-label">
-                    {item.label}
+                    {t(item.key)}
                   </Typography>
                 )}
               </Box>
@@ -195,7 +188,7 @@ export default function Sidebar({
 
         {/* Roles and Permissions */}
         <Tooltip
-          title={sidebarCollapsed ? "Roles & Permissions" : ""}
+          title={sidebarCollapsed ? t("rolesPermissions") : ""}
           placement="right"
         >
           <Box
@@ -220,7 +213,7 @@ export default function Sidebar({
             {!sidebarCollapsed && (
               <>
                 <Typography className="sidebar-link-label">
-                  Roles &amp; Permissions
+                  {t("rolesPermissions")}
                 </Typography>
 
                 <Box className="sidebar-menu-arrow">
@@ -255,7 +248,7 @@ export default function Sidebar({
                   <Icon className="sidebar-icon" />
 
                   <Typography className="sidebar-link-label">
-                    {item.label}
+                    {t(item.key)}
                   </Typography>
                 </Box>
               );
@@ -271,7 +264,7 @@ export default function Sidebar({
           return (
             <Tooltip
               key={item.path}
-              title={sidebarCollapsed ? item.label : ""}
+              title={sidebarCollapsed ? t(item.key) : ""}
               placement="right"
             >
               <Box
@@ -285,7 +278,7 @@ export default function Sidebar({
 
                 {!sidebarCollapsed && (
                   <Typography className="sidebar-link-label">
-                    {item.label}
+                    {t(item.key)}
                   </Typography>
                 )}
               </Box>
@@ -299,13 +292,13 @@ export default function Sidebar({
         <Divider className="sidebar-footer-divider" />
 
         <Tooltip
-          title={sidebarCollapsed ? "Admin profile" : ""}
+          title={sidebarCollapsed ? common("adminProfile") : ""}
           placement="right"
         >
           <Button
             className="sidebar-profile-button"
             onClick={handleProfileClick}
-            aria-label="Open profile menu"
+            aria-label={common("openProfileMenu")}
           >
             <Avatar className="sidebar-profile-avatar">A</Avatar>
 
@@ -317,7 +310,7 @@ export default function Sidebar({
                   </Typography>
 
                   <Typography className="sidebar-profile-role">
-                    Administrator
+                    {common("administrator")}
                   </Typography>
                 </Box>
 
@@ -354,18 +347,14 @@ export default function Sidebar({
             }}
           >
             <PersonOutlineOutlinedIcon fontSize="small" />
-            <Typography>View Profile</Typography>
+            <Typography>{common("viewProfile")}</Typography>
           </MenuItem>
 
           <Divider />
 
-          <MenuItem
-            onClick={handleLogout}
-            disabled={loggingOut}
-            className="sidebar-logout-item"
-          >
+          <MenuItem onClick={handleLogout} className="sidebar-logout-item">
             <LogoutOutlinedIcon fontSize="small" />
-            <Typography>{loggingOut ? "Logging out..." : "Logout"}</Typography>
+            <Typography>{common("logout")}</Typography>
           </MenuItem>
         </Menu>
       </Box>

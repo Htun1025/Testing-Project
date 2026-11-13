@@ -4,6 +4,8 @@ import { Button, InputAdornment, Stack, TextField } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
+import { useTranslations } from "next-intl";
+
 import AppButton from "../AppButton";
 import "@/app/globals.css";
 
@@ -18,12 +20,14 @@ export default function RoleToolbar({
   onSearchChange,
   onAdd,
 }: RoleToolbarProps) {
+  const t = useTranslations("Roles");
+
   return (
     <Stack direction="row" spacing={1} className="page-actions">
       <TextField
         className="page-search"
         size="small"
-        placeholder="Search roles..."
+        placeholder={t("searchRoles")}
         value={search}
         onChange={(event) => onSearchChange(event.target.value)}
         slotProps={{
@@ -43,7 +47,7 @@ export default function RoleToolbar({
         startIcon={<AddIcon />}
         onClick={onAdd}
       >
-        Add Role
+        {t("addRole")}
       </AppButton>
     </Stack>
   );

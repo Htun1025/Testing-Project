@@ -6,6 +6,7 @@ import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 
+import { useTranslations } from "next-intl";
 import type { Role, SummaryItem } from "@/types";
 import SummaryCards from "@/components/SummaryCard";
 import "@/app/globals.css";
@@ -15,6 +16,8 @@ interface RoleSummaryProps {
 }
 
 export default function RoleSummary({ roles }: RoleSummaryProps) {
+  const t = useTranslations("Roles");
+
   const activeRoles = roles.filter((role) => role.status === "ACTIVE").length;
 
   const inactiveRoles = roles.filter(
@@ -23,21 +26,21 @@ export default function RoleSummary({ roles }: RoleSummaryProps) {
 
   const summaries: SummaryItem[] = [
     {
-      label: "Total Roles",
+      label: t("totalRoles"),
       value: roles.length,
       icon: <GroupsOutlinedIcon />,
       color: "#7c3aed",
       background: "#ede9fe",
     },
     {
-      label: "Active Roles",
+      label: t("activeRoles"),
       value: activeRoles,
       icon: <CheckCircleOutlineIcon />,
       color: "#059669",
       background: "#d1fae5",
     },
     {
-      label: "Inactive Roles",
+      label: t("inactiveRoles"),
       value: inactiveRoles,
       icon: <BlockOutlinedIcon />,
       color: "#dc2626",

@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import Sidebar from "@/components/Sidebar";
 import DashboardHeader from "@/components/DashboardHeader";
+import LoadingScreen from "@/components/LoadingScreen";
+import useAuth from "@/hooks/useAuth";
 
 import "../app/globals.css";
 
@@ -15,16 +17,35 @@ type MenuLayoutClientProps = {
 
 export default function MenuLayoutClient({ children }: MenuLayoutClientProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
+  const { logout } = useAuth();
+
+  const [loading, setLoading] = useState(true);
   const [pinned, setPinned] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [headerSearch, setHeaderSearch] = useState("");
 
   const sidebarExpanded = pinned || hovered;
 
+  useEffect(() => {
+    setLoading(false);
+  }, [pathname]);
+
   function toggleSidebar() {
     setPinned((previous) => !previous);
     setHovered(false);
+  }
+
+  // Logout function
+  function handleLogout() {
+    logout();
+    router.replace("/login");
+    router.refresh();
+  }
+
+  if (loading) {
+    return <LoadingScreen />;
   }
 
   return (
@@ -47,6 +68,7 @@ export default function MenuLayoutClient({ children }: MenuLayoutClientProps) {
           collapsed={!sidebarExpanded}
           pathname={pathname}
           onToggle={toggleSidebar}
+          onLogout={handleLogout}
         />
       </Box>
 

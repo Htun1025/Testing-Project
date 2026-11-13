@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 
 import AppButton from "@/components/AppButton";
+import { useTranslations } from "next-intl";
 
 type Props = {
   search: string;
@@ -19,11 +20,13 @@ export default function UserToolbar({
   onSearchChange,
   onCreate,
 }: Props) {
+  const t = useTranslations("Users");
+
   return (
     <Stack direction="row" spacing={1} className="page-actions">
       <TextField
         size="small"
-        placeholder="Search users..."
+        placeholder={t("search")}
         value={search}
         onChange={(event) => onSearchChange(event.target.value)}
         className="search-field"
@@ -44,7 +47,7 @@ export default function UserToolbar({
         startIcon={<AddIcon />}
         onClick={onCreate}
       >
-        Create User
+        {t("addUser")}
       </AppButton>
     </Stack>
   );

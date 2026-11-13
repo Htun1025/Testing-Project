@@ -2,6 +2,7 @@
 
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import { LineChart } from "@mui/x-charts/LineChart";
+import { useTranslations } from "next-intl";
 import "@/app/globals.css";
 
 const activityData = [
@@ -15,18 +16,25 @@ const activityData = [
 ];
 
 export default function UserActivityChart() {
+  const t = useTranslations("Dashboard");
+
+  const translatedData = activityData.map((item) => ({
+    ...item,
+    day: t(`days.${item.day}`),
+  }));
+
   return (
     <Card className="dashboard-chart-card" elevation={0}>
       <CardContent>
-        <Typography className="chart-title">User Activity</Typography>
+        <Typography className="chart-title">{t("userActivity")}</Typography>
 
         <Typography className="chart-subtitle">
-          Active and inactive user trends
+          {t("activitySubtitle")}
         </Typography>
 
         <Box className="line-chart-wrapper">
           <LineChart
-            dataset={activityData}
+            dataset={translatedData}
             xAxis={[
               {
                 scaleType: "point",
@@ -36,13 +44,13 @@ export default function UserActivityChart() {
             series={[
               {
                 dataKey: "active",
-                label: "Active Users",
+                label: t("activeUsers"),
                 color: "#7251b3",
                 curve: "linear",
               },
               {
                 dataKey: "inactive",
-                label: "Inactive Users",
+                label: t("inactiveUsers"),
                 color: "#f59e0b",
                 curve: "linear",
               },

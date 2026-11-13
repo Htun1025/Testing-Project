@@ -57,7 +57,7 @@ export default function usePermissions() {
   const activePermissionIds = useMemo(
     () =>
       permissions
-        .filter((item) => item.status === "Active")
+        .filter((item) => item.status === "ACTIVE")
         .map((item) => item.id),
     [permissions],
   );

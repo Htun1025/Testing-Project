@@ -40,7 +40,7 @@ export default function useRoles() {
   const activePermissionIds = useMemo(
     () =>
       initialPermissions
-        .filter((permission) => permission.status === "Active")
+        .filter((permission) => permission.status === "ACTIVE")
         .map((permission) => permission.id),
     [],
   );

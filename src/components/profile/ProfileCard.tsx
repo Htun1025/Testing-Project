@@ -12,6 +12,8 @@ import {
 
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
+import { useTranslations } from "next-intl";
+
 import type { UserForm as UserFormData } from "@/types";
 
 import ProfileDetails from "@/components/profile/ProfileDetails";
@@ -23,11 +25,15 @@ type ProfileCardProps = {
 };
 
 export default function ProfileCard({ profile, onEdit }: ProfileCardProps) {
+  const t = useTranslations("Profile");
+
   return (
     <Paper className="profile-card profile-user-card">
       {/* Card Header */}
       <Box className="profile-card-header">
-        <Typography className="profile-section-title">User Profile</Typography>
+        <Typography className="profile-section-title">
+          {t("userProfile")}
+        </Typography>
 
         <Button
           variant="outlined"
@@ -35,7 +41,7 @@ export default function ProfileCard({ profile, onEdit }: ProfileCardProps) {
           className="profile-edit-button"
           onClick={onEdit}
         >
-          Edit
+          {t("edit")}
         </Button>
       </Box>
 
@@ -51,8 +57,8 @@ export default function ProfileCard({ profile, onEdit }: ProfileCardProps) {
       <Typography className="profile-username">@{profile.username}</Typography>
 
       <Chip
-        label={profile.status}
-        color={profile.status === "Active" ? "success" : "default"}
+        label={profile.status === "ACTIVE" ? t("active") : t("inactive")}
+        color={profile.status === "ACTIVE" ? "success" : "default"}
         size="small"
         className="profile-status"
       />

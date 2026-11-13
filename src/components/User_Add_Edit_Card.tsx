@@ -20,6 +20,8 @@ import type { User, UserForm } from "@/types";
 import AppButton from "@/components/AppButton";
 import nrcData from "@/data/nrc.json";
 import "@/app/globals.css";
+import { useLocale, useTranslations } from "next-intl";
+
 type UserDialogProps = {
   open: boolean;
   editingUser: User | null;
@@ -74,7 +76,8 @@ const regions = Array.from(
       item.state_code,
       {
         code: item.state_code,
-        name: item.state_en,
+        nameEn: item.state_en,
+        nameMm: item.state_mm,
       },
     ]),
   ).values(),
@@ -103,12 +106,15 @@ export default function UserForm({
   onClose,
   onSubmit,
 }: UserDialogProps) {
+  const t = useTranslations("Users");
+  const locale = useLocale();
+
+  const isMyanmar = locale === "mm";
   const isEditing = editingUser !== null;
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [nrcParts, setNrcParts] = useState<NrcParts>({ ...emptyNrc });
 
-  // Initialize NRC only when dialog opens or selected user changes
   useEffect(() => {
     if (open) {
       setNrcParts(parseNrc(form.nrc || ""));
@@ -152,31 +158,31 @@ export default function UserForm({
     const newErrors: FormErrors = {};
 
     if (!form.name.trim()) {
-      newErrors.name = "Name is required";
+      newErrors.name = t("validation.nameRequired");
     }
 
     if (!form.username.trim()) {
-      newErrors.username = "Username is required";
+      newErrors.username = t("validation.usernameRequired");
     } else if (form.username.trim().length < 3) {
-      newErrors.username = "At least 3 characters required";
+      newErrors.username = t("validation.usernameMin");
     }
 
     if (!form.email.trim()) {
-      newErrors.email = "Email is required";
+      newErrors.email = t("validation.emailRequired");
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
-      newErrors.email = "Enter a valid email";
+      newErrors.email = t("validation.emailInvalid");
     }
 
     if (!isEditing) {
       if (!form.password) {
-        newErrors.password = "Password is required";
+        newErrors.password = t("validation.passwordRequired");
       } else if (form.password.length < 6) {
-        newErrors.password = "Minimum 6 characters required";
+        newErrors.password = t("validation.passwordMin");
       }
     }
 
     if (!form.phone.trim()) {
-      newErrors.phone = "Phone is required";
+      newErrors.phone = t("validation.phoneRequired");
     }
 
     const selectedTownship = townshipData.some(
@@ -186,20 +192,20 @@ export default function UserForm({
     );
 
     if (!form.nrc.trim()) {
-      newErrors.nrc = "NRC is required";
+      newErrors.nrc = t("validation.nrcRequired");
     } else if (
       !selectedTownship ||
       !/^\d{1,2}\/[A-Z]+\([NEP]\)\d{6}$/.test(form.nrc)
     ) {
-      newErrors.nrc = "Enter a valid NRC number";
+      newErrors.nrc = t("validation.nrcInvalid");
     }
 
     if (!form.address.trim()) {
-      newErrors.address = "Address is required";
+      newErrors.address = t("validation.addressRequired");
     }
 
     if (!form.status) {
-      newErrors.status = "Status is required";
+      newErrors.status = t("validation.statusRequired");
     }
 
     setErrors(newErrors);
@@ -226,24 +232,22 @@ export default function UserForm({
 
   return (
     <Box className="form-overlay">
-      <Card className="form-card" elevation={0}>
-        <CardContent>
+      <Card className="form-card">
+        <CardContent className="form-card">
           <Box className="form-header">
             <Box>
               <Typography className="form-title">
-                {isEditing ? "Edit User" : "Create User"}
+                {isEditing ? t("editUser") : t("createUser")}
               </Typography>
 
               <Typography className="form-subtitle">
-                {isEditing
-                  ? "Update user information"
-                  : "Enter details to create a new user"}
+                {isEditing ? t("updateUserInfo") : t("createUserInfo")}
               </Typography>
             </Box>
 
             <IconButton
               onClick={handleClose}
-              aria-label="Close form"
+              aria-label={t("closeForm")}
               className="form-close"
               disabled={loading}
             >
@@ -254,7 +258,7 @@ export default function UserForm({
           <form onSubmit={handleSubmit} noValidate>
             <Box className="form-grid">
               <TextField
-                label="Name"
+                label={t("name")}
                 value={form.name}
                 onChange={(e) => handleChange("name", e.target.value)}
                 error={!!errors.name}
@@ -263,7 +267,7 @@ export default function UserForm({
               />
 
               <TextField
-                label="Username"
+                label={t("username")}
                 value={form.username}
                 onChange={(e) => handleChange("username", e.target.value)}
                 error={!!errors.username}
@@ -272,7 +276,7 @@ export default function UserForm({
               />
 
               <TextField
-                label="Email"
+                label={t("email")}
                 type="email"
                 value={form.email}
                 onChange={(e) => handleChange("email", e.target.value)}
@@ -283,7 +287,7 @@ export default function UserForm({
 
               {!isEditing && (
                 <TextField
-                  label="Password"
+                  label={t("password")}
                   type="password"
                   value={form.password}
                   onChange={(e) => handleChange("password", e.target.value)}
@@ -294,7 +298,7 @@ export default function UserForm({
               )}
 
               <TextField
-                label="Phone"
+                label={t("phone")}
                 value={form.phone}
                 onChange={(e) => handleChange("phone", e.target.value)}
                 error={!!errors.phone}
@@ -304,7 +308,7 @@ export default function UserForm({
 
               <Box className="nrc-grid">
                 <TextField
-                  label="Region / State"
+                  label={t("region")}
                   select
                   value={nrcParts.region}
                   onChange={(e) =>
@@ -318,13 +322,14 @@ export default function UserForm({
                 >
                   {regions.map((region) => (
                     <MenuItem key={region.code} value={region.code}>
-                      {region.code} - {region.name}
+                      {region.code} -{" "}
+                      {isMyanmar ? region.nameMm : region.nameEn}
                     </MenuItem>
                   ))}
                 </TextField>
 
                 <TextField
-                  label="Township Code"
+                  label={t("townshipCode")}
                   select
                   value={nrcParts.township}
                   onChange={(e) =>
@@ -341,13 +346,14 @@ export default function UserForm({
                       key={`${item.state_code}-${item.township_code_en}-${index}`}
                       value={item.township_code_en}
                     >
-                      {item.township_code_en} - {item.township_en[0]}
+                      {item.township_code_en} -{" "}
+                      {isMyanmar ? item.township_mm[0] : item.township_en[0]}
                     </MenuItem>
                   ))}
                 </TextField>
 
                 <TextField
-                  label="Type"
+                  label={t("type")}
                   select
                   value={nrcParts.type}
                   onChange={(e) =>
@@ -364,7 +370,7 @@ export default function UserForm({
                 </TextField>
 
                 <TextField
-                  label="Number"
+                  label={t("number")}
                   placeholder="123456"
                   value={nrcParts.number}
                   onChange={(e) =>
@@ -385,11 +391,11 @@ export default function UserForm({
 
               <Box className="nrc-preview">
                 <Typography className="user-nrc-label" variant="caption">
-                  NRC Preview
+                  {t("nrcPreview")}
                 </Typography>
 
                 <Typography className="nrc-value">
-                  {fullNrc || "Your NRC information"}
+                  {fullNrc || t("nrcPlaceholder")}
                 </Typography>
 
                 {errors.nrc && (
@@ -399,7 +405,7 @@ export default function UserForm({
 
               <TextField
                 className="user-address"
-                label="Address"
+                label={t("address")}
                 value={form.address}
                 onChange={(e) => handleChange("address", e.target.value)}
                 fullWidth
@@ -408,6 +414,7 @@ export default function UserForm({
                 error={!!errors.address}
                 helperText={errors.address}
               />
+
               <TextField
                 className="user-status-field"
                 select
@@ -422,18 +429,23 @@ export default function UserForm({
                     renderValue: (selected) => {
                       if (!selected) {
                         return (
-                          <span className="status-placeholder">Status</span>
+                          <span className="status-placeholder">
+                            {t("status")}
+                          </span>
                         );
                       }
 
-                      return selected === "ACTIVE" ? "ACTIVE" : "INACTIVE";
+                      return selected === "ACTIVE"
+                        ? t("active")
+                        : t("inactive");
                     },
                   },
                 }}
               >
-                <MenuItem value="ACTIVE">ACTIVE</MenuItem>
-                <MenuItem value="INACTIVE">INACTIVE</MenuItem>
+                <MenuItem value="ACTIVE">{t("active")}</MenuItem>
+                <MenuItem value="INACTIVE">{t("inactive")}</MenuItem>
               </TextField>
+
               {error && (
                 <Box sx={{ gridColumn: "1 / -1" }}>
                   <Alert severity="error">{error}</Alert>
@@ -447,15 +459,15 @@ export default function UserForm({
                   variant="outlined"
                   disabled={loading}
                 >
-                  Cancel
+                  {t("cancel")}
                 </AppButton>
 
                 <AppButton type="submit" variant="contained" disabled={loading}>
                   {loading
-                    ? "Saving..."
+                    ? t("saving")
                     : isEditing
-                      ? "Save Changes"
-                      : "Create User"}
+                      ? t("saveChanges")
+                      : t("createUser")}
                 </AppButton>
               </Box>
             </Box>

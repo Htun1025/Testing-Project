@@ -20,6 +20,8 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+
+import { useTranslations } from "next-intl";
 import "@/app/globals.css";
 
 type MatrixRole = {
@@ -63,6 +65,8 @@ export default function PermissionMatrix({
   onSelectAll,
   showFilters = false,
 }: PermissionMatrixProps) {
+  const t = useTranslations("Permissions");
+
   const [selectedRoleId, setSelectedRoleId] = useState<number | "">(
     roles[0]?.id ?? "",
   );
@@ -88,7 +92,7 @@ export default function PermissionMatrix({
     () =>
       permissions.filter(
         (item) =>
-          item.status === "Active" && activePermissionIds.includes(item.id),
+          item.status === "ACTIVE" && activePermissionIds.includes(item.id),
       ),
     [permissions, activePermissionIds],
   );
@@ -187,11 +191,11 @@ export default function PermissionMatrix({
             <Box className="permission-matrix-toolbar">
               <Box className="permission-matrix-heading">
                 <Typography className="permission-matrix-title">
-                  Permission Matrix
+                  {t("permissionMatrix")}
                 </Typography>
 
                 <Typography className="permission-matrix-subtitle">
-                  Configure access permissions for this role
+                  {t("matrixSubtitle")}
                 </Typography>
               </Box>
 
@@ -199,12 +203,14 @@ export default function PermissionMatrix({
                 {showFilters && (
                   <>
                     <FormControl size="small" className="matrix-filter">
-                      <InputLabel id="permission-role-label">Role</InputLabel>
+                      <InputLabel id="permission-role-label">
+                        {t("role")}
+                      </InputLabel>
 
                       <Select
                         labelId="permission-role-label"
                         value={selectedRoleId}
-                        label="Role"
+                        label={t("role")}
                         onChange={(event) =>
                           setSelectedRoleId(Number(event.target.value))
                         }
@@ -220,22 +226,22 @@ export default function PermissionMatrix({
 
                     <FormControl size="small" className="matrix-filter">
                       <InputLabel id="permission-module-label">
-                        Module
+                        {t("module")}
                       </InputLabel>
 
                       <Select
                         labelId="permission-module-label"
                         value={selectedModule}
-                        label="Module"
+                        label={t("module")}
                         onChange={(event) =>
                           setSelectedModule(event.target.value)
                         }
                       >
-                        <MenuItem value="ALL">All Modules</MenuItem>
+                        <MenuItem value="ALL">{t("allModules")}</MenuItem>
 
                         {modules.map((item) => (
                           <MenuItem key={item} value={item}>
-                            {item}
+                            {t(`moduleNames.${item}`)}
                           </MenuItem>
                         ))}
                       </Select>
@@ -246,7 +252,10 @@ export default function PermissionMatrix({
                 <Chip
                   size="small"
                   color="primary"
-                  label={`${selectedCount}/${visibleActivePermissions.length} selected`}
+                  label={t("selectedCount", {
+                    selected: selectedCount,
+                    total: visibleActivePermissions.length,
+                  })}
                 />
 
                 {!showFilters && (
@@ -264,10 +273,12 @@ export default function PermissionMatrix({
               >
                 <TableHead>
                   <TableRow>
-                    <TableCell className="matrix-id-column">ID</TableCell>
+                    <TableCell className="matrix-id-column">
+                      {t("id")}
+                    </TableCell>
 
                     <TableCell className="matrix-module-column">
-                      MODULE
+                      {t("module").toUpperCase()}
                     </TableCell>
 
                     {ACTION_COLUMNS.map((action) => {
@@ -294,7 +305,9 @@ export default function PermissionMatrix({
                           className="matrix-action-column"
                         >
                           <Box className="matrix-action-header">
-                            <Typography>{action}</Typography>
+                            <Typography>
+                              {t(`actionNames.${action}`)}
+                            </Typography>
 
                             <Checkbox
                               size="small"
@@ -310,7 +323,9 @@ export default function PermissionMatrix({
                               }
                               slotProps={{
                                 input: {
-                                  "aria-label": `Select all ${action} permissions`,
+                                  "aria-label": t("selectAllAction", {
+                                    action: t(`actionNames.${action}`),
+                                  }),
                                 },
                               }}
                             />
@@ -327,10 +342,6 @@ export default function PermissionMatrix({
                       .filter((item) => item.module === moduleName)
                       .map((item) => item.id);
 
-                    const moduleSelectedCount = modulePermissionIds.filter(
-                      (id) => roleSelectedIds.includes(id),
-                    ).length;
-
                     return (
                       <TableRow key={moduleName} className="matrix-module-row">
                         <TableCell className="matrix-id-column">
@@ -342,7 +353,7 @@ export default function PermissionMatrix({
                         <TableCell className="matrix-module-column">
                           <Box className="matrix-module-info">
                             <Typography className="matrix-module-name">
-                              {moduleName}
+                              {t(`moduleNames.${moduleName}`)}
                             </Typography>
                           </Box>
                         </TableCell>
@@ -365,7 +376,7 @@ export default function PermissionMatrix({
                           }
 
                           const active =
-                            permission.status === "Active" &&
+                            permission.status === "ACTIVE" &&
                             activePermissionIds.includes(permission.id);
 
                           return (
@@ -387,7 +398,9 @@ export default function PermissionMatrix({
                                 }
                                 slotProps={{
                                   input: {
-                                    "aria-label": `${moduleName} ${action}`,
+                                    "aria-label": `${t(
+                                      `moduleNames.${moduleName}`,
+                                    )} ${t(`actionNames.${action}`)}`,
                                   },
                                 }}
                               />
@@ -404,7 +417,7 @@ export default function PermissionMatrix({
                         colSpan={ACTION_COLUMNS.length + 2}
                         align="center"
                       >
-                        No permissions available.
+                        {t("noPermissionsAvailable")}
                       </TableCell>
                     </TableRow>
                   )}
@@ -415,8 +428,10 @@ export default function PermissionMatrix({
             {/* FOOTER */}
             <Box className="permission-matrix-footer">
               <Typography>
-                {visibleModules.length} modules ·{" "}
-                {visibleActivePermissions.length} active permissions
+                {t("matrixFooter", {
+                  modules: visibleModules.length,
+                  permissions: visibleActivePermissions.length,
+                })}
               </Typography>
 
               <Box className="matrix-footer-actions">
@@ -430,12 +445,12 @@ export default function PermissionMatrix({
                   }
                   slotProps={{
                     input: {
-                      "aria-label": "Select all visible permissions",
+                      "aria-label": t("selectAllVisible"),
                     },
                   }}
                 />
 
-                <Typography>Select all</Typography>
+                <Typography>{t("selectAll")}</Typography>
               </Box>
             </Box>
           </Paper>
@@ -447,8 +462,8 @@ export default function PermissionMatrix({
           <Box className="permission-matrix-empty">
             <Typography color="text.secondary">
               {roles.length === 0
-                ? "No roles available."
-                : "Please select a role."}
+                ? t("noRolesAvailable")
+                : t("pleaseSelectRole")}
             </Typography>
           </Box>
         </Paper>

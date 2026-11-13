@@ -7,12 +7,15 @@ import PersonOffOutlinedIcon from "@mui/icons-material/PersonOffOutlined";
 import type { User, SummaryItem } from "@/types";
 import SummaryCards from "@/components/SummaryCard";
 import "@/app/globals.css";
+import { useTranslations } from "next-intl";
 
 type Props = {
   users: User[];
 };
 
 export default function UserSummary({ users }: Props) {
+  const t = useTranslations("Users");
+
   const getStatus = (status: string) =>
     status
       .trim()
@@ -29,21 +32,21 @@ export default function UserSummary({ users }: Props) {
 
   const summaries: SummaryItem[] = [
     {
-      label: "Total Users",
+      label: t("totalUsers"),
       value: users.length,
       icon: <PeopleAltOutlinedIcon />,
       color: "#7e3af2",
       background: "#ede9fe",
     },
     {
-      label: "Active Users",
+      label: t("activeUsers"),
       value: active,
       icon: <CheckCircleOutlineIcon />,
       color: "#057a55",
       background: "#dcfce7",
     },
     {
-      label: "Inactive Users",
+      label: t("inactiveUsers"),
       value: inactive,
       icon: <PersonOffOutlinedIcon />,
       color: "#c81e1e",

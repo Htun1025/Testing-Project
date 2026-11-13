@@ -12,6 +12,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { useTranslations } from "next-intl";
 import "@/app/globals.css";
 
 export type PermissionForm = {
@@ -19,7 +20,7 @@ export type PermissionForm = {
   module: string;
   action: string;
   description: string;
-  status: "Active" | "Inactive";
+  status: "ACTIVE" | "INACTIVE";
 };
 
 interface PermissionFormDialogProps {
@@ -39,6 +40,8 @@ export default function PermissionFormDialog({
   onSave,
   onFormChange,
 }: PermissionFormDialogProps) {
+  const t = useTranslations("Permissions");
+
   const updateField = <K extends keyof PermissionForm>(
     field: K,
     value: PermissionForm[K],
@@ -49,6 +52,9 @@ export default function PermissionFormDialog({
     });
   };
 
+  const modules = ["User", "Role", "Dashboard", "Permission", "Settings"];
+  const actions = ["Create", "Read", "Update", "Delete", "Manage"];
+
   return (
     <Dialog
       open={open}
@@ -58,13 +64,13 @@ export default function PermissionFormDialog({
       className="form-dialog"
     >
       <DialogTitle className="form-dialog-title">
-        {editingPermission ? "Edit Permission" : "Add New Permission"}
+        {editingPermission ? t("editPermission") : t("addNewPermission")}
       </DialogTitle>
 
       <DialogContent className="form-dialog-content">
         <Stack spacing={1.5} sx={{ mt: 1 }}>
           <TextField
-            label="Permission Name"
+            label={t("permissionName")}
             size="small"
             fullWidth
             value={form.name}
@@ -73,38 +79,36 @@ export default function PermissionFormDialog({
 
           <TextField
             select
-            label="Module"
+            label={t("module")}
             size="small"
             fullWidth
             value={form.module}
             onChange={(event) => updateField("module", event.target.value)}
           >
-            {["User", "Role", "Dashboard", "Permission", "Settings"].map(
-              (module) => (
-                <MenuItem key={module} value={module}>
-                  {module}
-                </MenuItem>
-              ),
-            )}
-          </TextField>
-
-          <TextField
-            select
-            label="Action"
-            size="small"
-            fullWidth
-            value={form.action}
-            onChange={(event) => updateField("action", event.target.value)}
-          >
-            {["Create", "Read", "Update", "Delete", "Manage"].map((action) => (
-              <MenuItem key={action} value={action}>
-                {action}
+            {modules.map((module) => (
+              <MenuItem key={module} value={module}>
+                {t(`moduleNames.${module}`)}
               </MenuItem>
             ))}
           </TextField>
 
           <TextField
-            label="Description"
+            select
+            label={t("action")}
+            size="small"
+            fullWidth
+            value={form.action}
+            onChange={(event) => updateField("action", event.target.value)}
+          >
+            {actions.map((action) => (
+              <MenuItem key={action} value={action}>
+                {t(`actionNames.${action}`)}
+              </MenuItem>
+            ))}
+          </TextField>
+
+          <TextField
+            label={t("description")}
             size="small"
             fullWidth
             multiline
@@ -115,7 +119,7 @@ export default function PermissionFormDialog({
 
           <TextField
             select
-            label="Status"
+            label={t("status")}
             size="small"
             fullWidth
             value={form.status}
@@ -126,15 +130,15 @@ export default function PermissionFormDialog({
               )
             }
           >
-            <MenuItem value="Active">Active</MenuItem>
-            <MenuItem value="Inactive">Inactive</MenuItem>
+            <MenuItem value="ACTIVE">{t("active")}</MenuItem>
+            <MenuItem value="INACTIVE">{t("inactive")}</MenuItem>
           </TextField>
         </Stack>
       </DialogContent>
 
       <DialogActions className="form-dialog-actions">
         <Button color="inherit" onClick={onClose}>
-          Cancel
+          {t("cancel")}
         </Button>
 
         <Button
@@ -142,7 +146,7 @@ export default function PermissionFormDialog({
           onClick={onSave}
           disabled={!form.name.trim()}
         >
-          {editingPermission ? "Update" : "Save"}
+          {editingPermission ? t("update") : t("save")}
         </Button>
       </DialogActions>
     </Dialog>

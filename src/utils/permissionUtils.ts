@@ -6,7 +6,7 @@ export const defaultForm: PermissionForm = {
   module: "User",
   action: "Read",
   description: "",
-  status: "Active",
+  status: "ACTIVE",
 };
 
 // Create initial role permission matrix
@@ -19,7 +19,7 @@ export const createInitialMatrix = (
       role.id,
       role.name.toLowerCase() === "admin"
         ? permissions
-            .filter((permission) => permission.status === "Active")
+            .filter((permission) => permission.status === "ACTIVE")
             .map((permission) => permission.id)
         : [],
     ]),

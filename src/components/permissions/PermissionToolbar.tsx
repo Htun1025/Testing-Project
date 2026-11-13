@@ -2,6 +2,8 @@
 
 import { Button, InputAdornment, Stack, TextField } from "@mui/material";
 
+import { useTranslations } from "next-intl";
+
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import "@/app/globals.css";
@@ -17,12 +19,14 @@ export default function PermissionToolbar({
   onSearchChange,
   onAdd,
 }: PermissionToolbarProps) {
+  const t = useTranslations("Permissions");
+
   return (
     <Stack direction="row" spacing={1} className="page-actions">
       <TextField
         className="page-search"
         size="small"
-        placeholder="Search permissions..."
+        placeholder={t("searchPermissions")}
         value={search}
         onChange={(event) => onSearchChange(event.target.value)}
         slotProps={{
@@ -42,7 +46,7 @@ export default function PermissionToolbar({
         startIcon={<AddIcon />}
         onClick={onAdd}
       >
-        Add Permission
+        {t("addPermission")}
       </Button>
     </Stack>
   );
